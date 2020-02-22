@@ -47,11 +47,11 @@ Features:
 * Configurable Ribbons - Add a URL or part of a URL, choose a color and a ribbon will be added to the top left of any website that matches part of that URL. Here are some examples:
 
   - github.com
-  - https&#58;//github.com
-  - https&#58;//github.com/XjSv/environment-marker
-  - http&#58;//dev.
-  - http&#58;//qa.
-  - http&#58;//prod.
+  - ht<span>tps://</span>github.com
+  - ht<span>tps://</span>github.com/XjSv/environment-marker
+  - ht<span>tp://</span>dev.
+  - ht<span>tp://</span>qa.
+  - ht<span>tp://</span>prod.
   - environment-marker
   
 * Tab Counter - Displays the number of open tabs. Color is green when under 1- tabs and red when above. I plan to make this configurable in the future.
