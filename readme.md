@@ -38,6 +38,9 @@
 ## About The Project
 
 ![Environment Marker Screen Shot](screenshots/Environment-Marker.jpg)
+<p align="center">
+  <img width="450" height="400" src="screenshots/Environment-Marker.jpg">
+</p>
 
 A Firefox WebExtension that adds a color marker or ribbon to the top left of a web page depending if the URL contains a given string (e.g. 'http://dev-', 'http://qa-',  'http://prod-'). It uses JavaScript's indexOf to determine if the string is found.
 
