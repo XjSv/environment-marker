@@ -37,7 +37,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Environment Marker Screen Shot](screenshots/Environment-Marker.jpg)
 <p align="center">
   <img width="450" height="400" src="screenshots/Environment-Marker.jpg">
 </p>
