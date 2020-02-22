@@ -1,0 +1,212 @@
+/* General styling */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  font-size: 10px;
+  background: #FFFFFF;
+  margin: 0;
+}
+
+body {
+  width: 350px;
+  min-height: 225px;
+  background: #FFFFFF;
+  margin: 0 auto;
+  padding: 2px 2px 25px 2px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  font-family: sans-serif;
+}
+
+.outer-wrapper {
+  overflow: auto;
+  width: 100%;
+  background: #FFFFFF;
+  min-height: 150px;
+}
+
+.outer-wrapper .title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.clearfix {
+  clear: both;
+}
+
+/* form */
+input {
+  border: 1px solid rgb(218, 218, 218);
+  background: white;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+button {
+  background: #ccc;
+  box-shadow: inset -2px -2px 1px rgba(0,0,0,0.2);
+  border: 1px solid rgb(218, 218, 218);
+  border-radius: 3px;
+  transition: 0.1s all;
+  padding: 5px;
+}
+
+button:hover,
+button:focus {
+  background: #ddd;
+}
+
+button:active {
+  box-shadow: inset -2px -2px 1px rgba(0,0,0,0.05);
+}
+
+/* New setting entry box */
+.settings-input,
+.settings-container {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 2px;
+}
+
+.settings-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#url,
+#color {
+  float: left;
+}
+
+#url {
+  width: 80%;
+  margin-right: 5px;
+}
+
+#color {
+  width: 10%;
+}
+
+.pickr {
+  display: inline-block;
+  float: left;
+  width: 10%;
+}
+
+.save {
+  float: left;
+  padding: 0;
+  width: 8%;
+  background: white;
+  box-shadow: none;
+  border: none;
+}
+.save:hover,
+.save:focus {
+  background: white;
+}
+.save:active {
+  box-shadow: none;
+}
+
+.fa-save {
+  color: white;
+  background-color: #cecece;
+  border-radius: 3px;
+  box-shadow: 0 4px 0 #b5b5b5;
+  padding: 5px;
+  position: relative;
+}
+.fa-save:hover {
+  cursor: pointer;
+
+}
+.fa-save:active {
+  box-shadow: 0 0 0;
+  top: 2px;
+}
+
+.clear {
+  float: left;
+  position: absolute;
+  bottom: 2px;
+}
+
+/* Settings display box(es) */
+.setting {}
+
+.display-url,
+.display-color {
+  display: inline-block;
+  float: left;
+  cursor: pointer;
+}
+
+.display-url {
+  width: 80%;
+  padding: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.display-color {
+  width: 10%;
+}
+
+.display-color div {
+  height: 26.6667px;
+  width: 26.6667px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.delete {
+  float: left;
+  padding: 0;
+  width: 8%;
+  background: white;
+  box-shadow: none;
+  border: none;
+}
+.delete:hover,
+.delete:focus {
+  background: white;
+}
+.delete:active {
+  box-shadow: none;
+}
+
+.fa-trash {
+  color: white;
+  background-color: #cecece;
+  border-radius: 3px;
+  box-shadow: 0 4px 0 #b5b5b5;
+  padding: 5px;
+  position: relative;
+}
+.fa-trash:hover {
+  cursor: pointer;
+
+}
+.fa-trash:active {
+  box-shadow: 0 0 0;
+  top: 2px;
+}
+
+.edit-url {
+  float: left;
+  width: 50%;
+  margin-right: 5px;
+}
+.cancel {
+  float: left;
+}
+
+.update {
+  float: left;
+}

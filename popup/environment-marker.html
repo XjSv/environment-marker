@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/popup/environment-marker.css"/>
+    <link rel="stylesheet" href="/popup/pickr/themes/nano.min.css"/>
+    <link rel="stylesheet" href="/popup/fontawesome/css/fontawesome.css" >
+    <link rel="stylesheet" href="/popup/fontawesome/css/solid.css">
+  </head>
+<body>
+  <div class="outer-wrapper">
+    <div class="title">Environment Marker</div>
+    <div class="settings-input">
+      <input type="text" placeholder="URL" name="url" id="url">
+      <input type="input" placeholder="Color" name="color" id="color" class="color-picker" value="#42445a">
+      <button class="save"><i class="fas fa-save fa-lg"></i></button>
+      <div class="clearfix"></div>
+    </div>
+    <div class="settings-container"></div>
+    <button class="clear">Clear All</button>
+  </div>
+  <script src="/popup/pickr/pickr.min.js"></script>
+  <script src="/popup/environment-marker.js"></script>
+</body>
+</html>
