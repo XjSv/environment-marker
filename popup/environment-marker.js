@@ -3,7 +3,8 @@ let urlInput = document.querySelector('.settings-input #url'),
     colorInput = document.querySelector('.settings-input #color'),
     settingsContainer = document.querySelector('.settings-container'),
     clearBtn = document.querySelector('.clear'),
-    saveBtn = document.querySelector('.save');
+    saveBtn = document.querySelector('.save'),
+    emptyNotice = document.querySelector('.empty-notice');
 
 /* add event listeners to buttons */
 saveBtn.addEventListener('click', saveSettings);
@@ -29,9 +30,20 @@ function initialize() {
     let settingsKeys = Object.keys(results);
     for (let settingUrl of settingsKeys) {
       let settingColor = results[settingUrl];
+      hideEmptyNotice();
       displaySetting(settingUrl, settingColor);
     }
   }, onError);
+}
+
+/* function to hide the empty notice */
+function hideEmptyNotice() {
+  emptyNotice.style.display = 'none';
+}
+
+/* function to show the empty notice */
+function showEmptyNotice() {
+  emptyNotice.style.display = 'block';
 }
 
 /* Add a setting to the display, and storage */
@@ -52,6 +64,7 @@ function saveSettings() {
 /* function to store a new setting in storage */
 function storeSetting(settingUrl, settingColor) {
   browser.storage.local.set({ [settingUrl] : settingColor }).then(() => {
+    hideEmptyNotice();
     displaySetting(settingUrl, settingColor);
   }, onError);
 }
@@ -88,6 +101,7 @@ function displaySetting(settingUrl, settingColor) {
     let evtTgt = e.target;
     evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
     browser.storage.local.remove(settingUrl);
+    showEmptyNotice();
   });
 
   /* create setting edit box */
@@ -104,6 +118,7 @@ function displaySetting(settingUrl, settingColor) {
   cancelBtn.textContent = 'Cancel';
 
   settingEdit.appendChild(settingUrlEdit);
+  settingEdit.setAttribute('class', 'edit-container');
   settingUrlEdit.value = settingUrl;
   settingUrlEdit.setAttribute('class', 'edit-url');
   settingEdit.appendChild(settingColorEdit);
@@ -197,10 +212,11 @@ function updateSetting(settingUrl, newSettingUrl, settingColor) {
 
 /* Clear all settings from the display/storage */
 function clearAll() {
-  while (settingsContainer.firstChild) {
-      settingsContainer.removeChild(settingsContainer.firstChild);
-  }
+  document.querySelectorAll('.settings-container .setting').forEach((element) => {
+    element.remove();
+  });
   browser.storage.local.clear();
+  showEmptyNotice();
 }
 
 let pickr = Pickr.create({
@@ -234,4 +250,5 @@ let pickr = Pickr.create({
 
 pickr.on('save', (color, instance) => {
   colorInput.value = color.toHEXA();
+  instance.hide();
 });

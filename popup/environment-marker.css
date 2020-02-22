@@ -12,7 +12,7 @@ html {
 
 body {
   width: 350px;
-  min-height: 225px;
+  min-height: 300px;
   background: #FFFFFF;
   margin: 0 auto;
   padding: 2px 2px 25px 2px;
@@ -76,6 +76,15 @@ button:active {
 .settings-container {
   max-height: 400px;
   overflow-y: auto;
+}
+
+.settings-container .empty-notice {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 20% auto 0 auto;
+  text-align: center;
+  width: 50%;
+  display: block;
 }
 
 #url,
@@ -198,9 +207,13 @@ button:active {
   top: 2px;
 }
 
+.edit-container {
+  margin-bottom: 3px;
+}
+
 .edit-url {
   float: left;
-  width: 50%;
+  width: 58%;
   margin-right: 5px;
 }
 .cancel {
