@@ -77,14 +77,16 @@ function displaySetting(settingUrl, settingColor) {
       settingUrlDiv = document.createElement('div'),
       settingColorDiv = document.createElement('div'),
       deleteBtn = document.createElement('button'),
-      clearFix = document.createElement('div');
+      clearFix = document.createElement('div'),
+      settingColorDivBg = document.createElement('div');
 
   settingContainer.setAttribute('class', 'setting');
   settingUrlDiv.setAttribute('class', 'display-url');
   settingColorDiv.setAttribute('class', 'display-color');
+  settingColorDivBg.style.backgroundColor = settingColor;
 
   settingUrlDiv.textContent = truncateString(settingUrl, 35);
-  settingColorDiv.innerHTML = '<div style="background-color: ' + settingColor + ';"></div>';
+  settingColorDiv.appendChild(settingColorDivBg);
   deleteBtn.setAttribute('class', 'delete');
   deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>';
   clearFix.setAttribute('class', 'clearfix');
