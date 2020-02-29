@@ -10,6 +10,22 @@ let urlInput = document.querySelector('.settings-input #url'),
 saveBtn.addEventListener('click', saveSettings);
 clearBtn.addEventListener('click', clearAll);
 
+document.onkeydown = (event) => {
+  let keyCode = event.keyCode;
+
+  if (keyCode == 13) {
+    // For Enter
+    saveSettings();
+  }
+
+  if (keyCode == 27) {
+    // For Escape
+    window.close()
+  } else {
+    return true;
+  }
+};
+
 /* Generic error handler */
 function onError(error) {
   console.log(error);
@@ -73,7 +89,9 @@ function saveSettings() {
 
       if (objTest.length < 1) {
         let existingErrorMessage = document.querySelector('.outer-wrapper .message-container .error');
-        existingErrorMessage.remove();
+        if (existingErrorMessage !== null) {
+          existingErrorMessage.remove();
+        }
         urlInput.value = '';
         storeSetting(settingUrl, settingColor);
       } else {
