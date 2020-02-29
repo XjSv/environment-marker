@@ -13,14 +13,14 @@ clearBtn.addEventListener('click', clearAll);
 document.onkeydown = (event) => {
   let keyCode = event.keyCode;
 
+  // Enter
   if (keyCode == 13) {
-    // For Enter
     saveSettings();
   }
 
+  // Escape
   if (keyCode == 27) {
-    // For Escape
-    window.close()
+    window.close();
   } else {
     return true;
   }
