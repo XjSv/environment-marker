@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Environment Marker",
-  "version": "1.5",
+  "version": "1.6",
   "description": "Adds a color marker (ribbon) to the top left of the page depending if the URL contains a given string (e.g. 'http://dev-', 'http://prod-'). It uses JavaScript's indexOf to determine if the string is found.",
   "homepage_url": "https://github.com/XjSv/environment-marker",
   "icons": {
