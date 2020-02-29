@@ -35,6 +35,19 @@ body {
   margin-bottom: 5px;
 }
 
+.message-container {
+}
+
+.error {
+  color: #721c24;
+  font-weight: bold;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
 .clearfix {
   clear: both;
 }

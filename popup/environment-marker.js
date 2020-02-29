@@ -1,4 +1,4 @@
-/* initialise variables */
+/* Initialise variables */
 let urlInput = document.querySelector('.settings-input #url'),
     colorInput = document.querySelector('.settings-input #color'),
     settingsContainer = document.querySelector('.settings-container'),
@@ -6,11 +6,11 @@ let urlInput = document.querySelector('.settings-input #url'),
     saveBtn = document.querySelector('.save'),
     emptyNotice = document.querySelector('.empty-notice');
 
-/* add event listeners to buttons */
+/* Add event listeners to buttons */
 saveBtn.addEventListener('click', saveSettings);
 clearBtn.addEventListener('click', clearAll);
 
-/* generic error handler */
+/* Generic error handler */
 function onError(error) {
   console.log(error);
 }
@@ -22,7 +22,7 @@ function truncateString(str, num) {
   return str.slice(0, num) + '...'
 }
 
-/* display previously-saved stored notes on startup */
+/* Display previously saved markers on startup */
 initialize();
 
 function initialize() {
@@ -36,32 +36,58 @@ function initialize() {
   }, onError);
 }
 
-/* function to hide the empty notice */
+/* Hide the empty notice */
 function hideEmptyNotice() {
   emptyNotice.style.display = 'none';
 }
 
-/* function to show the empty notice */
+/* Show the empty notice */
 function showEmptyNotice() {
   emptyNotice.style.display = 'block';
 }
 
-/* Add a setting to the display, and storage */
+/* Show error message */
+function showErrorMessage(textMsg) {
+  let messageContainer = document.querySelector('.outer-wrapper .message-container'),
+      existingErrorMessage = document.querySelector('.outer-wrapper .message-container .error'),
+      errorMessage = document.createElement('div');
+
+  errorMessage.textContent = textMsg;
+  errorMessage.setAttribute('class', 'error');
+
+  if (existingErrorMessage !== null) {
+    messageContainer.replaceChild(errorMessage, existingErrorMessage);
+  } else {
+    messageContainer.appendChild(errorMessage);
+  }
+}
+
+/* Add a setting to the display and storage */
 function saveSettings() {
   let settingUrl = urlInput.value,
       settingColor = colorInput.value;
 
-  browser.storage.local.get(settingUrl).then((result) => {
-    let objTest = Object.keys(result);
-    if (objTest.length < 1 && settingUrl !== '' && settingColor !== '') {
-      urlInput.value = '';
-      //colorInput.value = '';
-      storeSetting(settingUrl, settingColor);
-    }
-  }, onError);
+  if (settingUrl !== '' && settingColor !== '') {
+    browser.storage.local.get(settingUrl).then((result) => {
+      let objTest = Object.keys(result);
+
+      if (objTest.length < 1) {
+        let existingErrorMessage = document.querySelector('.outer-wrapper .message-container .error');
+        existingErrorMessage.remove();
+        urlInput.value = '';
+        storeSetting(settingUrl, settingColor);
+      } else {
+        // Duplicate marker error message
+        showErrorMessage('Marker already exists!');
+      }
+    }, onError);
+  } else {
+    // Empty input error message
+    showErrorMessage('Enter URL fragment!');
+  }
 }
 
-/* function to store a new setting in storage */
+/* Store a new setting in local storage */
 function storeSetting(settingUrl, settingColor) {
   browser.storage.local.set({ [settingUrl] : settingColor }).then(() => {
     hideEmptyNotice();
@@ -69,9 +95,9 @@ function storeSetting(settingUrl, settingColor) {
   }, onError);
 }
 
-/* function to display a setting in the setting box */
+/* Display a setting in the setting box */
 function displaySetting(settingUrl, settingColor) {
-  /* create setting display box */
+  /* Create setting display box */
   let settingContainer = document.createElement('div'),
       settingDisplay = document.createElement('div'),
       settingUrlDiv = document.createElement('div'),
@@ -98,7 +124,7 @@ function displaySetting(settingUrl, settingColor) {
 
   settingContainer.appendChild(settingDisplay);
 
-  /* set up listener for the delete functionality */
+  /* Add listener for the delete functionality */
   deleteBtn.addEventListener('click', (e) => {
     let evtTgt = e.target;
     evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
@@ -106,7 +132,7 @@ function displaySetting(settingUrl, settingColor) {
     showEmptyNotice();
   });
 
-  /* create setting edit box */
+  /* Create setting edit box */
   let settingEdit = document.createElement('div'),
       settingUrlEdit = document.createElement('input'),
       settingColorEdit = document.createElement('input'),
@@ -137,7 +163,7 @@ function displaySetting(settingUrl, settingColor) {
   settingsContainer.appendChild(settingContainer);
   settingEdit.style.display = 'none';
 
-  /* set up listeners for the update functionality */
+  /* Add listeners for the update functionality */
   settingUrlDiv.addEventListener('click', () => {
     settingDisplay.style.display = 'none';
     settingEdit.style.display = 'block';
@@ -148,6 +174,7 @@ function displaySetting(settingUrl, settingColor) {
     settingEdit.style.display = 'block';
   });
 
+  /* Add color picker to edit input */
   let pickr = Pickr.create({
     el: settingColorEdit,
     theme: 'nano',
@@ -198,21 +225,22 @@ function displaySetting(settingUrl, settingColor) {
   });
 }
 
-/* function to update settings */
+/* Update settings */
 function updateSetting(settingUrl, newSettingUrl, settingColor) {
   browser.storage.local.set({ [newSettingUrl] : settingColor }).then(() => {
     if (settingUrl !== newSettingUrl) {
-      let removingSetting = browser.storage.local.remove(settingUrl);
-      removingSetting.then(() => {
+      // Changed URL
+      browser.storage.local.remove(settingUrl).then(() => {
         displaySetting(newSettingUrl, settingColor);
       }, onError);
     } else {
+      // Only changed color
       displaySetting(newSettingUrl, settingColor);
     }
   }, onError);
 }
 
-/* Clear all settings from the display/storage */
+/* Clear all settings from the display and storage */
 function clearAll() {
   document.querySelectorAll('.settings-container .setting').forEach((element) => {
     element.remove();
@@ -221,36 +249,38 @@ function clearAll() {
   showEmptyNotice();
 }
 
-let pickr = Pickr.create({
-  el: '.color-picker',
-  theme: 'nano',
-  swatches: [
-    'rgba(244, 67,  54, 1)',
-    'rgba(233, 30,  99, 1)',
-    'rgba(156, 39, 176, 1)',
-    'rgba(103, 58, 183, 1)',
-    'rgba(63,  81, 181, 1)',
-    'rgba(33, 150, 243, 1)',
-    'rgba(3,  169, 244, 1)'
-  ],
-  components: {
-    preview: true,
-    opacity: false,
-    hue: true,
-    interaction: {
-      hex: false,
-      rgba: false,
-      hsla: false,
-      hsva: false,
-      cmyk: false,
-      input: true,
-      clear: false,
-      save: true
+document.addEventListener('DOMContentLoaded', function(event) {
+  let pickr = Pickr.create({
+    el: '.color-picker',
+    theme: 'nano',
+    swatches: [
+      'rgba(244, 67,  54, 1)',
+      'rgba(233, 30,  99, 1)',
+      'rgba(156, 39, 176, 1)',
+      'rgba(103, 58, 183, 1)',
+      'rgba(63,  81, 181, 1)',
+      'rgba(33, 150, 243, 1)',
+      'rgba(3,  169, 244, 1)'
+    ],
+    components: {
+      preview: true,
+      opacity: false,
+      hue: true,
+      interaction: {
+        hex: false,
+        rgba: false,
+        hsla: false,
+        hsva: false,
+        cmyk: false,
+        input: true,
+        clear: false,
+        save: true
+      }
     }
-  }
-});
+  });
 
-pickr.on('save', (color, instance) => {
-  colorInput.value = color.toHEXA();
-  instance.hide();
+  pickr.on('save', (color, instance) => {
+    colorInput.value = color.toHEXA();
+    instance.hide();
+  });
 });
