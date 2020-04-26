@@ -12,17 +12,17 @@
   /**
    * Given a URL, background color create a ribbon and add it to the page.
    */
-  function insertRibbon(color, url, label) {
+  function insertRibbon(color, url, label, position) {
     removeExistingRibbon();
 
     let ribbonWrapper = document.createElement('div'),
         textColor = getContrastYIQ(color);
 
-    ribbonWrapper.className = 'ribbon-wrapper';
+    ribbonWrapper.className = 'ribbon-wrapper '+position+'-wrapper';
 
     let ribbon = document.createElement('div');
     ribbon.setAttribute('style', 'background-color: ' + color + '; color: ' + textColor + ';');
-    ribbon.className = 'ribbon';
+    ribbon.className = 'ribbon '+position+'-ribbon';
     ribbon.textContent = truncateString(label, 10);
 
     ribbonWrapper.appendChild(ribbon);
@@ -63,7 +63,7 @@
   */
   browser.runtime.onMessage.addListener((message) => {
     if (message.command === "addRibbon") {
-      insertRibbon(message.color, message.url, message.label);
+      insertRibbon(message.color, message.url, message.label, message.position);
     } else if (message.command === "reset") {
       removeExistingRibbon();
     }

@@ -44,7 +44,8 @@ function updateContent(tabId) {
                   command: 'addRibbon',
                   color: results[urlValue][0],
                   label: results[urlValue][1],
-                  url: urlValue
+                  url: urlValue,
+                  position: results[urlValue][2]
                 });
               }, onError);
 
