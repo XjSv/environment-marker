@@ -12,7 +12,7 @@
   /**
    * Given a URL, background color create a ribbon and add it to the page.
    */
-  function insertRibbon(color, url) {
+  function insertRibbon(color, url, label) {
     removeExistingRibbon();
 
     let ribbonWrapper = document.createElement('div'),
@@ -23,7 +23,7 @@
     let ribbon = document.createElement('div');
     ribbon.setAttribute('style', 'background-color: ' + color + '; color: ' + textColor + ';');
     ribbon.className = 'ribbon';
-    ribbon.textContent = truncateString(url, 10);
+    ribbon.textContent = truncateString(label, 10);
 
     ribbonWrapper.appendChild(ribbon);
 
@@ -63,7 +63,7 @@
   */
   browser.runtime.onMessage.addListener((message) => {
     if (message.command === "addRibbon") {
-      insertRibbon(message.color, message.url);
+      insertRibbon(message.color, message.url, message.label);
     } else if (message.command === "reset") {
       removeExistingRibbon();
     }

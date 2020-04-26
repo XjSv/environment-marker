@@ -162,14 +162,14 @@ button:active {
 /* Settings display box(es) */
 .setting {}
 
-.display-url,
+.display-labelUrl,
 .display-color {
   display: inline-block;
   float: left;
   cursor: pointer;
 }
 
-.display-url {
+.display-labelUrl {
   width: 80%;
   padding: 5px;
   margin-right: 5px;
@@ -226,9 +226,16 @@ button:active {
 
 .edit-url {
   float: left;
-  width: 58%;
+  width: 40%;
   margin-right: 5px;
 }
+
+.edit-label {
+  float: left;
+  width: 40%;
+  margin-right: 5px;
+}
+
 .cancel {
   float: left;
 }
