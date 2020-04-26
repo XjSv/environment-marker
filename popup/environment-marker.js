@@ -1,10 +1,12 @@
 /* Inititalise constant */
 const hide = 'none';
 const show = 'block';
+const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
 /* Initialise variables */
 let urlInput = document.querySelector('.settings-input #url'),
     colorInput = document.querySelector('.settings-input #color'),
+    positionInput = document.querySelector('.settings-input #position'),
     settingsContainer = document.querySelector('.settings-container'),
     clearBtn = document.querySelector('.clear'),
     saveBtn = document.querySelector('.save'),
@@ -52,7 +54,7 @@ function initialize() {
     let settingsUrls = Object.keys(results);
     settingsUrls.length > 0 ? showOrHideEmptyNotice(hide) : showOrHideEmptyNotice(show);
     for (let settingUrl of settingsUrls) {
-      displaySetting(settingUrl, results[settingUrl][0], results[settingUrl][1]);
+      displaySetting(settingUrl, results[settingUrl][0], results[settingUrl][1], results[settingUrl][2]);
     }
   }, onError);
 }
@@ -61,10 +63,11 @@ function showOrHideEmptyNotice(action = null) {
   if (action !== show && action !== hide) {
     browser.storage.local.get(null).then((results) => {
       let settingsUrls = Object.keys(results);
-      action = settingsUrls.length > 0 ? 'none' : 'block';
+      emptyNotice.style.display = settingsUrls.length > 0 ? 'none' : 'block';
     }, onError);
+  } else {
+    emptyNotice.style.display = action;
   }
-  emptyNotice.style.display = action;
 }
 
 /* Show error message */
@@ -87,7 +90,9 @@ function showErrorMessage(textMsg) {
 function saveSettings() {
   let settingUrl = urlInput.value,
       settingColor = colorInput.value,
-      settingLabel = labelInput.value;
+      settingLabel = labelInput.value,
+      settingPosition = positionInput.value
+  ;
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
     browser.storage.local.get(settingUrl).then((result) => {
@@ -100,7 +105,8 @@ function saveSettings() {
         }
         urlInput.value = '';
         labelInput.value = '';
-        storeSetting(settingUrl, settingColor, settingLabel);
+        positionInput.value = 'top-left';
+        storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
       } else {
         // Duplicate marker error message
         showErrorMessage('Marker for this URL already exists!');
@@ -113,36 +119,37 @@ function saveSettings() {
 }
 
 /* Store a new setting in local storage */
-function storeSetting(settingUrl, settingColor, settingLabel) {
-  browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel] }).then(() => {
+function storeSetting(settingUrl, settingColor, settingLabel, settingPosition) {
+  browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
     showOrHideEmptyNotice(hide);
-    displaySetting(settingUrl, settingColor, settingLabel);
+    displaySetting(settingUrl, settingColor, settingLabel, settingPosition);
   }, onError);
 }
 
 /* Display a setting in the setting box */
-function displaySetting(settingUrl, settingColor, settingLabel) {
+function displaySetting(settingUrl, settingColor, settingLabel, settingPosition) {
   /* Create setting display box */
   let settingContainer = document.createElement('div'),
       settingDisplay = document.createElement('div'),
-      settingLabelUrlDiv = document.createElement('div'),
+      settingLabelUrlPositionDiv = document.createElement('div'),
       settingColorDiv = document.createElement('div'),
       deleteBtn = document.createElement('button'),
       clearFix = document.createElement('div'),
-      settingColorDivBg = document.createElement('div');
+      settingColorDivBg = document.createElement('div')
+  ;
 
   settingContainer.setAttribute('class', 'setting');
-  settingLabelUrlDiv.setAttribute('class', 'display-labelUrl');
+  settingLabelUrlPositionDiv.setAttribute('class', 'display-labelUrl');
   settingColorDiv.setAttribute('class', 'display-color');
   settingColorDivBg.style.backgroundColor = settingColor;
 
-  settingLabelUrlDiv.textContent = settingLabel+' ('+settingUrl+')';
+  settingLabelUrlPositionDiv.textContent = settingLabel+' ('+settingUrl+') at '+settingPosition;
   settingColorDiv.appendChild(settingColorDivBg);
   deleteBtn.setAttribute('class', 'delete');
   deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>';
   clearFix.setAttribute('class', 'clearfix');
 
-  settingDisplay.appendChild(settingLabelUrlDiv);
+  settingDisplay.appendChild(settingLabelUrlPositionDiv);
   settingDisplay.appendChild(settingColorDiv);
   settingDisplay.appendChild(deleteBtn);
   settingDisplay.appendChild(clearFix);
@@ -162,25 +169,40 @@ function displaySetting(settingUrl, settingColor, settingLabel) {
       settingUrlEdit = document.createElement('input'),
       settingLabelEdit = document.createElement('input'),
       settingColorEdit = document.createElement('input'),
+      settingPositionEdit = document.createElement('select'),
       clearFix2 = document.createElement('div'),
       updateBtn = document.createElement('button'),
-      cancelBtn = document.createElement('button');
+      cancelBtn = document.createElement('button')
+  ;
+
+  for (let i=0; i < positions.length; i++) {
+    let optionPositionEdit = document.createElement('option');
+    optionPositionEdit.value = positions[i];
+    optionPositionEdit.text = positions[i];
+    settingPositionEdit.appendChild(optionPositionEdit)
+    if (positions[i] === settingPosition) {
+      settingPositionEdit.selectedIndex = i;
+    }
+  }
 
   updateBtn.setAttribute('class', 'update');
   updateBtn.textContent = 'Update';
   cancelBtn.setAttribute('class', 'cancel');
   cancelBtn.textContent = 'Cancel';
 
-  settingEdit.appendChild(settingLabelEdit);
-  settingEdit.appendChild(settingUrlEdit);
   settingEdit.setAttribute('class', 'edit-container');
+  settingEdit.appendChild(settingLabelEdit);
   settingLabelEdit.value = settingLabel;
   settingLabelEdit.setAttribute('class', 'edit-label');
+  settingEdit.appendChild(settingUrlEdit);
   settingUrlEdit.value = settingUrl;
   settingUrlEdit.setAttribute('class', 'edit-url');
   settingEdit.appendChild(settingColorEdit);
   settingColorEdit.setAttribute('class', 'color-picker');
   settingColorEdit.value = settingColor;
+  settingEdit.appendChild(settingPositionEdit);
+  settingPositionEdit.setAttribute('class', 'edit-position');
+
   settingEdit.appendChild(updateBtn);
   settingEdit.appendChild(cancelBtn);
 
@@ -193,7 +215,7 @@ function displaySetting(settingUrl, settingColor, settingLabel) {
   settingEdit.style.display = 'none';
 
   /* Add listeners for the update functionality */
-  settingLabelUrlDiv.addEventListener('click', () => {
+  settingLabelUrlPositionDiv.addEventListener('click', () => {
     settingDisplay.style.display = 'none';
     settingEdit.style.display = 'block';
   });
@@ -248,24 +270,24 @@ function displaySetting(settingUrl, settingColor, settingLabel) {
   });
 
   updateBtn.addEventListener('click', () => {
-    if (settingUrlEdit.value !== settingUrl || settingColorEdit.value !== settingColor || settingLabelEdit.value !== settingLabel) {
-      updateSetting(settingUrl, settingUrlEdit.value, settingColorEdit.value, settingLabelEdit.value);
+    if (settingUrlEdit.value !== settingUrl || settingColorEdit.value !== settingColor || settingLabelEdit.value !== settingLabel || settingPositionEdit.value !== settingPosition) {
+      updateSetting(settingUrl, settingUrlEdit.value, settingColorEdit.value, settingLabelEdit.value, settingPositionEdit.value);
       settingContainer.parentNode.removeChild(settingContainer);
     }
   });
 }
 
 /* Update settings */
-function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel) {
-  browser.storage.local.set({ [newSettingUrl] : [settingColor, settingLabel] }).then(() => {
+function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition) {
+  browser.storage.local.set({ [newSettingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
     if (settingUrl !== newSettingUrl) {
       // Changed URL
       browser.storage.local.remove(settingUrl).then(() => {
-        displaySetting(newSettingUrl, settingColor, settingLabel);
+        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition);
       }, onError);
     } else {
-      // Only changed color
-      displaySetting(newSettingUrl, settingColor, settingLabel);
+      // Change settings
+      displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition);
     }
   }, onError);
 }

@@ -86,6 +86,14 @@ button:active {
   padding: 2px;
 }
 
+#label {
+  width: 150px;
+}
+
+#position {
+  width: 100px;
+}
+
 .settings-container {
   max-height: 400px;
   overflow-y: auto;
@@ -226,13 +234,19 @@ button:active {
 
 .edit-url {
   float: left;
-  width: 40%;
+  width: 33%;
   margin-right: 5px;
 }
 
 .edit-label {
   float: left;
-  width: 40%;
+  width: 33%;
+  margin-right: 5px;
+}
+
+.edit-position {
+  float: left;
+  width: 33%;
   margin-right: 5px;
 }
 
