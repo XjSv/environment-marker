@@ -53,11 +53,20 @@ body {
 }
 
 /* form */
-input {
+input,
+select {
   border: 1px solid rgb(218, 218, 218);
   background: white;
   border-radius: 3px;
   padding: 5px;
+  height: 28px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  margin: 0 0 2px 0;
+}
+
+select {
+  padding: 0;
 }
 
 button {
@@ -87,11 +96,11 @@ button:active {
 }
 
 #label {
-  width: 150px;
+  width: 66%;
 }
 
 #position {
-  width: 100px;
+  width: 33%;
 }
 
 .settings-container {
