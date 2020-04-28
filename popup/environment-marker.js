@@ -1,18 +1,22 @@
 /* Inititalise constant */
 const hide = 'none';
 const show = 'block';
-const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+const positionsMap = [
+  {value: 'top-left', label: 'Top Left'},
+  {value: 'top-right', label: 'Top Right'},
+  {value: 'bottom-left', label: 'Bottom Left'},
+  {value: 'bottom-right', label: 'Bottom Right'}
+];
 
 /* Initialise variables */
 let urlInput = document.querySelector('.settings-input #url'),
     colorInput = document.querySelector('.settings-input #color'),
     positionInput = document.querySelector('.settings-input #position'),
     settingsContainer = document.querySelector('.settings-container'),
+    labelInput = document.querySelector('.settings-input #label'),
     clearBtn = document.querySelector('.clear'),
     saveBtn = document.querySelector('.save'),
-    emptyNotice = document.querySelector('.empty-notice'),
-    labelInput = document.querySelector('.settings-input #label')
-;
+    emptyNotice = document.querySelector('.empty-notice');
 
 /* Add event listeners to buttons */
 saveBtn.addEventListener('click', saveSettings);
@@ -91,8 +95,7 @@ function saveSettings() {
   let settingUrl = urlInput.value,
       settingColor = colorInput.value,
       settingLabel = labelInput.value,
-      settingPosition = positionInput.value
-  ;
+      settingPosition = positionInput.value;
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
     browser.storage.local.get(settingUrl).then((result) => {
@@ -135,15 +138,22 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
       settingColorDiv = document.createElement('div'),
       deleteBtn = document.createElement('button'),
       clearFix = document.createElement('div'),
-      settingColorDivBg = document.createElement('div')
-  ;
+      settingColorDivBg = document.createElement('div');
+
+  let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
+    if (currentValue.value == settingPosition) {
+      accumulator = currentValue.label;
+    }
+
+    return accumulator;
+  }, {});
 
   settingContainer.setAttribute('class', 'setting');
   settingLabelUrlPositionDiv.setAttribute('class', 'display-labelUrl');
   settingColorDiv.setAttribute('class', 'display-color');
   settingColorDivBg.style.backgroundColor = settingColor;
 
-  settingLabelUrlPositionDiv.textContent = settingLabel+' ('+settingUrl+') at '+settingPosition;
+  settingLabelUrlPositionDiv.textContent = settingLabel + ' (' + settingUrl + ') at ' + settingPositionDisplay;
   settingColorDiv.appendChild(settingColorDivBg);
   deleteBtn.setAttribute('class', 'delete');
   deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>';
@@ -175,12 +185,15 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
       cancelBtn = document.createElement('button')
   ;
 
-  for (let i=0; i < positions.length; i++) {
+  for (let i = 0; i < positionsMap.length; i++) {
     let optionPositionEdit = document.createElement('option');
-    optionPositionEdit.value = positions[i];
-    optionPositionEdit.text = positions[i];
+
+    optionPositionEdit.value = positionsMap[i].value;
+    optionPositionEdit.text = positionsMap[i].label;
+
     settingPositionEdit.appendChild(optionPositionEdit)
-    if (positions[i] === settingPosition) {
+
+    if (positionsMap[i].value === settingPosition) {
       settingPositionEdit.selectedIndex = i;
     }
   }

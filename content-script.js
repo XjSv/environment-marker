@@ -18,11 +18,11 @@
     let ribbonWrapper = document.createElement('div'),
         textColor = getContrastYIQ(color);
 
-    ribbonWrapper.className = 'ribbon-wrapper '+position+'-wrapper';
+    ribbonWrapper.className = 'ribbon-wrapper ' + position + '-wrapper';
 
     let ribbon = document.createElement('div');
     ribbon.setAttribute('style', 'background-color: ' + color + '; color: ' + textColor + ';');
-    ribbon.className = 'ribbon '+position+'-ribbon';
+    ribbon.className = 'ribbon ' + position + '-ribbon';
     ribbon.textContent = truncateString(label, 10);
 
     ribbonWrapper.appendChild(ribbon);
@@ -39,7 +39,7 @@
 
   function getContrastYIQ(hexcolor) {
     hexcolor = hexcolor.replace('#', '');
-    var r = parseInt(hexcolor.substr(0, 2), 16),
+    let r = parseInt(hexcolor.substr(0, 2), 16),
         g = parseInt(hexcolor.substr(2, 2), 16),
         b = parseInt(hexcolor.substr(4, 2), 16),
         yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
@@ -51,7 +51,7 @@
    * Remove the ribbon from the page.
    */
   function removeExistingRibbon() {
-    let existingRibbons = document.querySelectorAll(".ribbon-wrapper");
+    let existingRibbons = document.querySelectorAll('.ribbon-wrapper');
     for (let ribbon of existingRibbons) {
       ribbon.remove();
     }
@@ -62,9 +62,9 @@
    * Call "addRibbon()" or "reset()".
   */
   browser.runtime.onMessage.addListener((message) => {
-    if (message.command === "addRibbon") {
+    if (message.command === 'addRibbon') {
       insertRibbon(message.color, message.url, message.label, message.position);
-    } else if (message.command === "reset") {
+    } else if (message.command === 'reset') {
       removeExistingRibbon();
     }
   });
