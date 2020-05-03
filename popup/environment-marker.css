@@ -100,7 +100,7 @@ button:active {
 }
 
 #position {
-  width: 33%;
+  width: 32%;
 }
 
 .settings-container {
@@ -243,20 +243,19 @@ button:active {
 
 .edit-url {
   float: left;
-  width: 33%;
-  margin-right: 5px;
+  width: 29%;
+  margin-right: 3px;
 }
 
 .edit-label {
   float: left;
-  width: 33%;
-  margin-right: 5px;
+  width: 29%;
+  margin-right: 3px;
 }
 
 .edit-position {
   float: left;
-  width: 33%;
-  margin-right: 5px;
+  width: 29%;
 }
 
 .cancel {

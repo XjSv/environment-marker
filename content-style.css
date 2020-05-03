@@ -4,7 +4,7 @@
   overflow: hidden;
   position: fixed;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 999999;
 }
 
 .top-left-wrapper {
