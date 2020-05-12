@@ -42,8 +42,10 @@ function updateContent(tabId) {
 
                 browser.tabs.sendMessage(tabId, {
                   command: 'addRibbon',
-                  color: results[urlValue],
-                  url: urlValue
+                  url: urlValue,
+                  color: results[urlValue][0],
+                  label: results[urlValue][1],
+                  position: results[urlValue][2]
                 });
               }, onError);
 

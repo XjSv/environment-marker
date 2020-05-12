@@ -13,8 +13,15 @@
     <div class="message-container"></div>
     <div class="settings-input">
       <input type="text" placeholder="URL fragment" name="url" id="url">
-      <input type="input" placeholder="Color" name="color" id="color" class="color-picker" value="#42445a">
+      <input type="color" placeholder="Color" name="color" id="color" class="color-picker" value="#42445a">
       <button class="save"><i class="fas fa-save fa-lg"></i></button>
+      <input type="text" placeholder="Label" name="label" id="label">
+      <select name="position" id="position">
+        <option selected="selected" value="top-left">Top Left</option>
+        <option value="top-right">Top Right</option>
+        <option value="bottom-left">Bottom Left</option>
+        <option value="bottom-right">Bottom Right</option>
+      </select>
       <div class="clearfix"></div>
     </div>
     <div class="settings-container"><span class="empty-notice">No Markers Configured!</span></div>

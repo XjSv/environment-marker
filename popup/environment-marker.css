@@ -53,11 +53,20 @@ body {
 }
 
 /* form */
-input {
+input,
+select {
   border: 1px solid rgb(218, 218, 218);
   background: white;
   border-radius: 3px;
   padding: 5px;
+  height: 28px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  margin: 0 0 2px 0;
+}
+
+select {
+  padding: 0;
 }
 
 button {
@@ -84,6 +93,14 @@ button:active {
   width: 100%;
   margin-bottom: 10px;
   padding: 2px;
+}
+
+#label {
+  width: 66%;
+}
+
+#position {
+  width: 32%;
 }
 
 .settings-container {
@@ -162,14 +179,14 @@ button:active {
 /* Settings display box(es) */
 .setting {}
 
-.display-url,
+.display-labelUrl,
 .display-color {
   display: inline-block;
   float: left;
   cursor: pointer;
 }
 
-.display-url {
+.display-labelUrl {
   width: 80%;
   padding: 5px;
   margin-right: 5px;
@@ -226,9 +243,21 @@ button:active {
 
 .edit-url {
   float: left;
-  width: 58%;
-  margin-right: 5px;
+  width: 29%;
+  margin-right: 3px;
 }
+
+.edit-label {
+  float: left;
+  width: 29%;
+  margin-right: 3px;
+}
+
+.edit-position {
+  float: left;
+  width: 29%;
+}
+
 .cancel {
   float: left;
 }

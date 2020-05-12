@@ -1,7 +1,19 @@
+/* Inititalise constant */
+const hide = 'none';
+const show = 'block';
+const positionsMap = [
+  {value: 'top-left', label: 'Top Left'},
+  {value: 'top-right', label: 'Top Right'},
+  {value: 'bottom-left', label: 'Bottom Left'},
+  {value: 'bottom-right', label: 'Bottom Right'}
+];
+
 /* Initialise variables */
 let urlInput = document.querySelector('.settings-input #url'),
     colorInput = document.querySelector('.settings-input #color'),
+    positionInput = document.querySelector('.settings-input #position'),
     settingsContainer = document.querySelector('.settings-container'),
+    labelInput = document.querySelector('.settings-input #label'),
     clearBtn = document.querySelector('.clear'),
     saveBtn = document.querySelector('.save'),
     emptyNotice = document.querySelector('.empty-notice');
@@ -11,15 +23,15 @@ saveBtn.addEventListener('click', saveSettings);
 clearBtn.addEventListener('click', clearAll);
 
 document.onkeydown = (event) => {
-  let keyCode = event.keyCode;
+  let keyCode = event.key;
 
   // Enter
-  if (keyCode == 13) {
+  if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
     saveSettings();
   }
 
   // Escape
-  if (keyCode == 27) {
+  if (keyCode === 'Escape') {
     window.close();
   } else {
     return true;
@@ -43,23 +55,23 @@ initialize();
 
 function initialize() {
   browser.storage.local.get(null).then((results) => {
-    let settingsKeys = Object.keys(results);
-    for (let settingUrl of settingsKeys) {
-      let settingColor = results[settingUrl];
-      hideEmptyNotice();
-      displaySetting(settingUrl, settingColor);
+    let settingsUrls = Object.keys(results);
+    settingsUrls.length > 0 ? showOrHideEmptyNotice(hide) : showOrHideEmptyNotice(show);
+    for (let settingUrl of settingsUrls) {
+      displaySetting(settingUrl, results[settingUrl][0], results[settingUrl][1], results[settingUrl][2]);
     }
   }, onError);
 }
 
-/* Hide the empty notice */
-function hideEmptyNotice() {
-  emptyNotice.style.display = 'none';
-}
-
-/* Show the empty notice */
-function showEmptyNotice() {
-  emptyNotice.style.display = 'block';
+function showOrHideEmptyNotice(action = null) {
+  if (action !== show && action !== hide) {
+    browser.storage.local.get(null).then((results) => {
+      let settingsUrls = Object.keys(results);
+      emptyNotice.style.display = settingsUrls.length > 0 ? 'none' : 'block';
+    }, onError);
+  } else {
+    emptyNotice.style.display = action;
+  }
 }
 
 /* Show error message */
@@ -81,9 +93,11 @@ function showErrorMessage(textMsg) {
 /* Add a setting to the display and storage */
 function saveSettings() {
   let settingUrl = urlInput.value,
-      settingColor = colorInput.value;
+      settingColor = colorInput.value,
+      settingLabel = labelInput.value,
+      settingPosition = positionInput.value;
 
-  if (settingUrl !== '' && settingColor !== '') {
+  if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
     browser.storage.local.get(settingUrl).then((result) => {
       let objTest = Object.keys(result);
 
@@ -93,49 +107,59 @@ function saveSettings() {
           existingErrorMessage.remove();
         }
         urlInput.value = '';
-        storeSetting(settingUrl, settingColor);
+        labelInput.value = '';
+        positionInput.value = 'top-left';
+        storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
       } else {
         // Duplicate marker error message
-        showErrorMessage('Marker already exists!');
+        showErrorMessage('Marker for this URL already exists!');
       }
     }, onError);
   } else {
     // Empty input error message
-    showErrorMessage('Enter URL fragment!');
+    settingLabel === '' ? showErrorMessage('Enter Label !') : showErrorMessage('Enter URL !');
   }
 }
 
 /* Store a new setting in local storage */
-function storeSetting(settingUrl, settingColor) {
-  browser.storage.local.set({ [settingUrl] : settingColor }).then(() => {
-    hideEmptyNotice();
-    displaySetting(settingUrl, settingColor);
+function storeSetting(settingUrl, settingColor, settingLabel, settingPosition) {
+  browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
+    showOrHideEmptyNotice(hide);
+    displaySetting(settingUrl, settingColor, settingLabel, settingPosition);
   }, onError);
 }
 
 /* Display a setting in the setting box */
-function displaySetting(settingUrl, settingColor) {
+function displaySetting(settingUrl, settingColor, settingLabel, settingPosition) {
   /* Create setting display box */
   let settingContainer = document.createElement('div'),
       settingDisplay = document.createElement('div'),
-      settingUrlDiv = document.createElement('div'),
+      settingLabelUrlPositionDiv = document.createElement('div'),
       settingColorDiv = document.createElement('div'),
       deleteBtn = document.createElement('button'),
       clearFix = document.createElement('div'),
       settingColorDivBg = document.createElement('div');
 
+  let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
+    if (currentValue.value == settingPosition) {
+      accumulator = currentValue.label;
+    }
+
+    return accumulator;
+  }, {});
+
   settingContainer.setAttribute('class', 'setting');
-  settingUrlDiv.setAttribute('class', 'display-url');
+  settingLabelUrlPositionDiv.setAttribute('class', 'display-labelUrl');
   settingColorDiv.setAttribute('class', 'display-color');
   settingColorDivBg.style.backgroundColor = settingColor;
 
-  settingUrlDiv.textContent = truncateString(settingUrl, 35);
+  settingLabelUrlPositionDiv.textContent = settingLabel + ' (' + settingUrl + ') at ' + settingPositionDisplay;
   settingColorDiv.appendChild(settingColorDivBg);
   deleteBtn.setAttribute('class', 'delete');
   deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>';
   clearFix.setAttribute('class', 'clearfix');
 
-  settingDisplay.appendChild(settingUrlDiv);
+  settingDisplay.appendChild(settingLabelUrlPositionDiv);
   settingDisplay.appendChild(settingColorDiv);
   settingDisplay.appendChild(deleteBtn);
   settingDisplay.appendChild(clearFix);
@@ -147,29 +171,51 @@ function displaySetting(settingUrl, settingColor) {
     let evtTgt = e.target;
     evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
     browser.storage.local.remove(settingUrl);
-    showEmptyNotice();
+    showOrHideEmptyNotice();
   });
 
   /* Create setting edit box */
   let settingEdit = document.createElement('div'),
       settingUrlEdit = document.createElement('input'),
+      settingLabelEdit = document.createElement('input'),
       settingColorEdit = document.createElement('input'),
+      settingPositionEdit = document.createElement('select'),
       clearFix2 = document.createElement('div'),
       updateBtn = document.createElement('button'),
-      cancelBtn = document.createElement('button');
+      cancelBtn = document.createElement('button')
+  ;
+
+  for (let i = 0; i < positionsMap.length; i++) {
+    let optionPositionEdit = document.createElement('option');
+
+    optionPositionEdit.value = positionsMap[i].value;
+    optionPositionEdit.text = positionsMap[i].label;
+
+    settingPositionEdit.appendChild(optionPositionEdit)
+
+    if (positionsMap[i].value === settingPosition) {
+      settingPositionEdit.selectedIndex = i;
+    }
+  }
 
   updateBtn.setAttribute('class', 'update');
   updateBtn.textContent = 'Update';
   cancelBtn.setAttribute('class', 'cancel');
   cancelBtn.textContent = 'Cancel';
 
-  settingEdit.appendChild(settingUrlEdit);
   settingEdit.setAttribute('class', 'edit-container');
+  settingEdit.appendChild(settingLabelEdit);
+  settingLabelEdit.value = settingLabel;
+  settingLabelEdit.setAttribute('class', 'edit-label');
+  settingEdit.appendChild(settingUrlEdit);
   settingUrlEdit.value = settingUrl;
   settingUrlEdit.setAttribute('class', 'edit-url');
   settingEdit.appendChild(settingColorEdit);
   settingColorEdit.setAttribute('class', 'color-picker');
   settingColorEdit.value = settingColor;
+  settingEdit.appendChild(settingPositionEdit);
+  settingPositionEdit.setAttribute('class', 'edit-position');
+
   settingEdit.appendChild(updateBtn);
   settingEdit.appendChild(cancelBtn);
 
@@ -182,7 +228,7 @@ function displaySetting(settingUrl, settingColor) {
   settingEdit.style.display = 'none';
 
   /* Add listeners for the update functionality */
-  settingUrlDiv.addEventListener('click', () => {
+  settingLabelUrlPositionDiv.addEventListener('click', () => {
     settingDisplay.style.display = 'none';
     settingEdit.style.display = 'block';
   });
@@ -233,27 +279,28 @@ function displaySetting(settingUrl, settingColor) {
     settingEdit.style.display = 'none';
     settingUrlEdit.value = settingUrl;
     settingColorEdit.value = settingColor;
+    settingLabelEdit.value = settingLabel;
   });
 
   updateBtn.addEventListener('click', () => {
-    if (settingUrlEdit.value !== settingUrl || settingColorEdit.value !== settingColor) {
-      updateSetting(settingUrl, settingUrlEdit.value, settingColorEdit.value);
+    if (settingUrlEdit.value !== settingUrl || settingColorEdit.value !== settingColor || settingLabelEdit.value !== settingLabel || settingPositionEdit.value !== settingPosition) {
+      updateSetting(settingUrl, settingUrlEdit.value, settingColorEdit.value, settingLabelEdit.value, settingPositionEdit.value);
       settingContainer.parentNode.removeChild(settingContainer);
     }
   });
 }
 
 /* Update settings */
-function updateSetting(settingUrl, newSettingUrl, settingColor) {
-  browser.storage.local.set({ [newSettingUrl] : settingColor }).then(() => {
+function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition) {
+  browser.storage.local.set({ [newSettingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
     if (settingUrl !== newSettingUrl) {
       // Changed URL
       browser.storage.local.remove(settingUrl).then(() => {
-        displaySetting(newSettingUrl, settingColor);
+        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition);
       }, onError);
     } else {
-      // Only changed color
-      displaySetting(newSettingUrl, settingColor);
+      // Change settings
+      displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition);
     }
   }, onError);
 }
@@ -264,7 +311,7 @@ function clearAll() {
     element.remove();
   });
   browser.storage.local.clear();
-  showEmptyNotice();
+  showOrHideEmptyNotice(show);
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
