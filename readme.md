@@ -41,10 +41,10 @@
   <img width="450" height="400" src="screenshots/Environment-Marker.jpg">
 </p>
 
-A Firefox WebExtension that adds a color marker or ribbon to the top left of a web page depending if the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
+A Firefox WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
 
 Features:
-* Configurable Ribbons - Add a URL or part of a URL, choose a color and a ribbon will be added to the top left of any website that matches part of that URL. Here are some examples:
+* Configurable Ribbons - Add a URL or part of a URL, choose a color and a ribbon will be added to the page for any website that matches part of that URL. Here are some examples:
 
   - github.com
   - ht<span>tps://</span>github.com
@@ -54,7 +54,9 @@ Features:
   - ht<span>tp://</span>prod.
   - environment-marker
   
-* Tab Counter - Displays the number of open tabs. Color is green when under 1- tabs and red when above. I plan to make this configurable in the future.
+* Configurable Ribbon Positions - Choose where to position the ribbon (top left, top right, bottom left, bottom right).
+* Ribbon Labels - Displays a label on the ribbon.
+* Tab Counter - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
 
 ### Built With
 * [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)
