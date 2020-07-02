@@ -86,7 +86,7 @@ To build it simply compress the following files/folders using Zip.
 
 **Step 2** - Choose the "Install Add-on From File..."
 <p align="center">
-  <img width="450" height="400" src="screenshots/Install-From-File.jpg">
+  <img width="800" src="screenshots/Install-From-File.jpg">
 </p>
 
 **Step 3** - Select build/environment-marker.zip
