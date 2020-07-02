@@ -92,7 +92,7 @@ To build it simply compress the following files/folders using Zip.
 **Step 3** - Select build/environment-marker.zip
 
 ### 2 - Install From Firefox.com
-<a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Firefox Addons</a>
+<a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Environment Marker on Addons.mozilla.org (AMO)</a>
 
 
 
