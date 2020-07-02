@@ -67,9 +67,32 @@ Features:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+There are a couple of options for usage.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### 1 - Build & Install From File
+
+**Note:** A pre-built file is located in: build/environment-marker.zip
+
+To build it simply compress the following files/folders using Zip.
+
+- images/
+- popup/
+- background.js
+- content-script.js
+- content-style.css
+- manifest.json
+
+**Step 1** - Navigate to: <a target="_blank" href="about:addons">about:addons</a>
+
+**Step 2** - Choose the "Install Add-on From File..."
+<p align="center">
+  <img width="450" height="400" src="screenshots/Install-From-File.jpg">
+</p>
+
+**Step 3** - Select build/environment-marker.zip
+
+### 2 - Install From Firefox.com
+<a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Firefox Addons</a>
 
 
 
