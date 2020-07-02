@@ -82,7 +82,7 @@ To build it simply compress the following files/folders using Zip.
 - content-style.css
 - manifest.json
 
-**Step 1** - Navigate to: <a target="_blank" href="about:addons">about:addons</a>
+**Step 1** - Navigate to: `about:addons`
 
 **Step 2** - Choose the "Install Add-on From File..."
 <p align="center">
