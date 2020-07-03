@@ -99,6 +99,7 @@ To build it simply compress the following files/folders using Zip.
 
 ## Usage
 
+See [Usage](https://github.com/XjSv/environment-marker/wiki/Usage) instructions in the [Wiki](https://github.com/XjSv/environment-marker/wiki)
 
 ## Roadmap
 
