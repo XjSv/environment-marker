@@ -23,28 +23,33 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
-* [About the Project](#about-the-project)
+- [About The Project](#about-the-project)
+  * [Features](#features)
   * [Built With](#built-with)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
-
+- [Usage](#usage)
+  * [1 - Build & Install From File](#1---build---install-from-file)
+  * [2 - Install From Firefox.com](#2---install-from-firefoxcom)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 <p align="center">
-  <img width="450" height="400" src="screenshots/Environment-Marker.jpg">
+  <img width="420" src="screenshots/1-environment-marker-ui-empty.jpg">
+  <img width="420" src="screenshots/2-environment-marker-ui-data-input.jpg">
+  <img width="420" src="screenshots/3-environment-marker-ui-filled.jpg">
+  <img width="420" src="screenshots/4-environment-marker-ui-inline-edit.jpg">
 </p>
 
 A Firefox WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
 
-Features:
-* Configurable Ribbons - Add a URL or part of a URL, choose a color and a ribbon will be added to the page for any website that matches part of that URL. Here are some examples:
+### Features
+* **Configurable Ribbons** - Add a URL or part of a URL, choose a color and a ribbon will be added to the page for any website that matches part of that URL. Here are some examples:
 
   - github.com
   - ht<span>tps://</span>github.com
@@ -54,9 +59,9 @@ Features:
   - ht<span>tp://</span>prod.
   - environment-marker
   
-* Configurable Ribbon Positions - Choose where to position the ribbon (top left, top right, bottom left, bottom right).
-* Ribbon Labels - Displays a label on the ribbon.
-* Tab Counter - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
+* **Configurable Ribbon Positions** - Choose where to position the ribbon (top left, top right, bottom left, bottom right).
+* **Ribbon Labels** - Displays a label on the ribbon.
+* **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
 
 ### Built With
 * [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)
