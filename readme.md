@@ -40,10 +40,10 @@
 ## About The Project
 
 <p align="center">
-  <img width="420" src="screenshots/1-environment-marker-ui-empty.jpg">
-  <img width="420" src="screenshots/2-environment-marker-ui-data-input.jpg">
-  <img width="420" src="screenshots/3-environment-marker-ui-filled.jpg">
-  <img width="420" src="screenshots/4-environment-marker-ui-inline-edit.jpg">
+  <img width="410" src="screenshots/1-environment-marker-ui-empty.jpg">
+  <img width="410" src="screenshots/2-environment-marker-ui-data-input.jpg">
+  <img width="410" src="screenshots/3-environment-marker-ui-filled.jpg">
+  <img width="410" src="screenshots/4-environment-marker-ui-inline-edit.jpg">
 </p>
 
 A Firefox WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
