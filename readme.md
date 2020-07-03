@@ -19,16 +19,15 @@
 </p>
 
 
-
-<!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 - [About The Project](#about-the-project)
   * [Features](#features)
   * [Built With](#built-with)
-- [Usage](#usage)
+- [Installation](#installation)
   * [1 - Build & Install From File](#1---build---install-from-file)
   * [2 - Install From Firefox.com](#2---install-from-firefoxcom)
+- [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -36,7 +35,6 @@
 - [Acknowledgements](#acknowledgements)
 
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 <p align="center">
@@ -69,14 +67,13 @@ A Firefox WebExtension that adds a color marker (ribbon) to the page depending o
 * [Pickr](https://simonwep.github.io/pickr/)
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
+## Installation
 
 There are a couple of options for usage.
 
 ### 1 - Build & Install From File
 
-**Note:** A pre-built file is located in: build/environment-marker.zip
+**Note:** A pre-built file is located in: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker.zip">build/environment-marker.zip</a>
 
 To build it simply compress the following files/folders using Zip.
 
@@ -100,15 +97,14 @@ To build it simply compress the following files/folders using Zip.
 <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Environment Marker on Addons.mozilla.org (AMO)</a>
 
 
+## Usage
 
-<!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/XjSv/environment-marker/issues) for a list of proposed features (and known issues).
 
 
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -120,15 +116,11 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MPL-2.0 License. See `LICENSE` for more information.
 
 
-
-<!-- CONTACT -->
 ## Contact
 
 Armand Tresova - [@_XjSv_](https://twitter.com/_XjSv_) - atresova@gmail.com
@@ -136,8 +128,6 @@ Armand Tresova - [@_XjSv_](https://twitter.com/_XjSv_) - atresova@gmail.com
 Project Link: [https://github.com/XjSv/environment-marker](https://github.com/XjSv/environment-marker)
 
 
-
-<!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
