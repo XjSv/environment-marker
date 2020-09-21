@@ -7,10 +7,12 @@
   <h3 align="center">Environment Marker</h3>
 
   <p align="center">
-    A Firefox Addon
+    A Browser Addon
     <br />
     <br />
-    <a href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Firefox Addons</a>
+    <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Firefox Addons</a>
+    .
+    <a target="_blank" href="https://chrome.google.com/webstore/detail/environment-marker/cjnmfjkimfbollcepfbhpahipampinhb">Chrome Web Store</a>
     ·
     <a href="https://github.com/XjSv/environment-marker/issues">Report Bug</a>
     ·
@@ -22,11 +24,12 @@
 ## Table of Contents
 
 - [About The Project](#about-the-project)
+  * [Browser Support](#browser-support)
   * [Features](#features)
   * [Built With](#built-with)
 - [Installation](#installation)
-  * [1 - Build & Install From File](#1---build---install-from-file)
-  * [2 - Install From Firefox.com](#2---install-from-firefoxcom)
+  * [1 - Install From Firefox.com or the Chrome Web Store (Recommended)](#1---install-from-firefoxcom-or-the-chrome-web-store--recommended-)
+  * [2 - Build & Install From File (Firefox)](#2---build---install-from-file--firefox-)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
@@ -44,7 +47,13 @@
   <img width="410" src="screenshots/4-environment-marker-ui-inline-edit.jpg">
 </p>
 
-A Firefox WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
+A browser WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
+Currently this extension supports Firefox and Chrome. Plans are in place to also support Safari in the near future.
+
+### Browser Support
+- Firefox
+- Chrome
+- Safari (coming soon...)
 
 ### Features
 * **Configurable Ribbons** - Add a URL or part of a URL, choose a color and a ribbon will be added to the page for any website that matches part of that URL. Here are some examples:
@@ -65,37 +74,41 @@ A Firefox WebExtension that adds a color marker (ribbon) to the page depending o
 * [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
+* [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 
 
 ## Installation
 
-There are a couple of options for usage.
+There are a couple of options for installation.
 
-### 1 - Build & Install From File
+### 1 - Install From Firefox.com or the Chrome Web Store (Recommended)
+- Firefox: <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Environment Marker on Addons.mozilla.org (AMO)</a>
+- Chrome: <a target="_blank" href="https://chrome.google.com/webstore/detail/environment-marker/cjnmfjkimfbollcepfbhpahipampinhb">Environment Marker on Chrome Web Store</a>
 
-**Note:** A pre-built file is located in: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker.zip">build/environment-marker.zip</a>
+### 2 - Build & Install From File (Firefox)
 
-To build it simply compress the following files/folders using Zip.
+**Note:** Pre-built files are available for: 
+- Firefox: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker-firefox.zip">build/environment-marker-firefox.zip</a>
+- Chrome: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker-chrome.zip">build/environment-marker-chrome.zip</a>
 
-- images/
-- popup/
-- background.js
-- content-script.js
-- content-style.css
-- manifest.json
+**Step 1** - Build it
+1. Install dependencies
+    ``` bash
+    npm install
+    ```
+2. Run the build script
+    ``` bash
+    npm run build
+    ```
 
-**Step 1** - Navigate to: `about:addons`
+**Step 2** - Navigate to: `about:addons`
 
-**Step 2** - Choose the "Install Add-on From File..."
+**Step 3** - Choose the "Install Add-on From File..."
 <p align="center">
   <img width="800" src="screenshots/Install-From-File.jpg">
 </p>
 
-**Step 3** - Select build/environment-marker.zip
-
-### 2 - Install From Firefox.com
-<a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Environment Marker on Addons.mozilla.org (AMO)</a>
-
+**Step 4** - Select build/environment-marker-firefox.zip.
 
 ## Usage
 
@@ -132,3 +145,4 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 ## Acknowledgements
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
+* [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
