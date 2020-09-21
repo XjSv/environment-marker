@@ -70,7 +70,8 @@ archive_chrome.pipe(output_chrome);
 
 // append a file
 archive_chrome.file(__dirname + '/../background.js', { name: 'background.js' });
-archive_chrome.file(__dirname + '/../browser-polyfill.js', { name: 'browser-polyfill.min.js' });
+archive_chrome.file(__dirname + '/../browser-polyfill.js', { name: 'browser-polyfill.js' });
+archive_chrome.file(__dirname + '/../browser-polyfill.min.js', { name: 'browser-polyfill.min.js' });
 archive_chrome.file(__dirname + '/../content.css', { name: 'content.css' });
 archive_chrome.file(__dirname + '/../content.js', { name: 'content.js' });
 archive_chrome.file(__dirname + '/../manifest-chrome.json', { name: 'manifest.json' });
@@ -93,7 +94,8 @@ archive_firefox.pipe(output_firefox);
 
 // append a file
 archive_firefox.file(__dirname + '/../background.js', { name: 'background.js' });
-archive_firefox.file(__dirname + '/../browser-polyfill.js', { name: 'browser-polyfill.min.js' });
+archive_firefox.file(__dirname + '/../browser-polyfill.js', { name: 'browser-polyfill.js' });
+archive_firefox.file(__dirname + '/../browser-polyfill.min.js', { name: 'browser-polyfill.min.js' });
 archive_firefox.file(__dirname + '/../content.css', { name: 'content.css' });
 archive_firefox.file(__dirname + '/../content.js', { name: 'content.js' });
 archive_firefox.file(__dirname + '/../manifest-firefox.json', { name: 'manifest.json' });
