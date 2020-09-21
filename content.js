@@ -4,7 +4,7 @@
    * If this content script is injected into the same page again,
    * it will do nothing next time.
    */
-  if (window.hasRun) {
+  if (window.hasRun || typeof browser == "undefined") {
     return;
   }
   window.hasRun = true;
@@ -61,12 +61,13 @@
    * Listen for messages from the background script.
    * Call "addRibbon()" or "reset()".
   */
-  browser.runtime.onMessage.addListener((message) => {
+  browser.runtime.onMessage.addListener( (message) => {
     if (message.command === 'addRibbon') {
       insertRibbon(message.color, message.url, message.label, message.position);
     } else if (message.command === 'reset') {
       removeExistingRibbon();
     }
+    return Promise.resolve('done');
   });
 
 })();

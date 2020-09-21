@@ -1,0 +1,26 @@
+{
+  "name": "environment-marker",
+  "version": "2.0.0",
+  "description": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
+  "main": "background.js",
+  "dependencies": {
+    "webextension-polyfill": "^0.6.0"
+  },
+  "devDependencies": {
+    "archiver": "^5.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node scripts/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XjSv/environment-marker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XjSv/environment-marker/issues"
+  },
+  "homepage": "https://github.com/XjSv/environment-marker#readme"
+}

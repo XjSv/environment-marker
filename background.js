@@ -37,7 +37,7 @@ function updateContent(tabId) {
             if (tab.url.indexOf(urlValue) !== -1) {
 
               browser.tabs.executeScript(tabId, {
-                file: '/content-script.js'
+                file: '/content.js'
               }).then(() => {
 
                 browser.tabs.sendMessage(tabId, {
@@ -46,11 +46,14 @@ function updateContent(tabId) {
                   color: results[urlValue][0],
                   label: results[urlValue][1],
                   position: results[urlValue][2]
-                });
+                }).then(response => {
+                  console.log("Message from the content script:");
+                  console.log(response.response);
+                }).catch(onError);
               }, onError);
 
               browser.tabs.insertCSS(tabId, {
-                file: '/content-style.css'
+                file: '/content.css'
               }).then(null, onError);
 
             }
