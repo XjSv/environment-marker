@@ -1,0 +1,108 @@
+/* General styling */
+html {
+  font-family: sans-serif;
+  font-size: 12px;
+  background: #FFFFFF;
+  margin: 0;
+}
+
+body {
+  width: 350px;
+  font-size: 1.2rem;
+  font-family: sans-serif;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.outer-wrapper {
+  overflow: auto;
+  width: 100%;
+
+  .message-container {
+    .error {
+      color: #721c24;
+      font-weight: bold;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      padding: 5px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  }
+
+  .settings-input {
+    .pickr {
+      height: 100%;
+      width: 100%;
+
+      .pcr-button {
+        height: 100% !important;
+        width: 100% !important;
+      }
+    }
+    .save {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .settings-container {
+    max-height: 400px;
+    overflow-y: auto;
+
+    .empty-notice {
+      font-weight: bold;
+      font-size: 14px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .setting {
+
+      .display-container {
+
+        .display-color div {
+          height: 100%;
+          width: 100%;
+          border-radius: 2px;
+        }
+
+        .delete {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .edit-container {
+        .pickr {
+          height: 100%;
+          width: 100%;
+
+          .pcr-button {
+            height: 100% !important;
+            width: 100% !important;
+          }
+        }
+        .update,
+        .cancel {
+          height: 100%;
+          width: 100%;
+        }
+
+      }
+    }
+  }
+
+  .footer-container {
+    .export-import-container {
+      display: none;
+      .import-file {
+        display: inline-block;
+        max-width: 190px;
+      }
+    }
+  }
+}

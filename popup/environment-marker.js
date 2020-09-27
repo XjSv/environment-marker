@@ -7,36 +7,8 @@ const positionsMap = [
   {value: 'bottom-left', label: 'Bottom Left'},
   {value: 'bottom-right', label: 'Bottom Right'}
 ];
-
-/* Initialise variables */
-let urlInput = document.querySelector('.settings-input #url'),
-    colorInput = document.querySelector('.settings-input #color'),
-    positionInput = document.querySelector('.settings-input #position'),
-    settingsContainer = document.querySelector('.settings-container'),
-    labelInput = document.querySelector('.settings-input #label'),
-    clearBtn = document.querySelector('.clear'),
-    saveBtn = document.querySelector('.save'),
-    emptyNotice = document.querySelector('.empty-notice');
-
-/* Add event listeners to buttons */
-saveBtn.addEventListener('click', saveSettings);
-clearBtn.addEventListener('click', clearAll);
-
-document.onkeydown = (event) => {
-  let keyCode = event.key;
-
-  // Enter
-  if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
-    saveSettings();
-  }
-
-  // Escape
-  if (keyCode === 'Escape') {
-    window.close();
-  } else {
-    return true;
-  }
-};
+let exportFile = null;
+let pickr = null;
 
 /* Generic error handler */
 function onError(error) {
@@ -49,9 +21,6 @@ function truncateString(str, num) {
   }
   return str.slice(0, num) + '...'
 }
-
-/* Display previously saved markers on startup */
-initialize();
 
 function initialize() {
   browser.storage.local.get(null).then((results) => {
@@ -67,48 +36,43 @@ function showOrHideEmptyNotice(action = null) {
   if (action !== show && action !== hide) {
     browser.storage.local.get(null).then((results) => {
       let settingsUrls = Object.keys(results);
-      emptyNotice.style.display = settingsUrls.length > 0 ? 'none' : 'block';
+      $('.empty-notice').css('display', settingsUrls.length > 0 ? 'none' : 'block');
     }, onError);
   } else {
-    emptyNotice.style.display = action;
+    $('.empty-notice').css('display', action);
   }
 }
 
 /* Show error message */
 function showErrorMessage(textMsg) {
-  let messageContainer = document.querySelector('.outer-wrapper .message-container'),
-      existingErrorMessage = document.querySelector('.outer-wrapper .message-container .error'),
-      errorMessage = document.createElement('div');
-
-  errorMessage.textContent = textMsg;
-  errorMessage.setAttribute('class', 'error');
-
-  if (existingErrorMessage !== null) {
-    messageContainer.replaceChild(errorMessage, existingErrorMessage);
+  if ($('.outer-wrapper .message-container .error').length) {
+    $('.outer-wrapper .message-container .error').remove();
+    $('.outer-wrapper .message-container').append('<div class="error col-12">'+textMsg+'</div>');
   } else {
-    messageContainer.appendChild(errorMessage);
+    $('.outer-wrapper .message-container').append('<div class="error col-12">'+textMsg+'</div>');
   }
 }
 
 /* Add a setting to the display and storage */
-function saveSettings() {
-  let settingUrl = urlInput.value,
-      settingColor = colorInput.value,
-      settingLabel = labelInput.value,
-      settingPosition = positionInput.value;
+function saveSettings(urlIn, colorIn, labelIn, positionIn, importFlag = false) {
+  let settingUrl = importFlag ? urlIn : $('.settings-input #url').val(),
+      settingColor = importFlag ? colorIn : pickr.getSelectedColor().toHEXA().toString(0),
+      settingLabel = importFlag ? labelIn : $('.settings-input #label').val(),
+      settingPosition =  importFlag ? positionIn : $('.settings-input #position').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
     browser.storage.local.get(settingUrl).then((result) => {
       let objTest = Object.keys(result);
 
       if (objTest.length < 1) {
-        let existingErrorMessage = document.querySelector('.outer-wrapper .message-container .error');
-        if (existingErrorMessage !== null) {
-          existingErrorMessage.remove();
+        if ($('.outer-wrapper .message-container .error').length) {
+          $('.outer-wrapper .message-container .error').remove();
         }
-        urlInput.value = '';
-        labelInput.value = '';
-        positionInput.value = 'top-left';
+
+        $('.settings-input #url').val('');
+        $('.settings-input #label').val('');
+        $('.settings-input #position').val('top-left');
+
         storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
       } else {
         // Duplicate marker error message
@@ -131,119 +95,163 @@ function storeSetting(settingUrl, settingColor, settingLabel, settingPosition) {
 
 /* Display a setting in the setting box */
 function displaySetting(settingUrl, settingColor, settingLabel, settingPosition) {
-  /* Create setting display box */
-  let settingContainer = document.createElement('div'),
-      settingDisplay = document.createElement('div'),
-      settingLabelUrlPositionDiv = document.createElement('div'),
-      settingColorDiv = document.createElement('div'),
-      deleteBtn = document.createElement('button'),
-      clearFix = document.createElement('div'),
-      settingColorDivBg = document.createElement('div');
-
   let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
     if (currentValue.value == settingPosition) {
       accumulator = currentValue.label;
     }
-
     return accumulator;
   }, {});
 
-  settingContainer.setAttribute('class', 'setting');
-  settingLabelUrlPositionDiv.setAttribute('class', 'display-labelUrl');
-  settingColorDiv.setAttribute('class', 'display-color');
-  settingColorDivBg.style.backgroundColor = settingColor;
+  let innerSettingsContainer = $( "<div/>", { "class": "setting" });
+  let displayContainer = $( "<div/>", { "class": "row no-gutters mb-2 display-container" });
 
-  settingLabelUrlPositionDiv.textContent = settingLabel + ' (' + settingUrl + ') at ' + settingPositionDisplay;
-  settingColorDiv.appendChild(settingColorDivBg);
-  deleteBtn.setAttribute('class', 'delete');
-  deleteBtn.innerHTML = '<i class="fas fa-trash fa-lg"></i>';
-  clearFix.setAttribute('class', 'clearfix');
-
-  settingDisplay.appendChild(settingLabelUrlPositionDiv);
-  settingDisplay.appendChild(settingColorDiv);
-  settingDisplay.appendChild(deleteBtn);
-  settingDisplay.appendChild(clearFix);
-
-  settingContainer.appendChild(settingDisplay);
-
-  /* Add listener for the delete functionality */
-  deleteBtn.addEventListener('click', (e) => {
-    let evtTgt = e.target;
-    evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
-    browser.storage.local.remove(settingUrl);
-    showOrHideEmptyNotice();
+  let displayLabelUrl = $( "<div/>", {
+    "class": "col-10 pr-2 display-labelUrl",
+    text: settingLabel + ' (' + settingUrl + ') at ' + settingPositionDisplay,
+    click: function() {
+      displayContainer.hide();
+      editContainer.show();
+    }
   });
 
-  /* Create setting edit box */
-  let settingEdit = document.createElement('div'),
-      settingUrlEdit = document.createElement('input'),
-      settingLabelEdit = document.createElement('input'),
-      settingColorEdit = document.createElement('input'),
-      settingPositionEdit = document.createElement('select'),
-      clearFix2 = document.createElement('div'),
-      updateBtn = document.createElement('button'),
-      cancelBtn = document.createElement('button')
-  ;
+  let displayColor = $( "<div/>", {
+    "class": "col-1 pr-2 display-color",
+    html: '<div style="background-color: ' + settingColor + ';"></div>',
+    click: function() {
+      displayContainer.hide();
+      editContainer.show();
+    }
+  });
+
+  let deleteBtnContainer = $( "<div/>", {
+    "class": "col-1 display-delete"
+  });
+
+  let deleteBtn = $( "<button/>", {
+    "class": "btn btn-danger btn-sm delete",
+    html: '<i class="fas fa-trash fa-lg"></i>',
+    click: function() {
+      $(this).parent().parent().parent().remove();
+      browser.storage.local.remove(settingUrl);
+      showOrHideEmptyNotice();
+    }
+  });
+
+  let editContainer = $( "<div/>", {
+    "class": "row no-gutters mb-2 edit-container",
+    "style": "display: none;"
+  });
+
+  let editUrlInputContainer = $( "<div/>", {
+    "class": "col-10 pr-1 mb-2 edit-url-container"
+  });
+
+  let editUrlInput = $( "<input/>", {
+    "class": "form-control edit-url",
+    value: settingUrl
+  });
+
+  let editColorInputContainer = $( "<div/>", {
+    "class": "col-1 pr-1 mb-2 edit-color"
+  });
+
+  let editColorInput = $( "<input/>", {
+    "class": "color-picker",
+    value: settingColor
+  });
+
+  let updateBtnContainer = $( "<div/>", {
+    "class": "col-1 mb-2 edit-delete"
+  });
+
+  let updateBtn = $( "<button/>", {
+    "class": "btn btn-success btn-sm update",
+    html: '<i class="fas fa-pencil-alt fa-lg"></i>',
+    click: function() {
+      let urlEditVal = editUrlInput.val();
+      let colorEditVal = editColorInput.val();
+      let labelEditVal = editLabelInput.val();
+      let positionEditVal = optionsSelect.val();
+
+      if (urlEditVal !== settingUrl || colorEditVal !== settingColor || labelEditVal !== settingLabel || positionEditVal !== settingPosition) {
+        updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal);
+        innerSettingsContainer.remove();
+      }
+    }
+  });
+
+  let editLabelInputContainer = $( "<div/>", {
+    "class": "col-6 pr-2 edit-label-container"
+  });
+
+  let editLabelInput = $( "<input/>", {
+    "class": "form-control edit-label",
+    value: settingLabel
+  });
+
+  let optionsSelectContainer = $( "<div/>", {
+    "class": "col-5 pr-2 edit-position-container"
+  });
+
+  let optionsSelect = $( "<select/>", {
+    "class": "form-control edit-position"
+  });
 
   for (let i = 0; i < positionsMap.length; i++) {
-    let optionPositionEdit = document.createElement('option');
-
-    optionPositionEdit.value = positionsMap[i].value;
-    optionPositionEdit.text = positionsMap[i].label;
-
-    settingPositionEdit.appendChild(optionPositionEdit)
-
     if (positionsMap[i].value === settingPosition) {
-      settingPositionEdit.selectedIndex = i;
+      optionsSelect.append(new Option(positionsMap[i].label, positionsMap[i].value, true, true));
+    } else {
+      optionsSelect.append(new Option(positionsMap[i].label, positionsMap[i].value));
     }
   }
 
-  updateBtn.setAttribute('class', 'update');
-  updateBtn.textContent = 'Update';
-  cancelBtn.setAttribute('class', 'cancel');
-  cancelBtn.textContent = 'Cancel';
-
-  settingEdit.setAttribute('class', 'edit-container');
-  settingEdit.appendChild(settingLabelEdit);
-  settingLabelEdit.value = settingLabel;
-  settingLabelEdit.setAttribute('class', 'edit-label');
-  settingEdit.appendChild(settingUrlEdit);
-  settingUrlEdit.value = settingUrl;
-  settingUrlEdit.setAttribute('class', 'edit-url');
-  settingEdit.appendChild(settingColorEdit);
-  settingColorEdit.setAttribute('class', 'color-picker');
-  settingColorEdit.value = settingColor;
-  settingEdit.appendChild(settingPositionEdit);
-  settingPositionEdit.setAttribute('class', 'edit-position');
-
-  settingEdit.appendChild(updateBtn);
-  settingEdit.appendChild(cancelBtn);
-
-  settingEdit.appendChild(clearFix2);
-  clearFix2.setAttribute('class', 'clearfix');
-
-  settingContainer.appendChild(settingEdit);
-
-  settingsContainer.appendChild(settingContainer);
-  settingEdit.style.display = 'none';
-
-  /* Add listeners for the update functionality */
-  settingLabelUrlPositionDiv.addEventListener('click', () => {
-    settingDisplay.style.display = 'none';
-    settingEdit.style.display = 'block';
+  let cancelBtnContainer = $( "<div/>", {
+    "class": "col-1 edit-cancel"
   });
 
-  settingColorDiv.addEventListener('click', () => {
-    settingDisplay.style.display = 'none';
-    settingEdit.style.display = 'block';
+  let cancelBtn = $( "<button/>", {
+    "class": "btn btn-secondary btn-sm cancel",
+    html: '<i class="fas fa-times fa-lg"></i>',
+    click: function() {
+      displayContainer.show();
+      editContainer.hide();
+      editUrlInput.val(settingUrl);
+      editColorInput.val(settingColor);
+      editLabelInput.val(settingLabel);
+      optionsSelect.val(settingPosition);
+    }
   });
 
-  /* Add color picker to edit input */
+  editUrlInputContainer.append(editUrlInput);
+  editColorInputContainer.append(editColorInput);
+  optionsSelectContainer.append(optionsSelect);
+  updateBtnContainer.append(updateBtn);
+  editLabelInputContainer.append(editLabelInput);
+  cancelBtnContainer.append(cancelBtn);
+
+  editContainer.append(editUrlInputContainer);
+  editContainer.append(editColorInputContainer);
+  editContainer.append(updateBtnContainer);
+  editContainer.append(editLabelInputContainer);
+  editContainer.append(optionsSelectContainer);
+  editContainer.append(cancelBtnContainer);
+
+  deleteBtnContainer.append(deleteBtn);
+
+  displayContainer.append(displayLabelUrl);
+  displayContainer.append(displayColor);
+  displayContainer.append(deleteBtnContainer);
+
+  innerSettingsContainer.append(displayContainer);
+  innerSettingsContainer.append(editContainer);
+
+  $('.settings-container').append(innerSettingsContainer);
+
   let pickr = Pickr.create({
-    el: settingColorEdit,
+    el: editColorInput[0],
     theme: 'nano',
-    useAsButton: false,
     default: settingColor,
+    useAsButton: false,
     swatches: [
       'rgba(244, 67,  54, 1)',
       'rgba(233, 30,  99, 1)',
@@ -271,22 +279,8 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
   });
 
   pickr.on('save', (color, instance) => {
-    settingColorEdit.value = color.toHEXA();
-  });
-
-  cancelBtn.addEventListener('click', () => {
-    settingDisplay.style.display = 'block';
-    settingEdit.style.display = 'none';
-    settingUrlEdit.value = settingUrl;
-    settingColorEdit.value = settingColor;
-    settingLabelEdit.value = settingLabel;
-  });
-
-  updateBtn.addEventListener('click', () => {
-    if (settingUrlEdit.value !== settingUrl || settingColorEdit.value !== settingColor || settingLabelEdit.value !== settingLabel || settingPositionEdit.value !== settingPosition) {
-      updateSetting(settingUrl, settingUrlEdit.value, settingColorEdit.value, settingLabelEdit.value, settingPositionEdit.value);
-      settingContainer.parentNode.removeChild(settingContainer);
-    }
+    editColorInput.val(color.toHEXA().toString(0));
+    instance.hide();
   });
 }
 
@@ -307,17 +301,123 @@ function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, se
 
 /* Clear all settings from the display and storage */
 function clearAll() {
-  document.querySelectorAll('.settings-container .setting').forEach((element) => {
+  $('.settings-container .setting').each((index, element) => {
     element.remove();
   });
   browser.storage.local.clear();
   showOrHideEmptyNotice(show);
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  let pickr = Pickr.create({
+/* Make a URL Object from json text */
+function makeJsonExportFile(text) {
+  let data = new Blob([text], { type: 'application/json' });
+
+  // If we are replacing a previously generated file we need to
+  // manually revoke the object URL to avoid memory leaks.
+  if (exportFile !== null) {
+    window.URL.revokeObjectURL(exportFile);
+  }
+
+  exportFile = window.URL.createObjectURL(data);
+  return exportFile;
+}
+
+/* Get all configurations from the storage and output a json file */
+function exportConfig() {
+  browser.storage.local.get(null).then((results) => {
+    let settingsUrls = Object.keys(results),
+        configurations = [];
+
+    if (settingsUrls.length > 0) {
+      for (let settingUrl of settingsUrls) {
+        configurations.push({
+          "url" : settingUrl,
+          "color" : results[settingUrl][0],
+          "label" : results[settingUrl][1],
+          "position" : results[settingUrl][2]
+        });
+      }
+
+      let configurations_json = JSON.stringify(configurations);
+      let link = document.createElement('a');
+      link.setAttribute('download', 'configurations.json');
+      link.href = makeJsonExportFile(configurations_json);
+      document.body.appendChild(link);
+
+      // wait for the link to be added to the document
+      window.requestAnimationFrame(function () {
+        let event = new MouseEvent('click');
+        link.dispatchEvent(event);
+        document.body.removeChild(link);
+      });
+    }
+  }, onError);
+}
+
+/* Read import file and load all settings into the stoage */
+function importConfig() {
+  let importFileInput = document.getElementById("importFile"),
+      importFile = importFileInput.files[0];
+  const reader = new FileReader();
+
+  // This event listener will happen when the reader has read the file
+  reader.addEventListener('load', function() {
+    let import_config_obj = JSON.parse(reader.result); // Parse the result into an object
+
+    if (import_config_obj.length > 0) {
+      import_config_obj.forEach(function(arrayItem) {
+        saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position, true)
+      });
+    }
+
+    importFileInput.value = "";
+  });
+
+  reader.readAsText(importFile); // Read the uploaded file
+}
+
+$(document).ready(() => {
+  /* Display previously saved markers on startup */
+  initialize();
+
+  $('.save').click(() => {
+    saveSettings();
+  });
+
+  $('.clear').click(() => {
+    clearAll();
+  });
+
+  $('.import-export').click(() => {
+    $('.export-import-container').toggle();
+  });
+
+  $('.export').click(() => {
+    exportConfig();
+  });
+
+  $('.import').click(() => {
+    importConfig();
+  });
+
+  $(document).keydown(function(event) {
+    // Enter
+    if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+      saveSettings();
+    }
+
+    // Escape
+    if (event.key === 'Escape') {
+      window.close();
+    } else {
+      return true;
+    }
+  });
+
+  pickr = Pickr.create({
     el: '.color-picker',
     theme: 'nano',
+    useAsButton: false,
     swatches: [
       'rgba(244, 67,  54, 1)',
       'rgba(233, 30,  99, 1)',
@@ -345,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   });
 
   pickr.on('save', (color, instance) => {
-    colorInput.value = color.toHEXA();
+    //$('.settings-input #color').val(color.toHEXA().toString(0));
     instance.hide();
   });
 });

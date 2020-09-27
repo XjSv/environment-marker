@@ -1,34 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/popup/environment-marker.css"/>
+    <link rel="stylesheet" href="/popup/environment-marker.min.css"/>
     <link rel="stylesheet" href="/popup/pickr/themes/nano.min.css"/>
-    <link rel="stylesheet" href="/popup/fontawesome/css/fontawesome.css" >
-    <link rel="stylesheet" href="/popup/fontawesome/css/solid.css">
+    <link rel="stylesheet" href="/popup/fontawesome/css/fontawesome.min.css" >
+    <link rel="stylesheet" href="/popup/fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="/popup/bootstrap/css/bootstrap.min.css">
   </head>
 <body>
-  <div class="outer-wrapper">
-    <div class="title">Environment Marker</div>
-    <div class="message-container"></div>
-    <div class="settings-input">
-      <input type="text" placeholder="URL fragment" name="url" id="url">
-      <input type="color" placeholder="Color" name="color" id="color" class="color-picker" value="#42445a">
-      <button class="save"><i class="fas fa-save fa-lg"></i></button>
-      <input type="text" placeholder="Label" name="label" id="label">
-      <select name="position" id="position">
-        <option selected="selected" value="top-left">Top Left</option>
-        <option value="top-right">Top Right</option>
-        <option value="bottom-left">Bottom Left</option>
-        <option value="bottom-right">Bottom Right</option>
-      </select>
-      <div class="clearfix"></div>
+  <div class="container-fluid outer-wrapper">
+
+    <div class="row">
+
+      <div class="container">
+        <div class="message-container row"></div>
+      </div>
+
+      <div class="container mt-3 settings-input">
+        <div class="row no-gutters mb-2">
+          <div class="col-10 pr-1">
+            <input type="text" placeholder="URL fragment" name="url" id="url" class="form-control">
+          </div>
+          <div class="col-1 pr-1">
+            <input type="color" placeholder="Color" name="color" id="color" class="form-control color-picker" value="#42445a">
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm save"><i class="fas fa-save fa-lg"></i></button>
+          </div>
+        </div>
+
+        <div class="row no-gutters">
+          <div class="col-6 pr-1">
+            <input type="text" placeholder="Label" name="label" id="label" class="form-control">
+          </div>
+          <div class="col-6">
+            <select name="position" id="position" class="form-control">
+              <option selected="selected" value="top-left">Top Left</option>
+              <option value="top-right">Top Right</option>
+              <option value="bottom-left">Bottom Left</option>
+              <option value="bottom-right">Bottom Right</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="settings-container"><span class="empty-notice">No Markers Configured!</span></div>
-    <button class="clear">Clear All</button>
+
+    <div class="row">
+      <div class="container my-4 settings-container">
+        <span class="empty-notice">No Markers Configured!</span>
+      </div>
+    </div>
+
+    <div class="row no-gutters mb-3 footer-container">
+      <div class="col-3">
+        <button class="btn btn-danger btn-sm clear">Clear All</button>
+      </div>
+      <div class="col-9 text-right">
+        <button class="btn btn-secondary btn-sm align-self-end import-export">Import / Export</button>
+
+        <div class="row mt-2 export-import-container">
+          <div class="col-12">
+            <button class="btn btn-secondary btn-sm export">Export</button>
+          </div>
+          <div class="col-12 ml-0">
+            <input class="form-control-sm form-control-file import-file" type="file" id="importFile" name="importFile" accept=".json"><button class="btn btn-secondary btn-sm import">Import</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <script src="/browser-polyfill.min.js"></script>
+
+  <script src="/js/browser-polyfill.min.js"></script>
+  <script src="/popup/jquery/jquery.slim.min.js"></script>
+  <script src="/popup/bootstrap/js/bootstrap.min.js"></script>
   <script src="/popup/pickr/pickr.min.js"></script>
-  <script src="/popup/environment-marker.js"></script>
+  <script src="/popup/environment-marker.min.js"></script>
 </body>
 </html>
