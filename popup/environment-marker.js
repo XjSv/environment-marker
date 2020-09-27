@@ -10,7 +10,6 @@ const positionsMap = [
 let exportFile = null;
 let pickr = null;
 
-/* Generic error handler */
 function onError(error) {
   console.log(error);
 }

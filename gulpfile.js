@@ -11,8 +11,9 @@ let uglify = require('gulp-uglify-es').default;
 let rename = require('gulp-rename');
 let sass = require('gulp-sass');
 let sourcemaps = require('gulp-sourcemaps')
-let autoprefixer = require('gulp-autoprefixer');
-let cssnano = require('gulp-cssnano');
+let autoprefixer = require('autoprefixer');
+let postcss = require('gulp-postcss');
+let cssnano = require('cssnano');
 
 // JS function
 function js() {
@@ -24,7 +25,7 @@ function js() {
         .pipe(rename({
             extname: '.min.js'
         }))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('./'))
         .pipe(dest('./popup/'));
 }
 
@@ -35,15 +36,14 @@ function css() {
     return src(source)
         .pipe(sourcemaps.init())
         .pipe(sass())
-        .pipe(autoprefixer({
-            overrideBrowserslist: ['last 2 versions'],
-            cascade: false
-        }))
+        .pipe(postcss([
+            autoprefixer,
+            cssnano
+        ]))
         .pipe(rename({
             extname: '.min.css'
         }))
-        .pipe(cssnano())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('./'))
         .pipe(dest('./popup/'));
 }
 
