@@ -71,9 +71,9 @@ archive_chrome.pipe(output_chrome);
 // append a file
 archive_chrome.file(__dirname + '/../manifest-chrome.json', { name: 'manifest.json' });
 
-archive_chrome.file(__dirname + '/../background.js', { name: 'background.js' });
-archive_chrome.file(__dirname + '/../content.js', { name: 'content.js' });
-archive_chrome.file(__dirname + '/../content.css', { name: 'content.css' });
+archive_chrome.file(__dirname + '/../js/background.min.js', { name: 'js/background.min.js' });
+archive_chrome.file(__dirname + '/../js/content.min.js', { name: 'js/content.min.js' });
+archive_chrome.file(__dirname + '/../css/content.min.css', { name: 'css/content.min.css' });
 archive_chrome.file(__dirname + '/../js/browser-polyfill.min.js', { name: 'js/browser-polyfill.min.js' });
 
 // append files from a sub-directory and naming it `new-subdir` within the archive
@@ -95,9 +95,9 @@ archive_firefox.pipe(output_firefox);
 // append a file
 archive_firefox.file(__dirname + '/../manifest-firefox.json', { name: 'manifest.json' });
 
-archive_firefox.file(__dirname + '/../background.js', { name: 'background.js' });
-archive_firefox.file(__dirname + '/../content.js', { name: 'content.js' });
-archive_firefox.file(__dirname + '/../content.css', { name: 'content.css' });
+archive_firefox.file(__dirname + '/../js/background.min.js', { name: 'js/background.min.js' });
+archive_firefox.file(__dirname + '/../js/content.min.js', { name: 'js/content.min.js' });
+archive_firefox.file(__dirname + '/../css/content.min.css', { name: 'css/content.min.css' });
 archive_firefox.file(__dirname + '/../js/browser-polyfill.min.js', { name: 'js/browser-polyfill.min.js' });
 
 // append files from a sub-directory and naming it `new-subdir` within the archive

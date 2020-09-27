@@ -1,4 +1,3 @@
-/* Inititalise constant */
 const hide = 'none';
 const show = 'block';
 const positionsMap = [
@@ -106,7 +105,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
 
   let displayLabelUrl = $( "<div/>", {
     "class": "col-10 pr-2 display-labelUrl",
-    text: settingLabel + ' (' + settingUrl + ') at ' + settingPositionDisplay,
+    text: truncateString(settingLabel, 35) + ' (' + truncateString(settingUrl, 35) + ') at ' + settingPositionDisplay,
     click: function() {
       displayContainer.hide();
       editContainer.show();

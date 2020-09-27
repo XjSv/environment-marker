@@ -37,7 +37,7 @@ function updateContent(tabId) {
             if (tab.url.indexOf(urlValue) !== -1) {
 
               browser.tabs.executeScript(tabId, {
-                file: '/content.js'
+                file: '/js/content.min.js'
               }).then(() => {
 
                 browser.tabs.sendMessage(tabId, {
@@ -53,7 +53,7 @@ function updateContent(tabId) {
               }, onError);
 
               browser.tabs.insertCSS(tabId, {
-                file: '/content.css'
+                file: '/css/content.min.css'
               }).then(null, onError);
 
             }

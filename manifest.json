@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Environment Marker",
-  "version": "2.0",
+  "version": "2.1",
   "description": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
   "homepage_url": "https://github.com/XjSv/environment-marker",
   "icons": {
@@ -34,14 +34,14 @@
   "background": {
     "scripts": [
       "js/browser-polyfill.min.js",
-      "background.js"
+      "js/background.min.js"
     ]
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": [
       "js/browser-polyfill.min.js",
-      "content.js"
+      "js/content.min.js"
     ]
   }]
 }
