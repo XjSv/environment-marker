@@ -23,6 +23,7 @@
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
   * [Browser Support](#browser-support)
   * [Features](#features)
@@ -30,6 +31,7 @@
 - [Installation](#installation)
   * [1 - Install From Firefox.com or the Chrome Web Store (Recommended)](#1---install-from-firefoxcom-or-the-chrome-web-store--recommended-)
   * [2 - Build & Install From File (Firefox)](#2---build---install-from-file--firefox-)
+- [Development](#development)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
@@ -68,12 +70,14 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
   
 * **Configurable Ribbon Positions** - Choose where to position the ribbon (top left, top right, bottom left, bottom right).
 * **Ribbon Labels** - Displays a label on the ribbon.
+* **Import/Export** - Export and import ribbon configurations.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
 
 ### Built With
-* [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/)
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
+* [Bootstrap 4](https://getbootstrap.com/)
+* [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 
 
@@ -110,6 +114,21 @@ There are a couple of options for installation.
 
 **Step 4** - Select build/environment-marker-firefox.zip.
 
+## Development
+1. Install dependencies
+    ``` bash
+    npm install
+    ```
+2. Run the default gulp task
+    ``` bash
+    gulp
+    ```
+3. Develop...
+4. Run the build script when ready
+    ``` bash
+    npm run build
+    ```
+
 ## Usage
 
 See [Usage](https://github.com/XjSv/environment-marker/wiki/Usage) instructions in the [Wiki](https://github.com/XjSv/environment-marker/wiki)
@@ -145,4 +164,6 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 ## Acknowledgements
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
+* [Bootstrap 4](https://getbootstrap.com/)
+* [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
