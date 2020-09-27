@@ -24,7 +24,7 @@ function js() {
         .pipe(rename({
             extname: '.min.js'
         }))
-        .pipe(sourcemaps.write('./popup/'))
+        .pipe(sourcemaps.write())
         .pipe(dest('./popup/'));
 }
 
@@ -43,7 +43,7 @@ function css() {
             extname: '.min.css'
         }))
         .pipe(cssnano())
-        .pipe(sourcemaps.write('./popup/'))
+        .pipe(sourcemaps.write())
         .pipe(dest('./popup/'));
 }
 
