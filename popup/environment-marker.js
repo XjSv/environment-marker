@@ -41,12 +41,13 @@ function showOrHideEmptyNotice(action = null) {
 }
 
 /* Show error message */
-function showErrorMessage(textMsg) {
-  if ($('.outer-wrapper .message-container .error').length) {
-    $('.outer-wrapper .message-container .error').remove();
-    $('.outer-wrapper .message-container').append('<div class="error col-12">' + textMsg + '</div>');
+function showMessage(textMsg, errorFlag = false) {
+  let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
+  if ($('.outer-wrapper .message-container .alert').length) {
+    $('.outer-wrapper .message-container .alert').remove();
+    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
   } else {
-    $('.outer-wrapper .message-container').append('<div class="error col-12">' + textMsg + '</div>');
+    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
   }
 }
 
@@ -62,8 +63,8 @@ function saveSettings() {
       let objTest = Object.keys(result);
 
       if (objTest.length < 1) {
-        if ($('.outer-wrapper .message-container .error').length) {
-          $('.outer-wrapper .message-container .error').remove();
+        if ($('.outer-wrapper .message-container .alert').length) {
+          $('.outer-wrapper .message-container .alert').remove();
         }
 
         $('.settings-input #url').val('');
@@ -73,12 +74,12 @@ function saveSettings() {
         storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
       } else {
         // Duplicate marker error message
-        showErrorMessage('Marker for this URL already exists!');
+        showMessage('Marker for this URL already exists!');
       }
     }, onError);
   } else {
     // Empty input error message
-    settingLabel === '' ? showErrorMessage('Enter Label !') : showErrorMessage('Enter URL !');
+    settingLabel === '' ? showMessage('Enter Label !') : showMessage('Enter URL !');
   }
 }
 
