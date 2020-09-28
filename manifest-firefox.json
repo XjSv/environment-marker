@@ -42,14 +42,14 @@
   },
   "background": {
     "scripts": [
-      "js/browser-polyfill.min.js",
+      "libraries/browser-polyfill.min.js",
       "js/background.min.js"
     ]
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": [
-      "js/browser-polyfill.min.js",
+      "libraries/browser-polyfill.min.js",
       "js/content.min.js"
     ]
   }]

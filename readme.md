@@ -7,7 +7,7 @@
   <h3 align="center">Environment Marker</h3>
 
   <p align="center">
-    A Browser Addon
+    A Browser Extension
     <br />
     <br />
     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Firefox Addons</a>

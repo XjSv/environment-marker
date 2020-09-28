@@ -74,12 +74,21 @@ archive_chrome.file(__dirname + '/../manifest-chrome.json', { name: 'manifest.js
 archive_chrome.file(__dirname + '/../js/background.min.js', { name: 'js/background.min.js' });
 archive_chrome.file(__dirname + '/../js/content.min.js', { name: 'js/content.min.js' });
 archive_chrome.file(__dirname + '/../css/content.min.css', { name: 'css/content.min.css' });
-archive_chrome.file(__dirname + '/../js/browser-polyfill.min.js', { name: 'js/browser-polyfill.min.js' });
 
 // append files from a sub-directory and naming it `new-subdir` within the archive
 archive_chrome.directory(__dirname + '/../images/', 'images');
-archive_chrome.directory(__dirname + '/../popup/', 'popup');
-archive_chrome.directory(__dirname + '/../options/', 'options');
+archive_chrome.directory(__dirname + '/../libraries/', 'libraries');
+
+archive_chrome.file(__dirname + '/../popup/environment-marker.html', { name: 'popup/environment-marker.html' });
+archive_chrome.file(__dirname + '/../popup/environment-marker.min.js', { name: 'popup/environment-marker.min.js' });
+archive_chrome.file(__dirname + '/../popup/environment-marker.min.css', { name: 'popup/environment-marker.min.css' });
+
+archive_chrome.file(__dirname + '/../options/options.html', { name: 'options/options.html' });
+archive_chrome.file(__dirname + '/../options/options.min.js', { name: 'options/options.min.js' });
+archive_chrome.file(__dirname + '/../options/options.min.css', { name: 'options/options.min.css' });
+
+//archive_chrome.directory(__dirname + '/../popup/', 'popup');
+//archive_chrome.directory(__dirname + '/../options/', 'options');
 
 // append files from a glob pattern
 //archive_chrome.glob('subdir/*.txt');
@@ -99,12 +108,21 @@ archive_firefox.file(__dirname + '/../manifest-firefox.json', { name: 'manifest.
 archive_firefox.file(__dirname + '/../js/background.min.js', { name: 'js/background.min.js' });
 archive_firefox.file(__dirname + '/../js/content.min.js', { name: 'js/content.min.js' });
 archive_firefox.file(__dirname + '/../css/content.min.css', { name: 'css/content.min.css' });
-archive_firefox.file(__dirname + '/../js/browser-polyfill.min.js', { name: 'js/browser-polyfill.min.js' });
 
 // append files from a sub-directory and naming it `new-subdir` within the archive
 archive_firefox.directory(__dirname + '/../images/', 'images');
-archive_firefox.directory(__dirname + '/../popup/', 'popup');
-archive_firefox.directory(__dirname + '/../options/', 'options');
+archive_firefox.directory(__dirname + '/../libraries/', 'libraries');
+
+archive_firefox.file(__dirname + '/../popup/environment-marker.html', { name: 'popup/environment-marker.html' });
+archive_firefox.file(__dirname + '/../popup/environment-marker.min.js', { name: 'popup/environment-marker.min.js' });
+archive_firefox.file(__dirname + '/../popup/environment-marker.min.css', { name: 'popup/environment-marker.min.css' });
+
+archive_firefox.file(__dirname + '/../options/options.html', { name: 'options/options.html' });
+archive_firefox.file(__dirname + '/../options/options.min.js', { name: 'options/options.min.js' });
+archive_firefox.file(__dirname + '/../options/options.min.css', { name: 'options/options.min.css' });
+
+//archive_firefox.directory(__dirname + '/../popup/', 'popup');
+//archive_firefox.directory(__dirname + '/../options/', 'options');
 
 // append files from a glob pattern
 //archive_firefox.glob('subdir/*.txt');
