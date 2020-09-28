@@ -79,6 +79,7 @@ archive_chrome.file(__dirname + '/../js/browser-polyfill.min.js', { name: 'js/br
 // append files from a sub-directory and naming it `new-subdir` within the archive
 archive_chrome.directory(__dirname + '/../images/', 'images');
 archive_chrome.directory(__dirname + '/../popup/', 'popup');
+archive_chrome.directory(__dirname + '/../options/', 'options');
 
 // append files from a glob pattern
 //archive_chrome.glob('subdir/*.txt');
@@ -103,6 +104,7 @@ archive_firefox.file(__dirname + '/../js/browser-polyfill.min.js', { name: 'js/b
 // append files from a sub-directory and naming it `new-subdir` within the archive
 archive_firefox.directory(__dirname + '/../images/', 'images');
 archive_firefox.directory(__dirname + '/../popup/', 'popup');
+archive_firefox.directory(__dirname + '/../options/', 'options');
 
 // append files from a glob pattern
 //archive_firefox.glob('subdir/*.txt');

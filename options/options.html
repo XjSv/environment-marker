@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/popup/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/options/options.min.css"/>
+</head>
+<body>
+    <div class="container-fluid outer-wrapper">
+        <div class="row">
+            <div class="container">
+                <div class="message-container row"></div>
+            </div>
+        </div>
+
+        <div class="row my-2 export-import-container">
+            <div class="col-12">
+                <button class="btn btn-secondary btn-sm export">Export</button>
+            </div>
+            <div class="col-12 mt-1">
+                <input class="form-control-sm form-control-file import-file" type="file" id="importFile" name="importFile" accept=".json">
+                <button class="btn btn-secondary btn-sm import">Import</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/browser-polyfill.min.js"></script>
+    <script src="/popup/jquery/jquery.slim.min.js"></script>
+    <script src="/popup/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/options/options.min.js"></script>
+</body>
+</html>
+

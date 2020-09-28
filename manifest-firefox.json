@@ -17,14 +17,14 @@
     "activeTab",
     "storage"
   ],
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "environment-marker@armandtresova.com",
       "strict_min_version": "57.0"
     }
   },
   "browser_action": {
-    "browser_style": true,
+    "browser_style": false,
     "theme_icons": [{
         "light": "/images/icons/environment-marker-32.png",
         "dark": "/images/icons/environment-marker-32.png",
@@ -35,6 +35,10 @@
     },
     "default_title": "Environment Marker",
     "default_popup": "/popup/environment-marker.html"
+  },
+  "options_ui": {
+    "browser_style": false,
+    "page": "/options/options.html"
   },
   "background": {
     "scripts": [

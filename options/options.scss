@@ -1,0 +1,35 @@
+.outer-wrapper {
+  overflow: auto;
+  width: 100%;
+
+  .message-container {
+    .error {
+      color: #721c24;
+      font-weight: bold;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      padding: 5px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .success {
+      color: #721c24;
+      font-weight: bold;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      padding: 5px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  }
+
+  .export-import-container {
+    .import-file {
+      display: inline-block;
+      max-width: 190px;
+      padding: 0;
+    }
+  }
+}

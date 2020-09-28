@@ -6,7 +6,6 @@ const positionsMap = [
   {value: 'bottom-left', label: 'Bottom Left'},
   {value: 'bottom-right', label: 'Bottom Right'}
 ];
-let exportFile = null;
 let pickr = null;
 
 function onError(error) {
@@ -45,18 +44,18 @@ function showOrHideEmptyNotice(action = null) {
 function showErrorMessage(textMsg) {
   if ($('.outer-wrapper .message-container .error').length) {
     $('.outer-wrapper .message-container .error').remove();
-    $('.outer-wrapper .message-container').append('<div class="error col-12">'+textMsg+'</div>');
+    $('.outer-wrapper .message-container').append('<div class="error col-12">' + textMsg + '</div>');
   } else {
-    $('.outer-wrapper .message-container').append('<div class="error col-12">'+textMsg+'</div>');
+    $('.outer-wrapper .message-container').append('<div class="error col-12">' + textMsg + '</div>');
   }
 }
 
 /* Add a setting to the display and storage */
-function saveSettings(urlIn, colorIn, labelIn, positionIn, importFlag = false) {
-  let settingUrl = importFlag ? urlIn : $('.settings-input #url').val(),
-      settingColor = importFlag ? colorIn : pickr.getSelectedColor().toHEXA().toString(0),
-      settingLabel = importFlag ? labelIn : $('.settings-input #label').val(),
-      settingPosition =  importFlag ? positionIn : $('.settings-input #position').val();
+function saveSettings() {
+  let settingUrl = $('.settings-input #url').val(),
+      settingColor = pickr.getSelectedColor().toHEXA().toString(0),
+      settingLabel = $('.settings-input #label').val(),
+      settingPosition = $('.settings-input #position').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
     browser.storage.local.get(settingUrl).then((result) => {
@@ -306,74 +305,6 @@ function clearAll() {
   showOrHideEmptyNotice(show);
 }
 
-/* Make a URL Object from json text */
-function makeJsonExportFile(text) {
-  let data = new Blob([text], { type: 'application/json' });
-
-  // If we are replacing a previously generated file we need to
-  // manually revoke the object URL to avoid memory leaks.
-  if (exportFile !== null) {
-    window.URL.revokeObjectURL(exportFile);
-  }
-
-  exportFile = window.URL.createObjectURL(data);
-  return exportFile;
-}
-
-/* Get all configurations from the storage and output a json file */
-function exportConfig() {
-  browser.storage.local.get(null).then((results) => {
-    let settingsUrls = Object.keys(results),
-        configurations = [];
-
-    if (settingsUrls.length > 0) {
-      for (let settingUrl of settingsUrls) {
-        configurations.push({
-          "url" : settingUrl,
-          "color" : results[settingUrl][0],
-          "label" : results[settingUrl][1],
-          "position" : results[settingUrl][2]
-        });
-      }
-
-      let configurations_json = JSON.stringify(configurations);
-      let link = document.createElement('a');
-      link.setAttribute('download', 'configurations.json');
-      link.href = makeJsonExportFile(configurations_json);
-      document.body.appendChild(link);
-
-      // wait for the link to be added to the document
-      window.requestAnimationFrame(function () {
-        let event = new MouseEvent('click');
-        link.dispatchEvent(event);
-        document.body.removeChild(link);
-      });
-    }
-  }, onError);
-}
-
-/* Read import file and load all settings into the stoage */
-function importConfig() {
-  let importFileInput = document.getElementById("importFile"),
-      importFile = importFileInput.files[0];
-  const reader = new FileReader();
-
-  // This event listener will happen when the reader has read the file
-  reader.addEventListener('load', function() {
-    let import_config_obj = JSON.parse(reader.result); // Parse the result into an object
-
-    if (import_config_obj.length > 0) {
-      import_config_obj.forEach(function(arrayItem) {
-        saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position, true)
-      });
-    }
-
-    importFileInput.value = "";
-  });
-
-  reader.readAsText(importFile); // Read the uploaded file
-}
-
 $(document).ready(() => {
   /* Display previously saved markers on startup */
   initialize();
@@ -387,15 +318,7 @@ $(document).ready(() => {
   });
 
   $('.import-export').click(() => {
-    $('.export-import-container').toggle();
-  });
-
-  $('.export').click(() => {
-    exportConfig();
-  });
-
-  $('.import').click(() => {
-    importConfig();
+    browser.runtime.openOptionsPage();
   });
 
   $(document).keydown(function(event) {

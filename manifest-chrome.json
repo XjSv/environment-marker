@@ -19,7 +19,7 @@
   ],
   "minimum_chrome_version": "36",
   "browser_action": {
-    "browser_style": true,
+    "chrome_style": false,
     "theme_icons": [{
         "light": "/images/icons/environment-marker-32.png",
         "dark": "/images/icons/environment-marker-32.png",
@@ -30,6 +30,10 @@
     },
     "default_title": "Environment Marker",
     "default_popup": "/popup/environment-marker.html"
+  },
+  "options_ui": {
+    "chrome_style": false,
+    "page": "/options/options.html"
   },
   "background": {
     "scripts": [
