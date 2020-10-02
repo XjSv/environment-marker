@@ -1,65 +1,67 @@
-.ribbon-wrapper {
+.em-ribbon-wrapper {
   width: 175px;
   height: 175px;
   overflow: hidden;
   position: fixed;
   pointer-events: none;
   z-index: 999999;
+
+  .em-ribbon {
+    font-family: "HelveticaNeue-CondensedBold", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    padding: 6px 0 8px 0;
+    width: 100%;
+    box-shadow: 0 0 3px 2px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .em-top-left-ribbon {
+    transform: rotate(-45deg);
+    left: -22%;
+    top: 25px;
+  }
+
+  .em-top-right-ribbon {
+    transform: rotate(45deg);
+    left: 22%;
+    top: 25px;
+  }
+
+  .em-bottom-left-ribbon {
+    transform: rotate(45deg);
+    bottom: -65%;
+    left: -40px;
+  }
+
+  .em-bottom-right-ribbon {
+    transform: rotate(-45deg);
+    bottom: -65%;
+    left: 40px;
+  }
+
 }
 
-.top-left-wrapper {
+.em-top-left-wrapper {
   top: 0;
   left: 0;
 }
 
-.top-right-wrapper {
+.em-top-right-wrapper {
   top: 0;
   right: 0;
 }
 
-.bottom-left-wrapper {
+.em-bottom-left-wrapper {
   bottom: 0;
   left: 0;
 }
 
-.bottom-right-wrapper {
+.em-bottom-right-wrapper {
   bottom: 0;
   right: 0;
 }
 
-.ribbon {
-  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
-  position: relative;
-  text-align: center;
-  font-size: 14px;
-  padding: 6px 0 8px 0;
-  width: 100%;
-  box-shadow: 0 0 3px 2px rgba(0,0,0,0.3);
-  letter-spacing: 1px;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-.top-left-ribbon {
-  transform: rotate(-45deg);
-  left: -22%;
-  top: 25px;
-}
-
-.top-right-ribbon {
-  transform: rotate(45deg);
-  left: 22%;
-  top: 25px;
-}
-
-.bottom-left-ribbon {
-  transform: rotate(45deg);
-  bottom: -65%;
-  left: -40px;
-}
-
-.bottom-right-ribbon {
-  transform: rotate(-45deg);
-  bottom: -65%;
-  left: 40px;
-}

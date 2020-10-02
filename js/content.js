@@ -18,11 +18,11 @@
     let ribbonWrapper = document.createElement('div'),
         textColor = getContrastYIQ(color);
 
-    ribbonWrapper.className = 'ribbon-wrapper ' + position + '-wrapper';
+    ribbonWrapper.className = 'em-ribbon-wrapper em-' + position + '-wrapper';
 
     let ribbon = document.createElement('div');
     ribbon.setAttribute('style', 'background-color: ' + color + '; color: ' + textColor + ';');
-    ribbon.className = 'ribbon ' + position + '-ribbon';
+    ribbon.className = 'em-ribbon em-' + position + '-ribbon';
     ribbon.textContent = truncateString(label, 10);
 
     ribbonWrapper.appendChild(ribbon);
@@ -51,7 +51,7 @@
    * Remove the ribbon from the page.
    */
   function removeExistingRibbon() {
-    let existingRibbons = document.querySelectorAll('.ribbon-wrapper');
+    let existingRibbons = document.querySelectorAll('.em-ribbon-wrapper');
     for (let ribbon of existingRibbons) {
       ribbon.remove();
     }
