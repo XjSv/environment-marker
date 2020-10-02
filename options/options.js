@@ -100,24 +100,30 @@ function exportConfig() {
 function importConfig() {
     let importFileInput = document.getElementById("importFile"),
         importFile = importFileInput.files[0];
-    const reader = new FileReader();
 
-    // This event listener will happen when the reader has read the file
-    reader.addEventListener('load', function() {
-        let import_config_obj = JSON.parse(reader.result); // Parse the result into an object
+    if (importFile) {
+        const reader = new FileReader();
 
-        if (import_config_obj.length > 0) {
-            import_config_obj.forEach(function(arrayItem) {
-                saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position)
-            });
+        // This event listener will happen when the reader has read the file
+        reader.addEventListener('load', function() {
+            let import_config_obj = JSON.parse(reader.result); // Parse the result into an object
 
-            showMessage('Imported successfully!');
-        }
+            if (import_config_obj.length > 0) {
+                import_config_obj.forEach(function(arrayItem) {
+                    saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position)
+                });
 
-        importFileInput.value = "";
-    });
+                showMessage('Imported successfully!');
+            }
 
-    reader.readAsText(importFile); // Read the uploaded file
+            $('.import-file-label').html('Choose file');
+            importFileInput.value = '';
+        });
+
+        reader.readAsText(importFile); // Read the uploaded file
+    } else {
+        showMessage('Choose a file!');
+    }
 }
 
 $(document).ready(() => {
@@ -127,5 +133,11 @@ $(document).ready(() => {
 
     $('.import').click(() => {
         importConfig();
+    });
+
+    $('#importFile').change((event) => {
+        if (event.target.files.length) {
+            $('.import-file-label').html(event.target.files[0].name);
+        }
     });
 });

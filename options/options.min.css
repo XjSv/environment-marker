@@ -1,2 +1,2 @@
-.outer-wrapper{overflow:auto;width:100%}.outer-wrapper .message-container .error,.outer-wrapper .message-container .success{color:#721c24;font-weight:700;background-color:#f8d7da;border-color:#f5c6cb;padding:5px;border-radius:3px;margin-bottom:10px;text-align:center}.outer-wrapper .export-import-container .import-file{display:inline-block;max-width:190px;padding:0}
+.outer-wrapper{overflow:auto;width:100%}.outer-wrapper .export-import-container .import-file-label{cursor:pointer}
 /*# sourceMappingURL=options.min.css.map */

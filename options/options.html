@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/libraries/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/libraries/fontawesome/css/fontawesome.min.css" >
+    <link rel="stylesheet" href="/libraries/fontawesome/css/solid.min.css">
     <link rel="stylesheet" href="/options/options.min.css"/>
 </head>
 <body>
@@ -14,12 +16,13 @@
         </div>
 
         <div class="row my-2 export-import-container">
-            <div class="col-12">
-                <button class="btn btn-secondary btn-sm export">Export</button>
+            <div class="col-3">
+                <button class="btn btn-primary btn-sm export"><i class="fas fa-download fa-lg"></i> Export</button>
             </div>
-            <div class="col-12 mt-1">
-                <input class="form-control-sm form-control-file import-file" type="file" id="importFile" name="importFile" accept=".json">
-                <button class="btn btn-secondary btn-sm import">Import</button>
+            <div class="col-9 py-2">
+                <input class="d-none import-file" type="file" id="importFile" name="importFile" accept=".json">
+                <label class="import-file-label" for="importFile">Choose file</label>
+                <button class="btn btn-secondary btn-sm import"><i class="fas fa-upload fa-lg"></i> Import</button>
             </div>
         </div>
     </div>
