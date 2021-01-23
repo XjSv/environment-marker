@@ -1,12 +1,22 @@
+let positionInputTopLeft = browser.i18n.getMessage("positionInputTopLeft");
+let positionInputTopRight = browser.i18n.getMessage("positionInputTopRight");
+let positionInputBottomLeft = browser.i18n.getMessage("positionInputBottomLeft");
+let positionInputBottomRight = browser.i18n.getMessage("positionInputBottomRight");
+let noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons");
+let buttonClearAll = browser.i18n.getMessage("buttonClearAll");
+let buttonImportExport = browser.i18n.getMessage("buttonImportExport");
+let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker");
+let errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty");
+let errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty");
+let pickr = null;
 const hide = 'none';
 const show = 'block';
 const positionsMap = [
-  {value: 'top-left', label: 'Top Left'},
-  {value: 'top-right', label: 'Top Right'},
-  {value: 'bottom-left', label: 'Bottom Left'},
-  {value: 'bottom-right', label: 'Bottom Right'}
+  {value: 'top-left', label: positionInputTopLeft},
+  {value: 'top-right', label: positionInputTopRight},
+  {value: 'bottom-left', label: positionInputBottomLeft},
+  {value: 'bottom-right', label: positionInputBottomRight}
 ];
-let pickr = null;
 
 function onError(error) {
   console.log(error);
@@ -74,12 +84,12 @@ function saveSettings() {
         storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
       } else {
         // Duplicate marker error message
-        showMessage('Marker for this URL already exists!');
+        showMessage(errorDuplicateMarker);
       }
     }, onError);
   } else {
     // Empty input error message
-    settingLabel === '' ? showMessage('Enter Label !') : showMessage('Enter URL !');
+    settingLabel === '' ? showMessage(errorLabelEmpty) : showMessage(errorUrlEmpty);
   }
 }
 
@@ -370,4 +380,13 @@ $(document).ready(() => {
     //$('.settings-input #color').val(color.toHEXA().toString(0));
     instance.hide();
   });
+
+  $('span.empty-notice').html(noticeNoRibbons);
+  $('button.clear').html(buttonClearAll);
+  $('button.import-export').html(buttonImportExport);
+
+  $('select#position option[value="top-left"]').html(positionInputTopLeft);
+  $('select#position option[value="top-right"]').html(positionInputTopRight);
+  $('select#position option[value="bottom-left"]').html(positionInputBottomLeft);
+  $('select#position option[value="bottom-right"]').html(positionInputBottomRight);
 });

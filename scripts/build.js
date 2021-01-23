@@ -86,6 +86,7 @@ archive_chrome.file(__dirname + '/../popup/environment-marker.min.css', { name: 
 archive_chrome.file(__dirname + '/../options/options.html', { name: 'options/options.html' });
 archive_chrome.file(__dirname + '/../options/options.min.js', { name: 'options/options.min.js' });
 archive_chrome.file(__dirname + '/../options/options.min.css', { name: 'options/options.min.css' });
+archive_chrome.directory(__dirname + '/../_locales/', '_locales');
 
 //archive_chrome.directory(__dirname + '/../popup/', 'popup');
 //archive_chrome.directory(__dirname + '/../options/', 'options');
@@ -96,7 +97,6 @@ archive_chrome.file(__dirname + '/../options/options.min.css', { name: 'options/
 // finalize the archive (ie we are done appending files but streams have to finish yet)
 // 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
 archive_chrome.finalize();
-
 
 // Firefox
 // pipe archive data to the file
@@ -120,6 +120,7 @@ archive_firefox.file(__dirname + '/../popup/environment-marker.min.css', { name:
 archive_firefox.file(__dirname + '/../options/options.html', { name: 'options/options.html' });
 archive_firefox.file(__dirname + '/../options/options.min.js', { name: 'options/options.min.js' });
 archive_firefox.file(__dirname + '/../options/options.min.css', { name: 'options/options.min.css' });
+archive_firefox.directory(__dirname + '/../_locales/', '_locales');
 
 //archive_firefox.directory(__dirname + '/../popup/', 'popup');
 //archive_firefox.directory(__dirname + '/../options/', 'options');

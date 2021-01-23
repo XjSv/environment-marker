@@ -1,3 +1,13 @@
+let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker");
+let errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty");
+let errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty");
+let noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport");
+let noticeSuccessImport = browser.i18n.getMessage("noticeSuccessImport");
+let errorNoRibbonsToExport = browser.i18n.getMessage("errorNoRibbonsToExport");
+let errorChooseFile = browser.i18n.getMessage("errorChooseFile");
+let inputChooseFile = browser.i18n.getMessage("inputChooseFile");
+let buttonExport = browser.i18n.getMessage("buttonExport");
+let buttonImport = browser.i18n.getMessage("buttonImport");
 let exportFile = null;
 
 function onError(error) {
@@ -15,7 +25,7 @@ function showMessage(textMsg, errorFlag = false) {
     }
 }
 
-/* Add a setting to the display and storage */
+/* Add a setting to storage */
 function saveSettings(urlIn, colorIn, labelIn, positionIn) {
     let settingUrl = urlIn,
         settingColor = colorIn,
@@ -30,12 +40,12 @@ function saveSettings(urlIn, colorIn, labelIn, positionIn) {
                 storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
             } else {
                 // Duplicate marker error message
-                showMessage('Marker for this URL already exists!', true);
+                showMessage(errorDuplicateMarker, true);
             }
         }, onError);
     } else {
         // Empty input error message
-        settingLabel === '' ? showMessage('Enter Label !', true) : showMessage('Enter URL !', true);
+        settingLabel === '' ? showMessage(errorLabelEmpty, true) : showMessage(errorUrlEmpty, true);
     }
 }
 
@@ -88,10 +98,10 @@ function exportConfig() {
                 link.dispatchEvent(event);
                 document.body.removeChild(link);
 
-                showMessage('Export successful!');
+                showMessage(noticeSuccessExport);
             });
         } else {
-            showMessage('Nothing to export!', true);
+            showMessage(errorNoRibbonsToExport, true);
         }
     }, onError);
 }
@@ -113,16 +123,16 @@ function importConfig() {
                     saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position)
                 });
 
-                showMessage('Imported successfully!');
+                showMessage(noticeSuccessImport);
             }
 
-            $('.import-file-label').html('Choose file');
+            $('.import-file-label').html(inputChooseFile);
             importFileInput.value = '';
         });
 
         reader.readAsText(importFile); // Read the uploaded file
     } else {
-        showMessage('Choose a file!');
+        showMessage(errorChooseFile);
     }
 }
 
@@ -140,4 +150,8 @@ $(document).ready(() => {
             $('.import-file-label').html(event.target.files[0].name);
         }
     });
+
+    $('button.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
+    $('button.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
+    $('.import-file-label').html(inputChooseFile);
 });

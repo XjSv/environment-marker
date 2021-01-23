@@ -47,8 +47,8 @@ function updateContent(tabId) {
                   label: results[urlValue][1],
                   position: results[urlValue][2]
                 }).then(response => {
-                  console.log("Message from the content script:");
-                  console.log(response.response);
+                  //console.log("Message from the content script:");
+                  //console.log(response.response);
                 }).catch(onError);
               }, onError);
 

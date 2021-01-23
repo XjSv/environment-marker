@@ -1,0 +1,84 @@
+{
+  "extensionName": {
+    "message": "Environment Marker",
+    "description": "The name of the extension."
+  },
+  "extensionDescription": {
+    "message": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
+    "description":"The description of the extension."
+  },
+
+  "positionInputTopLeft": {
+    "message": "Top Left",
+    "description": "Top Left option label for the Position select field."
+  },
+  "positionInputTopRight": {
+    "message": "Top Right",
+    "description": "Top Right option label for the Position select field."
+  },
+  "positionInputBottomLeft": {
+    "message": "Bottom Left",
+    "description": "Bottom Left option label for the Position select field."
+  },
+  "positionInputBottomRight": {
+    "message": "Bottom Right",
+    "description": "Bottom Right option label for the Position select field."
+  },
+
+  "noticeNoRibbons": {
+    "message": "There are no ribbons saved",
+    "description": "No ribbons saved notice."
+  },
+
+  "errorDuplicateMarker": {
+    "message": "Marker for this URL already exists!",
+    "description": "Duplicate marker error message."
+  },
+  "errorLabelEmpty": {
+    "message": "Enter Label!",
+    "description": "Empty label error message."
+  },
+  "errorUrlEmpty": {
+    "message": "Enter URL!",
+    "description": "Empty URL error message."
+  },
+
+  "noticeSuccessExport": {
+    "message": "Export successful!",
+    "description": "Export successful notice message."
+  },
+  "noticeSuccessImport": {
+    "message": "Imported successfully!",
+    "description": "Import successful notice message."
+  },
+  "errorNoRibbonsToExport": {
+    "message": "Nothing to export!",
+    "description": "Nothing to export error message."
+  },
+  "errorChooseFile": {
+    "message": "Choose a file!",
+    "description": "Import no file selected error message."
+  },
+
+  "buttonClearAll": {
+    "message": "Clear All",
+    "description": "Clear All button label."
+  },
+  "buttonImportExport": {
+    "message": "Import / Export",
+    "description": "Import / Export button label."
+  },
+
+  "buttonExport": {
+    "message": "Export",
+    "description": "Export button label."
+  },
+  "buttonImport": {
+    "message": "Import",
+    "description": "Import button label."
+  },
+  "inputChooseFile": {
+    "message": "Choose file",
+    "description": "Choose file input label."
+  }
+}
