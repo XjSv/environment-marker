@@ -8,6 +8,19 @@
     "description":"The description of the extension."
   },
 
+  "inputUrlFragmentPlaceholder": {
+    "message": "URL fragment",
+    "description": "URL fragment input field placeholder."
+  },
+  "inputColorPlaceholder": {
+    "message": "Color",
+    "description": "Color input field placeholder."
+  },
+  "inputLabelPlaceholder": {
+    "message": "Label",
+    "description": "Label input field placeholder."
+  },
+
   "positionInputTopLeft": {
     "message": "Top Left",
     "description": "Top Left option label for the Position select field."

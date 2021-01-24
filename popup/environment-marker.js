@@ -1,3 +1,6 @@
+let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlaceholder");
+let inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder");
+let inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder");
 let positionInputTopLeft = browser.i18n.getMessage("positionInputTopLeft");
 let positionInputTopRight = browser.i18n.getMessage("positionInputTopRight");
 let positionInputBottomLeft = browser.i18n.getMessage("positionInputBottomLeft");
@@ -381,12 +384,16 @@ $(document).ready(() => {
     instance.hide();
   });
 
-  $('span.empty-notice').html(noticeNoRibbons);
-  $('button.clear').html(buttonClearAll);
-  $('button.import-export').html(buttonImportExport);
+  $('.empty-notice').html(noticeNoRibbons);
+  $('.clear').html(buttonClearAll);
+  $('.import-export').html(buttonImportExport);
 
-  $('select#position option[value="top-left"]').html(positionInputTopLeft);
-  $('select#position option[value="top-right"]').html(positionInputTopRight);
-  $('select#position option[value="bottom-left"]').html(positionInputBottomLeft);
-  $('select#position option[value="bottom-right"]').html(positionInputBottomRight);
+  $('#url').attr('placeholder', inputUrlFragmentPlaceholder);
+  $('#color').attr('placeholder', inputColorPlaceholder);
+  $('#label').attr('placeholder', inputLabelPlaceholder);
+  
+  $('#position option[value="top-left"]').html(positionInputTopLeft);
+  $('#position option[value="top-right"]').html(positionInputTopRight);
+  $('#position option[value="bottom-left"]').html(positionInputBottomLeft);
+  $('#position option[value="bottom-right"]').html(positionInputBottomRight);
 });
