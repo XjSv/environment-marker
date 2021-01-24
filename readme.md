@@ -69,6 +69,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
   - environment-marker
   
 * **Configurable Ribbon Positions** - Choose where to position the ribbon (top left, top right, bottom left, bottom right).
+* **Configurable Ribbon Sizes** - Choose one of 5 sizes (extra small, small, normal, large, extra large).
 * **Ribbon Labels** - Displays a label on the ribbon.
 * **Import/Export** - Export and import ribbon configurations.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
