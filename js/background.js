@@ -45,7 +45,8 @@ function updateContent(tabId) {
                   url: urlValue,
                   color: results[urlValue][0],
                   label: results[urlValue][1],
-                  position: results[urlValue][2]
+                  position: results[urlValue][2],
+                  size: results[urlValue][3]
                 }).then(response => {
                   //console.log("Message from the content script:");
                   //console.log(response.response);

@@ -1,10 +1,15 @@
 let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlaceholder"),
     inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder"),
     inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder"),
-    positionInputTopLeft = browser.i18n.getMessage("positionInputTopLeft"),
-    positionInputTopRight = browser.i18n.getMessage("positionInputTopRight"),
-    positionInputBottomLeft = browser.i18n.getMessage("positionInputBottomLeft"),
-    positionInputBottomRight = browser.i18n.getMessage("positionInputBottomRight"),
+    positionSelectTopLeft = browser.i18n.getMessage("positionSelectTopLeft"),
+    positionSelectTopRight = browser.i18n.getMessage("positionSelectTopRight"),
+    positionSelectBottomLeft = browser.i18n.getMessage("positionSelectBottomLeft"),
+    positionSelectBottomRight = browser.i18n.getMessage("positionSelectBottomRight"),
+    sizeSelectExtraSmall = browser.i18n.getMessage("sizeSelectExtraSmall"),
+    sizeSelectSmall = browser.i18n.getMessage("sizeSelectSmall"),
+    sizeSelectNormal = browser.i18n.getMessage("sizeSelectNormal"),
+    sizeSelectLarge = browser.i18n.getMessage("sizeSelectLarge"),
+    sizeSelectExtraLarge = browser.i18n.getMessage("sizeSelectExtraLarge"),
     noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons"),
     buttonClearAll = browser.i18n.getMessage("buttonClearAll"),
     buttonImportExport = browser.i18n.getMessage("buttonImportExport"),
@@ -30,10 +35,17 @@ let pickr = null;
 const hide = 'none';
 const show = 'block';
 const positionsMap = [
-  {value: 'top-left', label: positionInputTopLeft},
-  {value: 'top-right', label: positionInputTopRight},
-  {value: 'bottom-left', label: positionInputBottomLeft},
-  {value: 'bottom-right', label: positionInputBottomRight}
+  {value: 'top-left', label: positionSelectTopLeft},
+  {value: 'top-right', label: positionSelectTopRight},
+  {value: 'bottom-left', label: positionSelectBottomLeft},
+  {value: 'bottom-right', label: positionSelectBottomRight}
+];
+const sizesMap = [
+  {value: 'extra-small', label: sizeSelectExtraSmall},
+  {value: 'small', label: sizeSelectSmall},
+  {value: 'normal', label: sizeSelectNormal},
+  {value: 'large', label: sizeSelectLarge},
+  {value: 'extra-large', label: sizeSelectExtraLarge}
 ];
 
 function onError(error) {
@@ -52,7 +64,7 @@ function initialize() {
     let settingsUrls = Object.keys(results);
     settingsUrls.length > 0 ? showOrHideEmptyNotice(hide) : showOrHideEmptyNotice(show);
     for (let settingUrl of settingsUrls) {
-      displaySetting(settingUrl, results[settingUrl][0], results[settingUrl][1], results[settingUrl][2]);
+      displaySetting(settingUrl, results[settingUrl][0], results[settingUrl][1], results[settingUrl][2], results[settingUrl][3]);
     }
   }, onError);
 }
@@ -84,7 +96,8 @@ function saveSettings() {
   let settingUrl = $('.settings-input #url').val(),
       settingColor = pickr.getSelectedColor().toHEXA().toString(0),
       settingLabel = $('.settings-input #label').val(),
-      settingPosition = $('.settings-input #position').val();
+      settingPosition = $('.settings-input #position').val(),
+      settingSize = $('.settings-input #size').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
     browser.storage.local.get(settingUrl).then((result) => {
@@ -98,8 +111,9 @@ function saveSettings() {
         $('.settings-input #url').val('');
         $('.settings-input #label').val('');
         $('.settings-input #position').val('top-left');
+        $('.settings-input #size').val('normal');
 
-        storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
+        storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
       } else {
         // Duplicate marker error message
         showMessage(errorDuplicateMarker);
@@ -112,15 +126,15 @@ function saveSettings() {
 }
 
 /* Store a new setting in local storage */
-function storeSetting(settingUrl, settingColor, settingLabel, settingPosition) {
-  browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
+function storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+  browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition, settingSize] }).then(() => {
     showOrHideEmptyNotice(hide);
-    displaySetting(settingUrl, settingColor, settingLabel, settingPosition);
+    displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
   }, onError);
 }
 
 /* Display a setting in the setting box */
-function displaySetting(settingUrl, settingColor, settingLabel, settingPosition) {
+function displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
   let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
     if (currentValue.value == settingPosition) {
       accumulator = currentValue.label;
@@ -186,6 +200,53 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
     value: settingColor
   });
 
+  let editLabelInputContainer = $( "<div/>", {
+    "class": "col-5 pr-2 edit-label-container"
+  });
+
+  let editLabelInput = $( "<input/>", {
+    "class": "form-control edit-label",
+    value: settingLabel
+  });
+
+  let optionsSelectPositionContainer = $( "<div/>", {
+    "class": "col-3 pr-2 edit-position-container"
+  });
+
+  let optionsSelectPosition = $( "<select/>", {
+    "class": "form-control edit-position"
+  });
+
+  for (let i = 0; i < positionsMap.length; i++) {
+    if (positionsMap[i].value === settingPosition) {
+      optionsSelectPosition.append(new Option(positionsMap[i].label, positionsMap[i].value, true, true));
+    } else {
+      optionsSelectPosition.append(new Option(positionsMap[i].label, positionsMap[i].value));
+    }
+  }
+
+  let optionsSelectSizeContainer = $( "<div/>", {
+    "class": "col-3 pr-2 edit-size-container"
+  });
+
+  let optionsSelectSize = $( "<select/>", {
+    "class": "form-control edit-size"
+  });
+
+  for (let i = 0; i < sizesMap.length; i++) {
+    // For backwards compatibility for users that already have ribbons configured.
+    // @TODO: Remove sometime in the future
+    if (settingSize === undefined) {
+      settingSize = 'normal'
+    }
+
+    if (sizesMap[i].value === settingSize) {
+      optionsSelectSize.append(new Option(sizesMap[i].label, sizesMap[i].value, true, true));
+    } else {
+      optionsSelectSize.append(new Option(sizesMap[i].label, sizesMap[i].value));
+    }
+  }
+
   let updateBtnContainer = $( "<div/>", {
     "class": "col-1 mb-2 edit-delete"
   });
@@ -194,42 +255,22 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
     "class": "btn btn-success btn-sm update",
     html: '<i class="fas fa-pencil-alt fa-lg"></i>',
     click: function() {
-      let urlEditVal = editUrlInput.val();
-      let colorEditVal = editColorInput.val();
-      let labelEditVal = editLabelInput.val();
-      let positionEditVal = optionsSelect.val();
+      let urlEditVal = editUrlInput.val(),
+          colorEditVal = editColorInput.val(),
+          labelEditVal = editLabelInput.val(),
+          positionEditVal = optionsSelectPosition.val(),
+          sizeEditVal = optionsSelectSize.val();
 
-      if (urlEditVal !== settingUrl || colorEditVal !== settingColor || labelEditVal !== settingLabel || positionEditVal !== settingPosition) {
-        updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal);
+      if (urlEditVal !== settingUrl ||
+          colorEditVal !== settingColor ||
+          labelEditVal !== settingLabel ||
+          positionEditVal !== settingPosition ||
+          sizeEditVal !== settingSize) {
+        updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal);
         innerSettingsContainer.remove();
       }
     }
   });
-
-  let editLabelInputContainer = $( "<div/>", {
-    "class": "col-6 pr-2 edit-label-container"
-  });
-
-  let editLabelInput = $( "<input/>", {
-    "class": "form-control edit-label",
-    value: settingLabel
-  });
-
-  let optionsSelectContainer = $( "<div/>", {
-    "class": "col-5 pr-2 edit-position-container"
-  });
-
-  let optionsSelect = $( "<select/>", {
-    "class": "form-control edit-position"
-  });
-
-  for (let i = 0; i < positionsMap.length; i++) {
-    if (positionsMap[i].value === settingPosition) {
-      optionsSelect.append(new Option(positionsMap[i].label, positionsMap[i].value, true, true));
-    } else {
-      optionsSelect.append(new Option(positionsMap[i].label, positionsMap[i].value));
-    }
-  }
 
   let cancelBtnContainer = $( "<div/>", {
     "class": "col-1 edit-cancel"
@@ -244,13 +285,15 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
       editUrlInput.val(settingUrl);
       editColorInput.val(settingColor);
       editLabelInput.val(settingLabel);
-      optionsSelect.val(settingPosition);
+      optionsSelectPosition.val(settingPosition);
+      optionsSelectSize.val(settingSize);
     }
   });
 
   editUrlInputContainer.append(editUrlInput);
   editColorInputContainer.append(editColorInput);
-  optionsSelectContainer.append(optionsSelect);
+  optionsSelectPositionContainer.append(optionsSelectPosition);
+  optionsSelectSizeContainer.append(optionsSelectSize);
   updateBtnContainer.append(updateBtn);
   editLabelInputContainer.append(editLabelInput);
   cancelBtnContainer.append(cancelBtn);
@@ -259,7 +302,8 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
   editContainer.append(editColorInputContainer);
   editContainer.append(updateBtnContainer);
   editContainer.append(editLabelInputContainer);
-  editContainer.append(optionsSelectContainer);
+  editContainer.append(optionsSelectPositionContainer);
+  editContainer.append(optionsSelectSizeContainer);
   editContainer.append(cancelBtnContainer);
 
   deleteBtnContainer.append(deleteBtn);
@@ -327,16 +371,16 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
 }
 
 /* Update settings */
-function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition) {
-  browser.storage.local.set({ [newSettingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
+function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+  browser.storage.local.set({ [newSettingUrl] : [settingColor, settingLabel, settingPosition, settingSize] }).then(() => {
     if (settingUrl !== newSettingUrl) {
       // Changed URL
       browser.storage.local.remove(settingUrl).then(() => {
-        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition);
+        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize);
       }, onError);
     } else {
       // Change settings
-      displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition);
+      displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize);
     }
   }, onError);
 }
@@ -439,8 +483,14 @@ $(document).ready(() => {
   $('#color').attr('placeholder', inputColorPlaceholder);
   $('#label').attr('placeholder', inputLabelPlaceholder);
 
-  $('#position option[value="top-left"]').html(positionInputTopLeft);
-  $('#position option[value="top-right"]').html(positionInputTopRight);
-  $('#position option[value="bottom-left"]').html(positionInputBottomLeft);
-  $('#position option[value="bottom-right"]').html(positionInputBottomRight);
+  $('#position option[value="top-left"]').html(positionSelectTopLeft);
+  $('#position option[value="top-right"]').html(positionSelectTopRight);
+  $('#position option[value="bottom-left"]').html(positionSelectBottomLeft);
+  $('#position option[value="bottom-right"]').html(positionSelectBottomRight);
+
+  $('#size option[value="extra-small"]').html(sizeSelectExtraSmall);
+  $('#size option[value="small"]').html(sizeSelectSmall);
+  $('#size option[value="normal"]').html(sizeSelectNormal);
+  $('#size option[value="large"]').html(sizeSelectLarge);
+  $('#size option[value="extra-large"]').html(sizeSelectExtraLarge);
 });

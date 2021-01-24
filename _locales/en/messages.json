@@ -21,21 +21,42 @@
     "description": "Label input field placeholder."
   },
 
-  "positionInputTopLeft": {
+  "positionSelectTopLeft": {
     "message": "Top Left",
     "description": "Top Left option label for the Position select field."
   },
-  "positionInputTopRight": {
+  "positionSelectTopRight": {
     "message": "Top Right",
     "description": "Top Right option label for the Position select field."
   },
-  "positionInputBottomLeft": {
+  "positionSelectBottomLeft": {
     "message": "Bottom Left",
     "description": "Bottom Left option label for the Position select field."
   },
-  "positionInputBottomRight": {
+  "positionSelectBottomRight": {
     "message": "Bottom Right",
     "description": "Bottom Right option label for the Position select field."
+  },
+
+  "sizeSelectExtraSmall": {
+    "message": "Extra Small",
+    "description": "Extra Small option label for the Size select field."
+  },
+  "sizeSelectSmall": {
+    "message": "Small",
+    "description": "Small option label for the Size select field."
+  },
+  "sizeSelectNormal": {
+    "message": "Normal",
+    "description": "Normal option label for the Size select field."
+  },
+  "sizeSelectLarge": {
+    "message": "Large",
+    "description": "Large option label for the Size select field."
+  },
+  "sizeSelectExtraLarge": {
+    "message": "Extra Large",
+    "description": "Extra Large option label for the Size select field."
   },
 
   "noticeNoRibbons": {
