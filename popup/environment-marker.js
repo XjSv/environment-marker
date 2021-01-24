@@ -136,7 +136,14 @@ function storeSetting(settingUrl, settingColor, settingLabel, settingPosition, s
 /* Display a setting in the setting box */
 function displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
   let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
-    if (currentValue.value == settingPosition) {
+    if (currentValue.value === settingPosition) {
+      accumulator = currentValue.label;
+    }
+    return accumulator;
+  }, {});
+
+  let settingSizeDisplay = sizesMap.reduce(function(accumulator, currentValue) {
+    if (currentValue.value === settingSize) {
       accumulator = currentValue.label;
     }
     return accumulator;
@@ -147,7 +154,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
 
   let displayLabelUrl = $( "<div/>", {
     "class": "col-10 pr-2 display-labelUrl",
-    text: truncateString(settingLabel, 35) + ' (' + truncateString(settingUrl, 35) + ') at ' + settingPositionDisplay,
+    text: truncateString(settingLabel, 35) + ' (' + truncateString(settingUrl, 35) + ') ' + settingSizeDisplay + ' at ' + settingPositionDisplay,
     click: function() {
       displayContainer.hide();
       editContainer.show();

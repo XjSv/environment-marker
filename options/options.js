@@ -52,7 +52,7 @@ function saveSettings(urlIn, colorIn, labelIn, positionIn, sizeIn) {
 
 /* Store a new setting in local storage */
 function storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
-    browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingSize] }).then(() => {
+    browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition, settingSize] }).then(() => {
         // Success
     }, onError);
 }
@@ -122,7 +122,7 @@ function importConfig() {
 
             if (import_config_obj.length > 0) {
                 import_config_obj.forEach(function(arrayItem) {
-                    saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position, arrayItem.size)
+                    saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position, arrayItem.size);
                 });
 
                 showMessage(noticeSuccessImport);
