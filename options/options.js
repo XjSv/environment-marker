@@ -26,18 +26,19 @@ function showMessage(textMsg, errorFlag = false) {
 }
 
 /* Add a setting to storage */
-function saveSettings(urlIn, colorIn, labelIn, positionIn) {
+function saveSettings(urlIn, colorIn, labelIn, positionIn, sizeIn) {
     let settingUrl = urlIn,
         settingColor = colorIn,
         settingLabel = labelIn,
-        settingPosition =  positionIn;
+        settingPosition = positionIn,
+        settingSize = sizeIn;
 
     if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
         browser.storage.local.get(settingUrl).then((result) => {
             let objTest = Object.keys(result);
 
             if (objTest.length < 1) {
-                storeSetting(settingUrl, settingColor, settingLabel, settingPosition);
+                storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
             } else {
                 // Duplicate marker error message
                 showMessage(errorDuplicateMarker, true);
@@ -50,8 +51,8 @@ function saveSettings(urlIn, colorIn, labelIn, positionIn) {
 }
 
 /* Store a new setting in local storage */
-function storeSetting(settingUrl, settingColor, settingLabel, settingPosition) {
-    browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition] }).then(() => {
+function storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+    browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingSize] }).then(() => {
         // Success
     }, onError);
 }
@@ -82,7 +83,8 @@ function exportConfig() {
                     "url" : settingUrl,
                     "color" : results[settingUrl][0],
                     "label" : results[settingUrl][1],
-                    "position" : results[settingUrl][2]
+                    "position" : results[settingUrl][2],
+                    "size" : results[settingUrl][3]
                 });
             }
 
@@ -120,7 +122,7 @@ function importConfig() {
 
             if (import_config_obj.length > 0) {
                 import_config_obj.forEach(function(arrayItem) {
-                    saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position)
+                    saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position, arrayItem.size)
                 });
 
                 showMessage(noticeSuccessImport);
@@ -151,7 +153,7 @@ $(document).ready(() => {
         }
     });
 
-    $('button.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
-    $('button.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
+    $('.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
+    $('.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
     $('.import-file-label').html(inputChooseFile);
 });
