@@ -93,5 +93,62 @@
   "inputChooseFile": {
     "message": "Choose file",
     "description": "Choose file input label."
+  },
+
+  "colorPickerUiDialog": {
+    "message": "color picker dialog",
+    "description": "Color picker's dialog label."
+  },
+  "colorPickerBtnToggle": {
+    "message": "toggle color picker dialog",
+    "description": "Color picker's 'toggle color picker dialog' button label."
+  },
+  "colorPickerBtnSwatch": {
+    "message": "color swatch",
+    "description": "Color picker's 'color swatch' button label."
+  },
+  "colorPickerBtnLastColor": {
+    "message": "use previous color",
+    "description": "Color picker's 'use previous color' button label."
+  },
+  "colorPickerBtnSave": {
+    "message": "Save",
+    "description": "Color picker's Save button label."
+  },
+  "colorPickerBtnCancel": {
+    "message": "Cancel",
+    "description": "Color picker's Cancel button label."
+  },
+  "colorPickerBtnClear": {
+    "message": "Clear",
+    "description": "Color picker's Clear button label."
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "save and close",
+    "description": "Color picker's save and close aria label."
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "cancel and close",
+    "description": "Color picker's cancel and close aria label."
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "clear and close",
+    "description": "Color picker's clear and close aria label."
+  },
+  "colorPickerAriaInput": {
+    "message": "color input field",
+    "description": "Color picker's Input aria label."
+  },
+  "colorPickerAriaPalette": {
+    "message": "color selection area",
+    "description": "Color picker's Palette aria label."
+  },
+  "colorPickerAriaHue": {
+    "message": "hue selection slider",
+    "description": "Color picker's Hue aria label."
+  },
+  "colorPickerAriaOpacity": {
+    "message": "selection slider",
+    "description": "Color picker's Opacity aria label."
   }
 }

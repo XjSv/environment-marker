@@ -1,16 +1,31 @@
-let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlaceholder");
-let inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder");
-let inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder");
-let positionInputTopLeft = browser.i18n.getMessage("positionInputTopLeft");
-let positionInputTopRight = browser.i18n.getMessage("positionInputTopRight");
-let positionInputBottomLeft = browser.i18n.getMessage("positionInputBottomLeft");
-let positionInputBottomRight = browser.i18n.getMessage("positionInputBottomRight");
-let noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons");
-let buttonClearAll = browser.i18n.getMessage("buttonClearAll");
-let buttonImportExport = browser.i18n.getMessage("buttonImportExport");
-let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker");
-let errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty");
-let errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty");
+let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlaceholder"),
+    inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder"),
+    inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder"),
+    positionInputTopLeft = browser.i18n.getMessage("positionInputTopLeft"),
+    positionInputTopRight = browser.i18n.getMessage("positionInputTopRight"),
+    positionInputBottomLeft = browser.i18n.getMessage("positionInputBottomLeft"),
+    positionInputBottomRight = browser.i18n.getMessage("positionInputBottomRight"),
+    noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons"),
+    buttonClearAll = browser.i18n.getMessage("buttonClearAll"),
+    buttonImportExport = browser.i18n.getMessage("buttonImportExport"),
+    errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
+    errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty"),
+    errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty"),
+    colorPickerUiDialog = browser.i18n.getMessage("colorPickerUiDialog"),
+    colorPickerBtnToggle = browser.i18n.getMessage("colorPickerBtnToggle"),
+    colorPickerBtnSwatch = browser.i18n.getMessage("colorPickerBtnSwatch"),
+    colorPickerBtnLastColor = browser.i18n.getMessage("colorPickerBtnLastColor"),
+    colorPickerBtnSave = browser.i18n.getMessage("colorPickerBtnSave"),
+    colorPickerBtnCancel = browser.i18n.getMessage("colorPickerBtnCancel"),
+    colorPickerBtnClear = browser.i18n.getMessage("colorPickerBtnClear"),
+    colorPickerAriaBtnSave = browser.i18n.getMessage("colorPickerAriaBtnSave"),
+    colorPickerAriaBtnCancel = browser.i18n.getMessage("colorPickerAriaBtnCancel"),
+    colorPickerAriaBtnClear = browser.i18n.getMessage("colorPickerAriaBtnClear"),
+    colorPickerAriaInput = browser.i18n.getMessage("colorPickerAriaInput"),
+    colorPickerAriaPalette = browser.i18n.getMessage("colorPickerAriaPalette"),
+    colorPickerAriaHue = browser.i18n.getMessage("colorPickerAriaHue"),
+    colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity");
+
 let pickr = null;
 const hide = 'none';
 const show = 'block';
@@ -286,6 +301,22 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition)
         clear: false,
         save: true
       }
+    },
+    i18n: {
+      'ui:dialog': colorPickerUiDialog,
+      'btn:toggle': colorPickerBtnToggle,
+      'btn:swatch': colorPickerBtnSwatch,
+      'btn:last-color': colorPickerBtnLastColor,
+      'btn:save': colorPickerBtnSave,
+      'btn:cancel': colorPickerBtnCancel,
+      'btn:clear': colorPickerBtnClear,
+      'aria:btn:save': colorPickerAriaBtnSave,
+      'aria:btn:cancel': colorPickerAriaBtnCancel,
+      'aria:btn:clear': colorPickerAriaBtnClear,
+      'aria:input': colorPickerAriaInput,
+      'aria:palette': colorPickerAriaPalette,
+      'aria:hue': colorPickerAriaHue,
+      'aria:opacity': colorPickerAriaOpacity
     }
   });
 
@@ -376,6 +407,22 @@ $(document).ready(() => {
         clear: false,
         save: true
       }
+    },
+    i18n: {
+      'ui:dialog': colorPickerUiDialog,
+      'btn:toggle': colorPickerBtnToggle,
+      'btn:swatch': colorPickerBtnSwatch,
+      'btn:last-color': colorPickerBtnLastColor,
+      'btn:save': colorPickerBtnSave,
+      'btn:cancel': colorPickerBtnCancel,
+      'btn:clear': colorPickerBtnClear,
+      'aria:btn:save': colorPickerAriaBtnSave,
+      'aria:btn:cancel': colorPickerAriaBtnCancel,
+      'aria:btn:clear': colorPickerAriaBtnClear,
+      'aria:input': colorPickerAriaInput,
+      'aria:palette': colorPickerAriaPalette,
+      'aria:hue': colorPickerAriaHue,
+      'aria:opacity': colorPickerAriaOpacity
     }
   });
 
@@ -391,7 +438,7 @@ $(document).ready(() => {
   $('#url').attr('placeholder', inputUrlFragmentPlaceholder);
   $('#color').attr('placeholder', inputColorPlaceholder);
   $('#label').attr('placeholder', inputLabelPlaceholder);
-  
+
   $('#position option[value="top-left"]').html(positionInputTopLeft);
   $('#position option[value="top-right"]').html(positionInputTopRight);
   $('#position option[value="bottom-left"]').html(positionInputBottomLeft);
