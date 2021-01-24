@@ -59,6 +59,11 @@
     "description": "Extra Large option label for the Size select field."
   },
 
+  "displayAt": {
+    "message": "at",
+    "description": "Word used to indicate the position of the ribbon."
+  },
+
   "noticeNoRibbons": {
     "message": "There are no ribbons saved",
     "description": "No ribbons saved notice."

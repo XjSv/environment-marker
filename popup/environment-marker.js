@@ -29,7 +29,8 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     colorPickerAriaInput = browser.i18n.getMessage("colorPickerAriaInput"),
     colorPickerAriaPalette = browser.i18n.getMessage("colorPickerAriaPalette"),
     colorPickerAriaHue = browser.i18n.getMessage("colorPickerAriaHue"),
-    colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity");
+    colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity"),
+    displayAt = browser.i18n.getMessage("displayAt");
 
 let pickr = null;
 const hide = 'none';
@@ -154,7 +155,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
 
   let displayLabelUrl = $( "<div/>", {
     "class": "col-10 pr-2 display-labelUrl",
-    text: truncateString(settingLabel, 35) + ' (' + truncateString(settingUrl, 35) + ') ' + settingSizeDisplay + ' at ' + settingPositionDisplay,
+    text: truncateString(settingLabel, 35) + ' (' + truncateString(settingUrl, 35) + ') ' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay,
     click: function() {
       displayContainer.hide();
       editContainer.show();
