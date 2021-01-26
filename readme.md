@@ -72,6 +72,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * **Configurable Ribbon Sizes** - Choose one of 5 sizes (extra small, small, normal, large, extra large).
 * **Ribbon Labels** - Displays a label on the ribbon.
 * **Import/Export** - Export and import ribbon configurations.
+* **Multilingual Support** - Currently supports English, Spanish, German & French.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
 
 ### Built With
