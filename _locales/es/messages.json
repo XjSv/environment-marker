@@ -1,0 +1,128 @@
+{
+  "extensionName": {
+    "message": "Environment Marker"
+  },
+  "extensionDescription": {
+    "message": "Un navegador WebExtension que agrega un marcador de color (cinta) a la página dependiendo de si la URL contiene una cadena determinada."
+  },
+  "inputUrlFragmentPlaceholder": {
+    "message": "Fragmento de URL"
+  },
+  "inputColorPlaceholder": {
+    "message": "Color"
+  },
+  "inputLabelPlaceholder": {
+    "message": "Etiqueta"
+  },
+  "positionSelectTopLeft": {
+    "message": "Superior Izquierdo"
+  },
+  "positionSelectTopRight": {
+    "message": "Superior Derecha"
+  },
+  "positionSelectBottomLeft": {
+    "message": "Inferior Izquierda"
+  },
+  "positionSelectBottomRight": {
+    "message": "Inferior Derecha"
+  },
+  "sizeSelectExtraSmall": {
+    "message": "Extra Pequeña"
+  },
+  "sizeSelectSmall": {
+    "message": "Pequeño"
+  },
+  "sizeSelectNormal": {
+    "message": "Normal"
+  },
+  "sizeSelectLarge": {
+    "message": "Grande"
+  },
+  "sizeSelectExtraLarge": {
+    "message": "Extra Grande"
+  },
+  "displayAt": {
+    "message": "a la"
+  },
+  "noticeNoRibbons": {
+    "message": "No hay cintas guardadas"
+  },
+  "errorDuplicateMarker": {
+    "message": "Marcador para esta URL ya existe!"
+  },
+  "errorLabelEmpty": {
+    "message": "Escriba Etiqueta!"
+  },
+  "errorUrlEmpty": {
+    "message": "Escriba URL!"
+  },
+  "noticeSuccessExport": {
+    "message": "Exportación correcta!"
+  },
+  "noticeSuccessImport": {
+    "message": "Importado correctamente!"
+  },
+  "errorNoRibbonsToExport": {
+    "message": "Nada que exportar!"
+  },
+  "errorChooseFile": {
+    "message": "Elige un archivo!"
+  },
+  "buttonClearAll": {
+    "message": "Borrar Todo"
+  },
+  "buttonImportExport": {
+    "message": "Importar / Exportar"
+  },
+  "buttonExport": {
+    "message": "Exportar"
+  },
+  "buttonImport": {
+    "message": "Importar"
+  },
+  "inputChooseFile": {
+    "message": "Elegir archivo"
+  },
+  "colorPickerUiDialog": {
+    "message": "diálogo selector de color"
+  },
+  "colorPickerBtnToggle": {
+    "message": "alternancia diálogo del selector de color"
+  },
+  "colorPickerBtnSwatch": {
+    "message": "muestrario de colores"
+  },
+  "colorPickerBtnLastColor": {
+    "message": "usar el color anterior"
+  },
+  "colorPickerBtnSave": {
+    "message": "Guardar"
+  },
+  "colorPickerBtnCancel": {
+    "message": "Cancelar"
+  },
+  "colorPickerBtnClear": {
+    "message": "Borrar"
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "guardar y cerrar"
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "cancelar y cerrar"
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "borrar y cerrar"
+  },
+  "colorPickerAriaInput": {
+    "message": "campo de entrada de color"
+  },
+  "colorPickerAriaPalette": {
+    "message": "área de selección de color"
+  },
+  "colorPickerAriaHue": {
+    "message": "control deslizante de selección de matiz"
+  },
+  "colorPickerAriaOpacity": {
+    "message": "control deslizante de selección"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "extensionName": {
+    "message": "Environment Marker"
+  },
+  "extensionDescription": {
+    "message": "Un navigateur WebExtension qui ajoute un marqueur de couleur (ruban) à la page selon que l'URL contient une chaîne donnée."
+  },
+  "inputUrlFragmentPlaceholder": {
+    "message": "Fragment d’URL"
+  },
+  "inputColorPlaceholder": {
+    "message": "Couleur"
+  },
+  "inputLabelPlaceholder": {
+    "message": "Étiquette"
+  },
+  "positionSelectTopLeft": {
+    "message": "En Haut à Gauche"
+  },
+  "positionSelectTopRight": {
+    "message": "En Haut à Droite"
+  },
+  "positionSelectBottomLeft": {
+    "message": "En Bas à Gauche"
+  },
+  "positionSelectBottomRight": {
+    "message": "En Bas à Droite"
+  },
+  "sizeSelectExtraSmall": {
+    "message": "Très Petit"
+  },
+  "sizeSelectSmall": {
+    "message": "Petit"
+  },
+  "sizeSelectNormal": {
+    "message": "Normal"
+  },
+  "sizeSelectLarge": {
+    "message": "Grand"
+  },
+  "sizeSelectExtraLarge": {
+    "message": "Très Grande"
+  },
+  "displayAt": {
+    "message": "à"
+  },
+  "noticeNoRibbons": {
+    "message": "Il n'y a pas de rubans enregistrés"
+  },
+  "errorDuplicateMarker": {
+    "message": "Le marqueur pour cette URL existe déjà!"
+  },
+  "errorLabelEmpty": {
+    "message": "Entrez l'Étiquette!"
+  },
+  "errorUrlEmpty": {
+    "message": "Entrez l'URL!"
+  },
+  "noticeSuccessExport": {
+    "message": "Exportation terminée!"
+  },
+  "noticeSuccessImport": {
+    "message": "Importation effectuée!"
+  },
+  "errorNoRibbonsToExport": {
+    "message": "Rien à exporter!"
+  },
+  "errorChooseFile": {
+    "message": "Choisir un fichier!"
+  },
+  "buttonClearAll": {
+    "message": "Effacer Tout"
+  },
+  "buttonImportExport": {
+    "message": "Importer / Exporter"
+  },
+  "buttonExport": {
+    "message": "Exporter"
+  },
+  "buttonImport": {
+    "message": "Importer"
+  },
+  "inputChooseFile": {
+    "message": "Choisir un fichier"
+  },
+  "colorPickerUiDialog": {
+    "message": "boîte de dialogue de sélection de couleurs"
+  },
+  "colorPickerBtnToggle": {
+    "message": "basculer la boîte de dialogue du sélecteur de couleurs"
+  },
+  "colorPickerBtnSwatch": {
+    "message": "échantillon de couleurs"
+  },
+  "colorPickerBtnLastColor": {
+    "message": "utiliser la couleur précédente"
+  },
+  "colorPickerBtnSave": {
+    "message": "Enregistrer"
+  },
+  "colorPickerBtnCancel": {
+    "message": "Annuler"
+  },
+  "colorPickerBtnClear": {
+    "message": "Effacer"
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "enregistrer et fermer"
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "annuler et fermer"
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "effacer et fermer"
+  },
+  "colorPickerAriaInput": {
+    "message": "champ d'entrée de couleur"
+  },
+  "colorPickerAriaPalette": {
+    "message": "zone de sélection de couleur"
+  },
+  "colorPickerAriaHue": {
+    "message": "curseur de sélection de teinte"
+  },
+  "colorPickerAriaOpacity": {
+    "message": "curseur de sélection"
+  }
+}

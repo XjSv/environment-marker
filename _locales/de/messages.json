@@ -1,0 +1,128 @@
+{
+  "extensionName": {
+    "message": "Environment Marker"
+  },
+  "extensionDescription": {
+    "message": "Eine Browser-WebExtension, die der Seite eine Farbmarkierung (Multifunktionsleiste) hinzufügt, je nachdem, ob die URL eine bestimmte Zeichenfolge enthält."
+  },
+  "inputUrlFragmentPlaceholder": {
+    "message": "URL-Fragment"
+  },
+  "inputColorPlaceholder": {
+    "message": "Farbe"
+  },
+  "inputLabelPlaceholder": {
+    "message": "Beschriftung"
+  },
+  "positionSelectTopLeft": {
+    "message": "Oben Links"
+  },
+  "positionSelectTopRight": {
+    "message": "Oben Rechts"
+  },
+  "positionSelectBottomLeft": {
+    "message": "Unten Links"
+  },
+  "positionSelectBottomRight": {
+    "message": "Unten Rechts"
+  },
+  "sizeSelectExtraSmall": {
+    "message": "Sehr Klein"
+  },
+  "sizeSelectSmall": {
+    "message": "Klein"
+  },
+  "sizeSelectNormal": {
+    "message": "Normal"
+  },
+  "sizeSelectLarge": {
+    "message": "Groß"
+  },
+  "sizeSelectExtraLarge": {
+    "message": "Sehr Groß"
+  },
+  "displayAt": {
+    "message": "um"
+  },
+  "noticeNoRibbons": {
+    "message": "Es sind keine Bänder gespeichert"
+  },
+  "errorDuplicateMarker": {
+    "message": "Marker für diese URL existiert bereits!"
+  },
+  "errorLabelEmpty": {
+    "message": "Beschriftung Eingeben!"
+  },
+  "errorUrlEmpty": {
+    "message": "URL Eingeben!"
+  },
+  "noticeSuccessExport": {
+    "message": "Export erfolgreich!"
+  },
+  "noticeSuccessImport": {
+    "message": "Erfolgreich importiert!"
+  },
+  "errorNoRibbonsToExport": {
+    "message": "Nichts zu exportieren!"
+  },
+  "errorChooseFile": {
+    "message": "Datei auswählen!"
+  },
+  "buttonClearAll": {
+    "message": "Alles Löschen"
+  },
+  "buttonImportExport": {
+    "message": "Importieren / Exportieren"
+  },
+  "buttonExport": {
+    "message": "Exportieren"
+  },
+  "buttonImport": {
+    "message": "Importieren"
+  },
+  "inputChooseFile": {
+    "message": "Datei auswählen"
+  },
+  "colorPickerUiDialog": {
+    "message": "dialogfeld für die farbauswahl"
+  },
+  "colorPickerBtnToggle": {
+    "message": "dialogfeld für die farbauswahl umschalten"
+  },
+  "colorPickerBtnSwatch": {
+    "message": "farbmuster"
+  },
+  "colorPickerBtnLastColor": {
+    "message": "verwenden sie die vorherige farbe"
+  },
+  "colorPickerBtnSave": {
+    "message": "Speichern"
+  },
+  "colorPickerBtnCancel": {
+    "message": "Abbrechen"
+  },
+  "colorPickerBtnClear": {
+    "message": "Löschen"
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "speichern und schließen"
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "abbrechen und schließen"
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "löschen und schließen"
+  },
+  "colorPickerAriaInput": {
+    "message": "farbeingabefeld"
+  },
+  "colorPickerAriaPalette": {
+    "message": "farbauswahlbereich"
+  },
+  "colorPickerAriaHue": {
+    "message": "schieberegler für die farbtonauswahl"
+  },
+  "colorPickerAriaOpacity": {
+    "message": "auswahlregler"
+  }
+}
