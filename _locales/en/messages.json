@@ -82,6 +82,19 @@
     "description": "Empty URL error message."
   },
 
+  "errorImportLabelEmpty": {
+    "message": "Missing label value in import file.",
+    "description": "Error message when the label field is empty in the import file."
+  },
+  "errorImportUrlEmpty": {
+    "message": "Missing URL value in import file.",
+    "description": "Error message when the URL field is empty in the import file."
+  },
+  "errorImportColorEmpty": {
+    "message": "Missing color value in import file.",
+    "description": "Error message when the color field is empty in the import file."
+  },
+
   "noticeSuccessExport": {
     "message": "Export successful!",
     "description": "Export successful notice message."
@@ -119,6 +132,10 @@
   "inputChooseFile": {
     "message": "Choose file",
     "description": "Choose file input label."
+  },
+  "importWarning": {
+    "message": "Warning: Importing ribbons will override everything!",
+    "description": "Warning message when importing ribbons."
   },
 
   "colorPickerUiDialog": {

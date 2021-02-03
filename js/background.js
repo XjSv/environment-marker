@@ -1,6 +1,7 @@
 const TAB_COUNT_COLOR_LIMIT = 10;
 const TAB_COUNT_COLOR_LOW = '#28a745';
 const TAB_COUNT_COLOR_HIGH ='#dc3545';
+const markersKey = '__em-markers__';
 
 /* generic error handler */
 function onError(error) {
@@ -31,32 +32,30 @@ function updateContent(tabId) {
   if (tabId !== undefined) {
     browser.tabs.get(tabId).then((tab) => {
       if (tab.url !== '') {
-        browser.storage.local.get(null).then((results) => {
-          let settingsKeys = Object.keys(results);
-          for (let urlValue of settingsKeys) {
-            if (tab.url.indexOf(urlValue) !== -1) {
+        browser.storage.local.get(markersKey).then((storedArray) => {
+          if (storedArray[markersKey]) {
+            for (let storedObject of storedArray[markersKey]) {
+              if (tab.url.indexOf(storedObject.settingUrl) !== -1) {
+                browser.tabs.executeScript(tabId, {
+                  file: '/js/content.min.js'
+                }).then(() => {
+                  browser.tabs.sendMessage(tabId, {
+                    command: 'addRibbon',
+                    url: storedObject.settingUrl,
+                    color: storedObject.settingColor,
+                    label: storedObject.settingLabel,
+                    position: storedObject.settingPosition,
+                    size: storedObject.settingSize
+                  }).then(response => {
+                    //console.log("Message from the content script:");
+                    //console.log(response.response);
+                  }).catch(onError);
+                }, onError);
 
-              browser.tabs.executeScript(tabId, {
-                file: '/js/content.min.js'
-              }).then(() => {
-
-                browser.tabs.sendMessage(tabId, {
-                  command: 'addRibbon',
-                  url: urlValue,
-                  color: results[urlValue][0],
-                  label: results[urlValue][1],
-                  position: results[urlValue][2],
-                  size: results[urlValue][3]
-                }).then(response => {
-                  //console.log("Message from the content script:");
-                  //console.log(response.response);
-                }).catch(onError);
-              }, onError);
-
-              browser.tabs.insertCSS(tabId, {
-                file: '/css/content.min.css'
-              }).then(null, onError);
-
+                browser.tabs.insertCSS(tabId, {
+                  file: '/css/content.min.css'
+                }).then(null, onError);
+              }
             }
           }
         }, onError);

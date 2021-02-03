@@ -32,7 +32,19 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity"),
     displayAt = browser.i18n.getMessage("displayAt");
 
-let pickr = null;
+let pickr = null,
+    colorSwatches = [
+      'rgba(244, 67,  54, 1)',
+      'rgba(233, 30,  99, 1)',
+      'rgba(156, 39, 176, 1)',
+      'rgba(103, 58, 183, 1)',
+      'rgba(63,  81, 181, 1)',
+      'rgba(33, 150, 243, 1)',
+      'rgba(3,  169, 244, 1)'
+    ];
+const swatchesKey = '__em-swatches__';
+const markersKey = '__em-markers__';
+const maxSwatches = 7;
 const hide = 'none';
 const show = 'block';
 const positionsMap = [
@@ -49,6 +61,21 @@ const sizesMap = [
   {value: 'extra-large', label: sizeSelectExtraLarge}
 ];
 
+Pickr.prototype.getSwatches = function() {
+  return this._swatchColors.reduce((arr, swatch) => {
+    arr.push(swatch.color.toRGBA().toString(0));
+    return arr
+  }, []);
+}
+
+Pickr.prototype.setSwatches = function(swatches) {
+  if (!swatches.length) return;
+  for (let i = this._swatchColors.length - 1; i > -1; i--) {
+    this.removeSwatch(i);
+  }
+  swatches.forEach(swatch => this.addSwatch(swatch));
+}
+
 function onError(error) {
   console.log(error);
 }
@@ -61,27 +88,40 @@ function truncateString(str, num) {
 }
 
 function initialize() {
-  browser.storage.local.get(null).then((results) => {
-    let settingsUrls = Object.keys(results);
-    settingsUrls.length > 0 ? showOrHideEmptyNotice(hide) : showOrHideEmptyNotice(show);
-    for (let settingUrl of settingsUrls) {
-      displaySetting(settingUrl, results[settingUrl][0], results[settingUrl][1], results[settingUrl][2], results[settingUrl][3]);
+  browser.storage.local.get(markersKey).then((storedResults) => {
+    let storedArray = storedResults[markersKey] || [];
+    if (storedArray.length > 0) {
+      showOrHideEmptyNotice(hide);
+      for (let storedObject of storedArray) {
+        displaySetting(
+            storedObject.settingUrl,
+            storedObject.settingColor,
+            storedObject.settingLabel,
+            storedObject.settingPosition,
+            storedObject.settingSize
+        );
+      }
+    } else {
+      showOrHideEmptyNotice(show);
     }
   }, onError);
 }
 
 function showOrHideEmptyNotice(action = null) {
   if (action !== show && action !== hide) {
-    browser.storage.local.get(null).then((results) => {
-      let settingsUrls = Object.keys(results);
-      $('.empty-notice').css('display', settingsUrls.length > 0 ? 'none' : 'block');
+    browser.storage.local.get(markersKey).then((storedArray) => {
+      $('.empty-notice').css('display', storedArray[markersKey].length > 0 ? 'none' : 'block');
     }, onError);
   } else {
     $('.empty-notice').css('display', action);
   }
 }
 
-/* Show error message */
+function saveSwatches(swatches) {
+  browser.storage.local.set({ [swatchesKey] : swatches }).then(null, onError);
+}
+
+/* Show error or success messages */
 function showMessage(textMsg, errorFlag = false) {
   let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
   if ($('.outer-wrapper .message-container .alert').length) {
@@ -89,6 +129,15 @@ function showMessage(textMsg, errorFlag = false) {
     $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
   } else {
     $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
+  }
+}
+
+/* Search stored array of object for the url */
+function searchStoredMarkers(url, storedArray) {
+  for (let i = 0; i < storedArray.length; i++) {
+    if (storedArray[i].settingUrl === url) {
+      return storedArray[i];
+    }
   }
 }
 
@@ -101,10 +150,11 @@ function saveSettings() {
       settingSize = $('.settings-input #size').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
-    browser.storage.local.get(settingUrl).then((result) => {
-      let objTest = Object.keys(result);
+    browser.storage.local.get(markersKey).then((storedResults) => {
+      let storedArray = storedResults[markersKey] || [],
+          objectExists = searchStoredMarkers(settingUrl, storedArray);
 
-      if (objTest.length < 1) {
+      if (!objectExists) {
         if ($('.outer-wrapper .message-container .alert').length) {
           $('.outer-wrapper .message-container .alert').remove();
         }
@@ -114,7 +164,7 @@ function saveSettings() {
         $('.settings-input #position').val('top-left');
         $('.settings-input #size').val('normal');
 
-        storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
+        storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize);
       } else {
         // Duplicate marker error message
         showMessage(errorDuplicateMarker);
@@ -127,11 +177,68 @@ function saveSettings() {
 }
 
 /* Store a new setting in local storage */
-function storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
-  browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition, settingSize] }).then(() => {
+function storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+  let storedArray = storedResults[markersKey] || [];
+  let storeObject = {
+    settingUrl: settingUrl,
+    settingColor: settingColor,
+    settingLabel: settingLabel,
+    settingPosition: settingPosition,
+    settingSize: settingSize
+  };
+
+  storedArray.unshift(storeObject);
+
+  browser.storage.local.set({ [markersKey] : storedArray }).then(() => {
     showOrHideEmptyNotice(hide);
     displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
   }, onError);
+}
+
+/* Update settings */
+function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+  browser.storage.local.get(markersKey).then((storedResults) => {
+    let storedArray = storedResults[markersKey] || [],
+        settingExists = searchStoredMarkers(settingUrl, storedArray);
+
+    if (settingExists) {
+      let updatedArray = storedArray.filter(function(obj) {
+        if (obj.settingUrl === settingUrl) {
+          obj.settingUrl = newSettingUrl;
+          obj.settingColor = settingColor;
+          obj.settingLabel = settingLabel;
+          obj.settingPosition = settingPosition;
+          obj.settingSize = settingSize;
+        }
+        return true;
+      });
+
+      browser.storage.local.set({ [markersKey] : updatedArray }).then(() => {
+        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize);
+      }, onError);
+    }
+  }, onError);
+}
+
+function deleteSetting(settingUrl) {
+  browser.storage.local.get(markersKey).then((storedResults) => {
+    let storedArray = storedResults[markersKey] || [],
+        settingExists = searchStoredMarkers(settingUrl, storedArray);
+
+    if (settingExists) {
+      let filteredArray = storedArray.filter(function(obj) { return obj.settingUrl !== settingUrl; });
+      browser.storage.local.set({ [markersKey] : filteredArray }).then(null, onError);
+    }
+  }, onError);
+}
+
+/* Clear all settings from the display and storage */
+function clearAll() {
+  $('.settings-container .setting').each((index, element) => {
+    element.remove();
+  });
+  browser.storage.local.set({ [markersKey] : [] }).then(null, onError);
+  showOrHideEmptyNotice(show);
 }
 
 /* Display a setting in the setting box */
@@ -143,12 +250,18 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
     return accumulator;
   }, {});
 
-  let settingSizeDisplay = sizesMap.reduce(function(accumulator, currentValue) {
-    if (currentValue.value === settingSize) {
-      accumulator = currentValue.label;
-    }
-    return accumulator;
-  }, {});
+  // For backwards compatibility for users that already have ribbons configured.
+  // @TODO: Remove sometime in the future
+  let settingSizeDisplay = sizeSelectNormal;
+  if (settingSize !== undefined) {
+    settingSizeDisplay = sizesMap.reduce(function(accumulator, currentValue) {
+      if (currentValue.value === settingSize) {
+        accumulator = currentValue.label;
+      }
+      return accumulator;
+    }, {});
+    settingSize = 'normal';
+  }
 
   let innerSettingsContainer = $( "<div/>", { "class": "setting" });
   let displayContainer = $( "<div/>", { "class": "row no-gutters mb-2 display-container" });
@@ -180,7 +293,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
     html: '<i class="fas fa-trash fa-lg"></i>',
     click: function() {
       $(this).parent().parent().parent().remove();
-      browser.storage.local.remove(settingUrl);
+      deleteSetting(settingUrl);
       showOrHideEmptyNotice();
     }
   });
@@ -242,12 +355,6 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   });
 
   for (let i = 0; i < sizesMap.length; i++) {
-    // For backwards compatibility for users that already have ribbons configured.
-    // @TODO: Remove sometime in the future
-    if (settingSize === undefined) {
-      settingSize = 'normal'
-    }
-
     if (sizesMap[i].value === settingSize) {
       optionsSelectSize.append(new Option(sizesMap[i].label, sizesMap[i].value, true, true));
     } else {
@@ -325,81 +432,77 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
 
   $('.settings-container').append(innerSettingsContainer);
 
-  let pickr = Pickr.create({
-    el: editColorInput[0],
-    theme: 'nano',
-    default: settingColor,
-    useAsButton: false,
-    swatches: [
-      'rgba(244, 67,  54, 1)',
-      'rgba(233, 30,  99, 1)',
-      'rgba(156, 39, 176, 1)',
-      'rgba(103, 58, 183, 1)',
-      'rgba(63,  81, 181, 1)',
-      'rgba(33, 150, 243, 1)',
-      'rgba(3,  169, 244, 1)'
-    ],
-    components: {
-      preview: true,
-      opacity: false,
-      hue: true,
-      interaction: {
-        hex: false,
-        rgba: false,
-        hsla: false,
-        hsva: false,
-        cmyk: false,
-        input: true,
-        clear: false,
-        save: true
+  browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+    if (storedSwatchesArray[swatchesKey]) {
+      colorSwatches = storedSwatchesArray[swatchesKey]
+    }
+
+    let pickr = Pickr.create({
+      el: editColorInput[0],
+      theme: 'nano',
+      default: settingColor,
+      useAsButton: false,
+      swatches: colorSwatches,
+      components: {
+        preview: true,
+        opacity: false,
+        hue: true,
+        interaction: {
+          hex: false,
+          rgba: false,
+          hsla: false,
+          hsva: false,
+          cmyk: false,
+          input: true,
+          clear: false,
+          save: true
+        }
+      },
+      i18n: {
+        'ui:dialog': colorPickerUiDialog,
+        'btn:toggle': colorPickerBtnToggle,
+        'btn:swatch': colorPickerBtnSwatch,
+        'btn:last-color': colorPickerBtnLastColor,
+        'btn:save': colorPickerBtnSave,
+        'btn:cancel': colorPickerBtnCancel,
+        'btn:clear': colorPickerBtnClear,
+        'aria:btn:save': colorPickerAriaBtnSave,
+        'aria:btn:cancel': colorPickerAriaBtnCancel,
+        'aria:btn:clear': colorPickerAriaBtnClear,
+        'aria:input': colorPickerAriaInput,
+        'aria:palette': colorPickerAriaPalette,
+        'aria:hue': colorPickerAriaHue,
+        'aria:opacity': colorPickerAriaOpacity
       }
-    },
-    i18n: {
-      'ui:dialog': colorPickerUiDialog,
-      'btn:toggle': colorPickerBtnToggle,
-      'btn:swatch': colorPickerBtnSwatch,
-      'btn:last-color': colorPickerBtnLastColor,
-      'btn:save': colorPickerBtnSave,
-      'btn:cancel': colorPickerBtnCancel,
-      'btn:clear': colorPickerBtnClear,
-      'aria:btn:save': colorPickerAriaBtnSave,
-      'aria:btn:cancel': colorPickerAriaBtnCancel,
-      'aria:btn:clear': colorPickerAriaBtnClear,
-      'aria:input': colorPickerAriaInput,
-      'aria:palette': colorPickerAriaPalette,
-      'aria:hue': colorPickerAriaHue,
-      'aria:opacity': colorPickerAriaOpacity
-    }
-  });
+    });
 
-  pickr.on('save', (color, instance) => {
-    editColorInput.val(color.toHEXA().toString(0));
-    instance.hide();
-  });
-}
+    pickr.on('save', (color, instance) => {
+      editColorInput.val(color.toHEXA().toString(0));
 
-/* Update settings */
-function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize) {
-  browser.storage.local.set({ [newSettingUrl] : [settingColor, settingLabel, settingPosition, settingSize] }).then(() => {
-    if (settingUrl !== newSettingUrl) {
-      // Changed URL
-      browser.storage.local.remove(settingUrl).then(() => {
-        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize);
+      // Add color to the swatch and remove the last color
+      let swatchList = pickr.getSwatches();
+      let swatchExists = swatchList.includes(color.toRGBA().toString(0));
+      if (!swatchExists) {
+        if (swatchList.length === maxSwatches) {
+          swatchList.pop();
+        }
+        swatchList.unshift(color.toRGBA().toString(0));
+        pickr.setSwatches(swatchList);
+        saveSwatches(swatchList);
+      }
+
+      instance.hide();
+    });
+
+    pickr.on('show', () => {
+      browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+        if (storedSwatchesArray[swatchesKey]) {
+          colorSwatches = storedSwatchesArray[swatchesKey]
+        }
+        pickr.setSwatches(colorSwatches);
       }, onError);
-    } else {
-      // Change settings
-      displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize);
-    }
+    });
   }, onError);
-}
-
-/* Clear all settings from the display and storage */
-function clearAll() {
-  $('.settings-container .setting').each((index, element) => {
-    element.remove();
-  });
-  browser.storage.local.clear();
-  showOrHideEmptyNotice(show);
 }
 
 $(document).ready(() => {
@@ -432,56 +535,76 @@ $(document).ready(() => {
     }
   });
 
-  pickr = Pickr.create({
-    el: '.color-picker',
-    theme: 'nano',
-    useAsButton: false,
-    swatches: [
-      'rgba(244, 67,  54, 1)',
-      'rgba(233, 30,  99, 1)',
-      'rgba(156, 39, 176, 1)',
-      'rgba(103, 58, 183, 1)',
-      'rgba(63,  81, 181, 1)',
-      'rgba(33, 150, 243, 1)',
-      'rgba(3,  169, 244, 1)'
-    ],
-    components: {
-      preview: true,
-      opacity: false,
-      hue: true,
-      interaction: {
-        hex: false,
-        rgba: false,
-        hsla: false,
-        hsva: false,
-        cmyk: false,
-        input: true,
-        clear: false,
-        save: true
-      }
-    },
-    i18n: {
-      'ui:dialog': colorPickerUiDialog,
-      'btn:toggle': colorPickerBtnToggle,
-      'btn:swatch': colorPickerBtnSwatch,
-      'btn:last-color': colorPickerBtnLastColor,
-      'btn:save': colorPickerBtnSave,
-      'btn:cancel': colorPickerBtnCancel,
-      'btn:clear': colorPickerBtnClear,
-      'aria:btn:save': colorPickerAriaBtnSave,
-      'aria:btn:cancel': colorPickerAriaBtnCancel,
-      'aria:btn:clear': colorPickerAriaBtnClear,
-      'aria:input': colorPickerAriaInput,
-      'aria:palette': colorPickerAriaPalette,
-      'aria:hue': colorPickerAriaHue,
-      'aria:opacity': colorPickerAriaOpacity
+  browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+    if (storedSwatchesArray[swatchesKey]) {
+      colorSwatches = storedSwatchesArray[swatchesKey]
     }
-  });
 
-  pickr.on('save', (color, instance) => {
-    //$('.settings-input #color').val(color.toHEXA().toString(0));
-    instance.hide();
-  });
+    pickr = Pickr.create({
+      el: '.color-picker',
+      theme: 'nano',
+      useAsButton: false,
+      swatches: colorSwatches,
+      components: {
+        preview: true,
+        opacity: false,
+        hue: true,
+        interaction: {
+          hex: false,
+          rgba: false,
+          hsla: false,
+          hsva: false,
+          cmyk: false,
+          input: true,
+          clear: false,
+          save: true
+        }
+      },
+      i18n: {
+        'ui:dialog': colorPickerUiDialog,
+        'btn:toggle': colorPickerBtnToggle,
+        'btn:swatch': colorPickerBtnSwatch,
+        'btn:last-color': colorPickerBtnLastColor,
+        'btn:save': colorPickerBtnSave,
+        'btn:cancel': colorPickerBtnCancel,
+        'btn:clear': colorPickerBtnClear,
+        'aria:btn:save': colorPickerAriaBtnSave,
+        'aria:btn:cancel': colorPickerAriaBtnCancel,
+        'aria:btn:clear': colorPickerAriaBtnClear,
+        'aria:input': colorPickerAriaInput,
+        'aria:palette': colorPickerAriaPalette,
+        'aria:hue': colorPickerAriaHue,
+        'aria:opacity': colorPickerAriaOpacity
+      }
+    });
+
+    pickr.on('save', (color, instance) => {
+      //$('.settings-input #color').val(color.toHEXA().toString(0));
+
+      // Add color to the swatch and remove the last color
+      let swatchList = pickr.getSwatches();
+      let swatchExists = swatchList.includes(color.toRGBA().toString(0));
+      if (!swatchExists) {
+        if (swatchList.length === maxSwatches) {
+          swatchList.pop();
+        }
+        swatchList.unshift(color.toRGBA().toString(0));
+        pickr.setSwatches(swatchList);
+        saveSwatches(swatchList);
+      }
+
+      instance.hide();
+    });
+
+    pickr.on('show', () => {
+      browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+        if (storedSwatchesArray[swatchesKey]) {
+          colorSwatches = storedSwatchesArray[swatchesKey]
+        }
+        pickr.setSwatches(colorSwatches);
+      }, onError);
+    });
+  }, onError);
 
   $('.empty-notice').html(noticeNoRibbons);
   $('.clear').html(buttonClearAll);

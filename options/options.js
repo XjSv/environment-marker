@@ -1,159 +1,165 @@
-let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker");
-let errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty");
-let errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty");
-let noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport");
-let noticeSuccessImport = browser.i18n.getMessage("noticeSuccessImport");
-let errorNoRibbonsToExport = browser.i18n.getMessage("errorNoRibbonsToExport");
-let errorChooseFile = browser.i18n.getMessage("errorChooseFile");
-let inputChooseFile = browser.i18n.getMessage("inputChooseFile");
-let buttonExport = browser.i18n.getMessage("buttonExport");
-let buttonImport = browser.i18n.getMessage("buttonImport");
-let exportFile = null;
+let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
+    errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty"),
+    errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty"),
+    noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport"),
+    noticeSuccessImport = browser.i18n.getMessage("noticeSuccessImport"),
+    errorNoRibbonsToExport = browser.i18n.getMessage("errorNoRibbonsToExport"),
+    errorChooseFile = browser.i18n.getMessage("errorChooseFile"),
+    inputChooseFile = browser.i18n.getMessage("inputChooseFile"),
+    buttonExport = browser.i18n.getMessage("buttonExport"),
+    buttonImport = browser.i18n.getMessage("buttonImport"),
+    importWarning = browser.i18n.getMessage("importWarning"),
+    errorImportLabelEmpty = browser.i18n.getMessage("errorImportLabelEmpty"),
+    errorImportUrlEmpty = browser.i18n.getMessage("errorImportUrlEmpty"),
+    errorImportColorEmpty = browser.i18n.getMessage("errorImportColorEmpty"),
+    exportFile = null;
+
+const markersKey = '__em-markers__';
+const exportFileName = 'ribbons.json';
 
 function onError(error) {
-    console.log(error);
+  console.log(error);
 }
 
-/* Show error message */
+/* Show error or success messages */
 function showMessage(textMsg, errorFlag = false) {
-    let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
-    if ($('.outer-wrapper .message-container .alert').length) {
-        $('.outer-wrapper .message-container .alert').remove();
-        $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
-    } else {
-        $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
-    }
-}
-
-/* Add a setting to storage */
-function saveSettings(urlIn, colorIn, labelIn, positionIn, sizeIn) {
-    let settingUrl = urlIn,
-        settingColor = colorIn,
-        settingLabel = labelIn,
-        settingPosition = positionIn,
-        settingSize = sizeIn;
-
-    if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
-        browser.storage.local.get(settingUrl).then((result) => {
-            let objTest = Object.keys(result);
-
-            if (objTest.length < 1) {
-                storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
-            } else {
-                // Duplicate marker error message
-                showMessage(errorDuplicateMarker, true);
-            }
-        }, onError);
-    } else {
-        // Empty input error message
-        settingLabel === '' ? showMessage(errorLabelEmpty, true) : showMessage(errorUrlEmpty, true);
-    }
-}
-
-/* Store a new setting in local storage */
-function storeSetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
-    browser.storage.local.set({ [settingUrl] : [settingColor, settingLabel, settingPosition, settingSize] }).then(() => {
-        // Success
-    }, onError);
+  let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
+  if ($('.outer-wrapper .message-container .alert').length) {
+    $('.outer-wrapper .message-container .alert').remove();
+    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
+  } else {
+    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
+  }
 }
 
 /* Make a URL Object from json text */
 function makeJsonExportFile(text) {
-    let data = new Blob([text], { type: 'application/json' });
+  let data = new Blob([text], { type: 'application/json' });
 
-    // If we are replacing a previously generated file we need to
-    // manually revoke the object URL to avoid memory leaks.
-    if (exportFile !== null) {
-        window.URL.revokeObjectURL(exportFile);
-    }
+  // If we are replacing a previously generated file we need to
+  // manually revoke the object URL to avoid memory leaks.
+  if (exportFile !== null) {
+    window.URL.revokeObjectURL(exportFile);
+  }
 
-    exportFile = window.URL.createObjectURL(data);
-    return exportFile;
+  exportFile = window.URL.createObjectURL(data);
+  return exportFile;
 }
 
 /* Get all configurations from the storage and output a json file */
 function exportConfig() {
-    browser.storage.local.get(null).then((results) => {
-        let settingsUrls = Object.keys(results),
-            configurations = [];
+  browser.storage.local.get(markersKey).then((storedResults) => {
+    let storedArray = storedResults[markersKey] || [],
+        configurations = [];
 
-        if (settingsUrls.length > 0) {
-            for (let settingUrl of settingsUrls) {
-                configurations.push({
-                    "url" : settingUrl,
-                    "color" : results[settingUrl][0],
-                    "label" : results[settingUrl][1],
-                    "position" : results[settingUrl][2],
-                    "size" : results[settingUrl][3]
-                });
-            }
+    if (storedArray.length > 0) {
+      for (let storedObject of storedArray) {
+        configurations.push({
+          "url" : storedObject.settingUrl,
+          "color" : storedObject.settingColor,
+          "label" : storedObject.settingLabel,
+          "position" : storedObject.settingPosition,
+          "size" : storedObject.settingSize
+        });
+      }
 
-            let configurations_json = JSON.stringify(configurations);
-            let link = document.createElement('a');
-            link.setAttribute('download', 'ribbons.json');
-            link.href = makeJsonExportFile(configurations_json);
-            document.body.appendChild(link);
+      let configurations_json = JSON.stringify(configurations);
+      let link = document.createElement('a');
+      link.setAttribute('download', exportFileName);
+      link.href = makeJsonExportFile(configurations_json);
+      document.body.appendChild(link);
 
-            // wait for the link to be added to the document
-            window.requestAnimationFrame(function () {
-                let event = new MouseEvent('click');
-                link.dispatchEvent(event);
-                document.body.removeChild(link);
+      // Wait for the link to be added to the document
+      window.requestAnimationFrame(function () {
+        let event = new MouseEvent('click');
+        link.dispatchEvent(event);
+        document.body.removeChild(link);
 
-                showMessage(noticeSuccessExport);
-            });
-        } else {
-            showMessage(errorNoRibbonsToExport, true);
-        }
-    }, onError);
+        showMessage(noticeSuccessExport);
+      });
+    } else {
+      showMessage(errorNoRibbonsToExport, true);
+    }
+  }, onError);
 }
 
 /* Read import file and load all settings into the stoage */
-function importConfig() {
-    let importFileInput = document.getElementById("importFile"),
-        importFile = importFileInput.files[0];
+async function importConfig() {
+  let importFileInput = document.getElementById('importFile'),
+      importFile = importFileInput.files[0];
 
-    if (importFile) {
-        const reader = new FileReader();
+  if (importFile) {
+    const reader = new FileReader();
 
-        // This event listener will happen when the reader has read the file
-        reader.addEventListener('load', function() {
-            let import_config_obj = JSON.parse(reader.result); // Parse the result into an object
+    // This event listener will happen when the reader has read the file
+    reader.addEventListener('load', function() {
+      let importConfigObjects = JSON.parse(reader.result); // Parse the result into an object
 
-            if (import_config_obj.length > 0) {
-                import_config_obj.forEach(function(arrayItem) {
-                    saveSettings(arrayItem.url, arrayItem.color, arrayItem.label, arrayItem.position, arrayItem.size);
-                });
+      if (importConfigObjects.length > 0) {
 
-                showMessage(noticeSuccessImport);
+        let storedArray = [],
+            errorMessages = '';
+
+        for (let importConfigObject of importConfigObjects) {
+          if (importConfigObject.url !== '' && importConfigObject.color !== '' && importConfigObject.label !== '') {
+            let storeObject = {
+              settingUrl: importConfigObject.url,
+              settingColor: importConfigObject.color,
+              settingLabel: importConfigObject.label,
+              settingPosition: importConfigObject.position,
+              settingSize: importConfigObject.size
+            };
+            storedArray.unshift(storeObject);
+          } else {
+            // Empty field error messages
+            if (importConfigObject.url === '') {
+              errorMessages += '<li>' + errorImportUrlEmpty + '</li>';
             }
+            if (importConfigObject.label === '') {
+              errorMessages += '<li>' + errorImportLabelEmpty + '</li>';
+            }
+            if (importConfigObject.color === '') {
+              errorMessages += '<li>' + errorImportColorEmpty + '</li>';
+            }
+          }
+        }
 
-            $('.import-file-label').html(inputChooseFile);
-            importFileInput.value = '';
-        });
+        $('.import-file-label').html(inputChooseFile);
+        importFileInput.value = '';
 
-        reader.readAsText(importFile); // Read the uploaded file
-    } else {
-        showMessage(errorChooseFile);
-    }
+        if (errorMessages !== '') {
+          showMessage('<ul>' + errorMessages + '</ul>', true);
+        } else {
+          browser.storage.local.set({ [markersKey] : storedArray }).then(() => {
+            showMessage(noticeSuccessImport);
+          }, onError);
+        }
+      }
+    });
+
+    reader.readAsText(importFile); // Read the uploaded file
+  } else {
+    showMessage(errorChooseFile);
+  }
 }
 
 $(document).ready(() => {
-    $('.export').click(() => {
-        exportConfig();
-    });
+  $('.export').click(() => {
+    exportConfig();
+  });
 
-    $('.import').click(() => {
-        importConfig();
-    });
+  $('.import').click(() => {
+    importConfig();
+  });
 
-    $('#importFile').change((event) => {
-        if (event.target.files.length) {
-            $('.import-file-label').html(event.target.files[0].name);
-        }
-    });
+  $('#importFile').change((event) => {
+    if (event.target.files.length) {
+      $('.import-file-label').html(event.target.files[0].name);
+    }
+  });
 
-    $('.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
-    $('.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
-    $('.import-file-label').html(inputChooseFile);
+  $('.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
+  $('.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
+  $('.import-file-label').html(inputChooseFile);
+  $('#import-warning').html(importWarning);
 });
