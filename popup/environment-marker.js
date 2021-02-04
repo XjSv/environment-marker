@@ -260,6 +260,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
       }
       return accumulator;
     }, {});
+  } else {
     settingSize = 'normal';
   }
 
