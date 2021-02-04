@@ -56,6 +56,15 @@
   "errorUrlEmpty": {
     "message": "Entrez l'URL!"
   },
+  "errorImportLabelEmpty": {
+    "message": "Valeur d'étiquette manquante dans le fichier d'importation."
+  },
+  "errorImportUrlEmpty": {
+    "message": "Valeur d'URL manquante dans le fichier d'importation."
+  },
+  "errorImportColorEmpty": {
+    "message": "Valeur de couleur manquante dans le fichier d'importation."
+  },
   "noticeSuccessExport": {
     "message": "Exportation terminée!"
   },
@@ -82,6 +91,9 @@
   },
   "inputChooseFile": {
     "message": "Choisir un fichier"
+  },
+  "importWarning": {
+    "message": "Attention: l'importation de rubans annulera tout!"
   },
   "colorPickerUiDialog": {
     "message": "boîte de dialogue de sélection de couleurs"

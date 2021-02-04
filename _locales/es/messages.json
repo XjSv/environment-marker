@@ -56,6 +56,15 @@
   "errorUrlEmpty": {
     "message": "Escriba URL!"
   },
+  "errorImportLabelEmpty": {
+    "message": "Falta el valor de la etiqueta en el archivo de importación."
+  },
+  "errorImportUrlEmpty": {
+    "message": "Falta el valor de URL en el archivo de importación."
+  },
+  "errorImportColorEmpty": {
+    "message": "Falta el valor de color en el archivo de importación."
+  },
   "noticeSuccessExport": {
     "message": "Exportación correcta!"
   },
@@ -82,6 +91,9 @@
   },
   "inputChooseFile": {
     "message": "Elegir archivo"
+  },
+  "importWarning": {
+    "message": "Advertencia: La importación de cintas anulará todo!"
   },
   "colorPickerUiDialog": {
     "message": "diálogo selector de color"

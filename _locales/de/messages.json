@@ -56,6 +56,15 @@
   "errorUrlEmpty": {
     "message": "URL Eingeben!"
   },
+  "errorImportLabelEmpty": {
+    "message": "Fehlender beschriftung in der importdatei."
+  },
+  "errorImportUrlEmpty": {
+    "message": "Fehlender URL-Wert in der Importdatei."
+  },
+  "errorImportColorEmpty": {
+    "message": "Fehlender farbwert in der importdatei."
+  },
   "noticeSuccessExport": {
     "message": "Export erfolgreich!"
   },
@@ -82,6 +91,9 @@
   },
   "inputChooseFile": {
     "message": "Datei auswählen"
+  },
+  "importWarning": {
+    "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!"
   },
   "colorPickerUiDialog": {
     "message": "dialogfeld für die farbauswahl"
