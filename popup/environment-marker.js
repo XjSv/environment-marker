@@ -44,6 +44,7 @@ let pickr = null,
     ];
 const swatchesKey = '__em-swatches__';
 const markersKey = '__em-markers__';
+const dbVersionKey = '__em-version__';
 const maxSwatches = 7;
 const hide = 'none';
 const show = 'block';
@@ -87,7 +88,98 @@ function truncateString(str, num) {
   return str.slice(0, num) + '...'
 }
 
+// Gist: https://gist.github.com/TheDistantSea/8021359
+// a negative integer iff v1 < v2
+// a positive integer iff v1 > v2
+function versionCompare(v1, v2, options) {
+  var lexicographical = options && options.lexicographical,
+      zeroExtend = options && options.zeroExtend,
+      v1parts = v1.split('.'),
+      v2parts = v2.split('.');
+  function isValidPart(x) {
+    return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
+  }
+  if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
+    return NaN;
+  }
+  if (zeroExtend) {
+    while (v1parts.length < v2parts.length) v1parts.push("0");
+    while (v2parts.length < v1parts.length) v2parts.push("0");
+  }
+  if (!lexicographical) {
+    v1parts = v1parts.map(Number);
+    v2parts = v2parts.map(Number);
+  }
+  for (var i = 0; i < v1parts.length; ++i) {
+    if (v2parts.length == i) {
+      return 1;
+    }
+    if (v1parts[i] == v2parts[i]) {
+      continue;
+    }
+    else if (v1parts[i] > v2parts[i]) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+  }
+  if (v1parts.length != v2parts.length) {
+    return -1;
+  }
+  return 0;
+}
+
 function initialize() {
+  browser.storage.local.get(dbVersionKey).then((storedResult) => {
+    let storedVersion = storedResult[dbVersionKey] || '',
+        extensionVersion = browser.runtime.getManifest().version;
+
+    if (storedVersion === '') {
+      // This should process only once for people that have pre v2.3 installed
+      // Pre v2.3 did not store the version in the db, therefore it should be empty
+      browser.storage.local.get(null).then((storedResults) => {
+        let storedArray = Object.keys(storedResults);
+
+        if (storedArray.length > 0) {
+          let convertedArray = [];
+          for (let storedMarker of storedArray) {
+            let storeObject = {
+              settingUrl: storedMarker,
+              settingColor: storedResults[storedMarker][0],
+              settingLabel: storedResults[storedMarker][1],
+              settingPosition: storedResults[storedMarker][2],
+              settingSize: storedResults[storedMarker][3]
+            };
+            convertedArray.push(storeObject);
+          }
+
+          // Initial data conversion for pre v2.3 (old data is cleared before inserting the new format)
+          browser.storage.local.clear().then(() => {
+            browser.storage.local.set({ [markersKey] : convertedArray }).then(() => {
+              browser.storage.local.set({ [dbVersionKey] : extensionVersion }).then(() => {
+                initializeDisplay();
+              }, onError);
+            }, onError);
+          });
+        } else {
+          // No previous markers saved
+          browser.storage.local.set({ [dbVersionKey] : extensionVersion }).then(() => {
+            initializeDisplay();
+          }, onError);
+        }
+      }, onError);
+    } else {
+      // Version is saved in the db
+      if (versionCompare(extensionVersion, storedVersion, {zeroExtend: true}) > 0) {
+        // For future updates (when version number increases)
+      }
+      initializeDisplay();
+    }
+  }, onError);
+}
+
+function initializeDisplay() {
   browser.storage.local.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [];
     if (storedArray.length > 0) {
@@ -187,7 +279,7 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
     settingSize: settingSize
   };
 
-  storedArray.unshift(storeObject);
+  storedArray.push(storeObject);
 
   browser.storage.local.set({ [markersKey] : storedArray }).then(() => {
     showOrHideEmptyNotice(hide);
@@ -605,6 +697,10 @@ $(document).ready(() => {
         pickr.setSwatches(colorSwatches);
       }, onError);
     });
+
+    pickr.on('init', instance => {
+      $('.pcr-button').attr('tabindex', '2');
+    });
   }, onError);
 
   $('.empty-notice').html(noticeNoRibbons);
@@ -615,6 +711,7 @@ $(document).ready(() => {
   $('#color').attr('placeholder', inputColorPlaceholder);
   $('#label').attr('placeholder', inputLabelPlaceholder);
 
+  $('#position option[value="top-left"]').html(positionSelectTopLeft);
   $('#position option[value="top-left"]').html(positionSelectTopLeft);
   $('#position option[value="top-right"]').html(positionSelectTopRight);
   $('#position option[value="bottom-left"]').html(positionSelectBottomLeft);

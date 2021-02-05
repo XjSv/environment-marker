@@ -109,7 +109,7 @@ async function importConfig() {
               settingPosition: importConfigObject.position,
               settingSize: importConfigObject.size
             };
-            storedArray.unshift(storeObject);
+            storedArray.push(storeObject);
           } else {
             // Empty field error messages
             if (importConfigObject.url === '') {

@@ -20,22 +20,22 @@
       <div class="container mt-3 settings-input">
         <div class="row no-gutters mb-2">
           <div class="col-10 pr-1">
-            <input type="text" placeholder="" name="url" id="url" class="form-control">
+            <input tabindex="1" type="text" placeholder="" name="url" id="url" class="form-control">
           </div>
           <div class="col-1 pr-1">
-            <input type="color" placeholder="" name="color" id="color" class="form-control color-picker" value="#42445a">
+            <input tabindex="2" type="color" placeholder="" name="color" id="color" class="form-control color-picker" value="#42445a">
           </div>
           <div class="col-1">
-            <button class="btn btn-primary btn-sm save"><i class="fas fa-save fa-lg"></i></button>
+            <button tabindex="6" class="btn btn-primary btn-sm save"><i class="fas fa-save fa-lg"></i></button>
           </div>
         </div>
 
         <div class="row no-gutters">
           <div class="col-6 pr-1">
-            <input type="text" placeholder="" name="label" id="label" class="form-control">
+            <input tabindex="3" type="text" placeholder="" name="label" id="label" class="form-control">
           </div>
           <div class="col-3">
-            <select name="position" id="position" class="form-control">
+            <select tabindex="4" name="position" id="position" class="form-control">
               <option selected="selected" value="top-left"></option>
               <option value="top-right"></option>
               <option value="bottom-left"></option>
@@ -43,7 +43,7 @@
             </select>
           </div>
           <div class="col-3">
-            <select name="size" id="size" class="form-control">
+            <select tabindex="5" name="size" id="size" class="form-control">
               <option value="extra-small"></option>
               <option value="small"></option>
               <option selected="selected" value="normal"></option>
