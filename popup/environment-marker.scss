@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  width: 400px;
+  width: 450px;
   font-size: 1.2rem;
   font-family: sans-serif;
 }
@@ -49,16 +49,55 @@ body {
     }
 
     .setting {
+      border-bottom: 0.1rem dotted #CCCCCC;
+
       .display-container {
-        .display-color div {
-          height: 100%;
-          width: 100%;
-          border-radius: 2px;
+        .col-10 {
+          max-width: 86%;
+          width: 86%;
+          flex: 0 0 86%;
+        }
+        .col-1 {
+          max-width: 7%;
+          width: 7%;
+          flex: 0 0 7%;
+        }
+        .display-labelUrl {
+          .row {
+            > div {
+              overflow-wrap: break-word;
+              padding: 0 3px;
+
+              &:first-child {
+                padding: 0 3px 0 15px;
+              }
+
+              &:last-child {
+                padding: 0 10px 0 3px;
+              }
+            }
+          }
         }
 
-        .delete {
-          height: 100%;
-          width: 100%;
+        .display-color {
+          margin-right: 0;
+
+          .display-color-color {
+            float: right;
+          }
+          div {
+            height: 24px;
+            width: 24px;
+            border-radius: 2px;
+          }
+        }
+
+        .display-delete {
+          height: 24px;
+          width: 24px;
+          text-align: right;
+
+          .delete { }
         }
       }
 

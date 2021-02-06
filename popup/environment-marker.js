@@ -200,7 +200,7 @@ function initializeDisplay() {
 }
 
 function showOrHideEmptyNotice(action = null) {
-  if (action !== show && action !== hide) {
+  if (action === null) {
     browser.storage.local.get(markersKey).then((storedArray) => {
       $('.empty-notice').css('display', storedArray[markersKey].length > 0 ? 'none' : 'block');
     }, onError);
@@ -356,12 +356,18 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
     settingSize = 'normal';
   }
 
-  let innerSettingsContainer = $( "<div/>", { "class": "setting" });
-  let displayContainer = $( "<div/>", { "class": "row no-gutters mb-2 display-container" });
+  let innerSettingsContainer = $( "<div/>", { "class": "setting" }),
+      displayContainer = $( "<div/>", { "class": "row no-gutters my-1 d-flex align-items-center display-container" }),
+      displayString =
+        '<div class="row d-flex align-items-center">' +
+          '<div class="col-3 align-self-center"><b>' + truncateString(settingLabel, 30) + '</b></div>' +
+          '<div class="col-4 align-self-center">' + truncateString(settingUrl, 30) + '</div> ' +
+          '<div class="col-5 align-self-center">' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + '</div> ' +
+        '</div>';
 
   let displayLabelUrl = $( "<div/>", {
-    "class": "col-10 pr-2 display-labelUrl",
-    text: truncateString(settingLabel, 35) + ' (' + truncateString(settingUrl, 35) + ') ' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay,
+    "class": "col-10 display-labelUrl",
+    html: displayString,
     click: function() {
       displayContainer.hide();
       editContainer.show();
@@ -369,8 +375,8 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   });
 
   let displayColor = $( "<div/>", {
-    "class": "col-1 pr-2 display-color",
-    html: '<div style="background-color: ' + settingColor + ';"></div>',
+    "class": "col-1 display-color",
+    html: '<div class="display-color-color" style="background-color: ' + settingColor + ';"></div>',
     click: function() {
       displayContainer.hide();
       editContainer.show();
@@ -392,7 +398,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   });
 
   let editContainer = $( "<div/>", {
-    "class": "row no-gutters mb-2 edit-container",
+    "class": "row no-gutters my-3 edit-container",
     "style": "display: none;"
   });
 
