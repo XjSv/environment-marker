@@ -319,7 +319,9 @@ function deleteSetting(settingUrl) {
 
     if (settingExists) {
       let filteredArray = storedArray.filter(function(obj) { return obj.settingUrl !== settingUrl; });
-      browser.storage.local.set({ [markersKey] : filteredArray }).then(null, onError);
+      browser.storage.local.set({ [markersKey] : filteredArray }).then(() => {
+        showOrHideEmptyNotice();
+      }, onError);
     }
   }, onError);
 }
@@ -393,7 +395,6 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
     click: function() {
       $(this).parent().parent().parent().remove();
       deleteSetting(settingUrl);
-      showOrHideEmptyNotice();
     }
   });
 
