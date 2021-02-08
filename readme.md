@@ -34,6 +34,7 @@
 - [Development](#development)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
+- [Localization](#localization)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -140,6 +141,9 @@ See [Usage](https://github.com/XjSv/environment-marker/wiki/Usage) instructions 
 
 See the [open issues](https://github.com/XjSv/environment-marker/issues) for a list of proposed features (and known issues).
 
+## Localization
+
+Localization is done through Crowdin. To contribute to the translations see the [Environment Marker Crowdin](https://crowdin.com/project/environment-marker) project page.
 
 ## Contributing
 
