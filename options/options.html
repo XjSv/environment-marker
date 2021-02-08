@@ -8,24 +8,24 @@
     <link rel="stylesheet" href="/options/options.min.css"/>
 </head>
 <body>
-    <div class="container-fluid outer-wrapper">
+    <div class="container outer-wrapper">
         <div class="row">
-            <div class="container">
-                <div class="message-container row"></div>
-            </div>
+            <div class="col-12 message-container"></div>
         </div>
-        <div class="row my-2 export-import-container">
-            <div class="col-3">
+        <div class="row my-2 justify-content-around align-items-center export-import-container">
+            <div class="align-self-center">
                 <button class="btn btn-primary btn-sm export"></button>
             </div>
-            <div class="col-9 py-2">
+            <div class="align-self-center">
                 <input class="d-none import-file" type="file" id="importFile" name="importFile" accept=".json">
                 <label class="import-file-label" for="importFile"></label>
                 <button class="btn btn-secondary btn-sm import"></button>
             </div>
         </div>
         <div class="row">
-            <div id="import-warning" class="alert alert-warning" role="alert"></div>
+            <div class="col-12">
+                <div id="import-warning" class="alert alert-warning" role="alert"></div>
+            </div>
         </div>
     </div>
 

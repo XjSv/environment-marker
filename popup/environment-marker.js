@@ -482,7 +482,6 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
           positionEditVal !== settingPosition ||
           sizeEditVal !== settingSize) {
         updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal, innerSettingsContainer);
-        //innerSettingsContainer.remove();
       }
     }
   });
