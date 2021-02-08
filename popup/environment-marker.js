@@ -288,7 +288,7 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
 }
 
 /* Update settings */
-function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, replacePrevious) {
   browser.storage.local.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
         settingExists = searchStoredMarkers(settingUrl, storedArray);
@@ -306,7 +306,7 @@ function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, se
       });
 
       browser.storage.local.set({ [markersKey] : updatedArray }).then(() => {
-        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize);
+        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, replacePrevious);
       }, onError);
     }
   }, onError);
@@ -336,7 +336,7 @@ function clearAll() {
 }
 
 /* Display a setting in the setting box */
-function displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+function displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize, replacePrevious = null) {
   let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
     if (currentValue.value === settingPosition) {
       accumulator = currentValue.label;
@@ -359,7 +359,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   }
 
   let innerSettingsContainer = $( "<div/>", { "class": "setting" }),
-      displayContainer = $( "<div/>", { "class": "row no-gutters my-1 d-flex align-items-center display-container" }),
+      displayContainer = $( "<div/>", { "class": "row no-gutters my-1 align-items-center display-container" }),
       displayString =
         '<div class="row d-flex align-items-center">' +
           '<div class="col-3 align-self-center"><b>' + truncateString(settingLabel, 30) + '</b></div>' +
@@ -481,8 +481,8 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
           labelEditVal !== settingLabel ||
           positionEditVal !== settingPosition ||
           sizeEditVal !== settingSize) {
-        updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal);
-        innerSettingsContainer.remove();
+        updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal, innerSettingsContainer);
+        //innerSettingsContainer.remove();
       }
     }
   });
@@ -530,7 +530,11 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   innerSettingsContainer.append(displayContainer);
   innerSettingsContainer.append(editContainer);
 
-  $('.settings-container').append(innerSettingsContainer);
+  if (replacePrevious) {
+    replacePrevious.replaceWith(innerSettingsContainer);
+  } else {
+    $('.settings-container').append(innerSettingsContainer);
+  }
 
   browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
     if (storedSwatchesArray[swatchesKey]) {
@@ -718,7 +722,6 @@ $(document).ready(() => {
   $('#color').attr('placeholder', inputColorPlaceholder);
   $('#label').attr('placeholder', inputLabelPlaceholder);
 
-  $('#position option[value="top-left"]').html(positionSelectTopLeft);
   $('#position option[value="top-left"]').html(positionSelectTopLeft);
   $('#position option[value="top-right"]').html(positionSelectTopRight);
   $('#position option[value="bottom-left"]').html(positionSelectBottomLeft);

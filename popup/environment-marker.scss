@@ -52,6 +52,8 @@ body {
       border-bottom: 0.1rem dotted #CCCCCC;
 
       .display-container {
+        display: flex;
+
         .col-10 {
           max-width: 86%;
           width: 86%;
