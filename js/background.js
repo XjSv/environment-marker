@@ -35,7 +35,11 @@ function updateContent(tabId) {
         browser.storage.local.get(markersKey).then((storedArray) => {
           if (storedArray[markersKey]) {
             for (let storedObject of storedArray[markersKey]) {
-              if (tab.url.indexOf(storedObject.settingUrl) !== -1) {
+
+              let regex = new RegExp(storedObject.settingUrl, 'iu'),
+                  urlFound = regex.test(tab.url);
+
+              if (urlFound) {
                 browser.tabs.executeScript(tabId, {
                   file: '/js/content.min.js'
                 }).then(() => {
