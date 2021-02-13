@@ -75,6 +75,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * **Import/Export** - Export and import ribbon configurations.
 * **Multilingual Support** - Currently supports English, Spanish, German & French.
 * **Reusable Color Swatch** - The last 7 colors used will be available from the color swatch.
+* **RegExp** - When enabled the URL fragment can be used with RegExp instead of searching using indexOf.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
 
 ### Built With
