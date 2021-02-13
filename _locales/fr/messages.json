@@ -80,8 +80,8 @@
   "buttonClearAll": {
     "message": "Effacer Tout"
   },
-  "buttonImportExport": {
-    "message": "Importer / Exporter"
+  "buttonOptions": {
+    "message": "Options"
   },
   "buttonExport": {
     "message": "Exporter"
@@ -91,6 +91,9 @@
   },
   "inputChooseFile": {
     "message": "Choisir un fichier"
+  },
+  "inputEnableRegExp": {
+    "message": "Activer RegExp"
   },
   "importWarning": {
     "message": "Attention: l'importation de rubans annulera tout!"

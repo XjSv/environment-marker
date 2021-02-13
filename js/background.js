@@ -2,6 +2,7 @@ const TAB_COUNT_COLOR_LIMIT = 10;
 const TAB_COUNT_COLOR_LOW = '#28a745';
 const TAB_COUNT_COLOR_HIGH ='#dc3545';
 const markersKey = '__em-markers__';
+const searchModeKey = '__em-search-mode__';
 
 /* generic error handler */
 function onError(error) {
@@ -33,35 +34,47 @@ function updateContent(tabId) {
     browser.tabs.get(tabId).then((tab) => {
       if (tab.url !== '') {
         browser.storage.local.get(markersKey).then((storedArray) => {
-          if (storedArray[markersKey]) {
-            for (let storedObject of storedArray[markersKey]) {
 
-              let regex = new RegExp(storedObject.settingUrl, 'iu'),
+          browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
+            let searchModeRegExp = storedSearchMode[searchModeKey] || false;
+
+            if (storedArray[markersKey]) {
+              for (let storedObject of storedArray[markersKey]) {
+
+                let urlFound = false;
+                if (searchModeRegExp) {
+                  let regex = new RegExp(storedObject.settingUrl, 'iu');
                   urlFound = regex.test(tab.url);
+                } else {
+                  urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
+                }
 
-              if (urlFound) {
-                browser.tabs.executeScript(tabId, {
-                  file: '/js/content.min.js'
-                }).then(() => {
-                  browser.tabs.sendMessage(tabId, {
-                    command: 'addRibbon',
-                    url: storedObject.settingUrl,
-                    color: storedObject.settingColor,
-                    label: storedObject.settingLabel,
-                    position: storedObject.settingPosition,
-                    size: storedObject.settingSize
-                  }).then(response => {
-                    //console.log("Message from the content script:");
-                    //console.log(response.response);
-                  }).catch(onError);
-                }, onError);
+                if (urlFound) {
+                  browser.tabs.executeScript(tabId, {
+                    file: '/js/content.min.js'
+                  }).then(() => {
+                    browser.tabs.sendMessage(tabId, {
+                      command: 'addRibbon',
+                      url: storedObject.settingUrl,
+                      color: storedObject.settingColor,
+                      label: storedObject.settingLabel,
+                      position: storedObject.settingPosition,
+                      size: storedObject.settingSize
+                    }).then(response => {
+                      //console.log("Message from the content script:");
+                      //console.log(response.response);
+                    }).catch(onError);
+                  }, onError);
 
-                browser.tabs.insertCSS(tabId, {
-                  file: '/css/content.min.css'
-                }).then(null, onError);
+                  browser.tabs.insertCSS(tabId, {
+                    file: '/css/content.min.css'
+                  }).then(null, onError);
+                }
               }
             }
-          }
+          }, onError);
+
+
         }, onError);
       }
     }, onError);
@@ -81,4 +94,3 @@ browser.tabs.onUpdated.addListener((tabId) => {
 });
 
 updateCount();
-updateContent();

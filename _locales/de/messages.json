@@ -80,8 +80,8 @@
   "buttonClearAll": {
     "message": "Alles Löschen"
   },
-  "buttonImportExport": {
-    "message": "Importieren / Exportieren"
+  "buttonOptions": {
+    "message": "Optionen"
   },
   "buttonExport": {
     "message": "Exportieren"
@@ -91,6 +91,9 @@
   },
   "inputChooseFile": {
     "message": "Datei auswählen"
+  },
+  "inputEnableRegExp": {
+    "message": "Aktivieren Sie RegExp"
   },
   "importWarning": {
     "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!"

@@ -80,8 +80,8 @@
   "buttonClearAll": {
     "message": "Borrar Todo"
   },
-  "buttonImportExport": {
-    "message": "Importar / Exportar"
+  "buttonOptions": {
+    "message": "Opciones"
   },
   "buttonExport": {
     "message": "Exportar"
@@ -91,6 +91,9 @@
   },
   "inputChooseFile": {
     "message": "Elegir archivo"
+  },
+  "inputEnableRegExp": {
+    "message": "Habilitar RegExp"
   },
   "importWarning": {
     "message": "Advertencia: La importación de cintas anulará todo!"

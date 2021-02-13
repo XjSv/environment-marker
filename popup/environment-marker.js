@@ -12,7 +12,7 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     sizeSelectExtraLarge = browser.i18n.getMessage("sizeSelectExtraLarge"),
     noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons"),
     buttonClearAll = browser.i18n.getMessage("buttonClearAll"),
-    buttonImportExport = browser.i18n.getMessage("buttonImportExport"),
+    buttonOptions = browser.i18n.getMessage("buttonOptions"),
     errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty"),
     errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty"),
@@ -715,7 +715,7 @@ $(document).ready(() => {
 
   $('.empty-notice').html(noticeNoRibbons);
   $('.clear').html(buttonClearAll);
-  $('.import-export').html(buttonImportExport);
+  $('.options').html(buttonOptions);
 
   $('#url').attr('placeholder', inputUrlFragmentPlaceholder);
   $('#color').attr('placeholder', inputColorPlaceholder);

@@ -12,9 +12,11 @@ let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     errorImportLabelEmpty = browser.i18n.getMessage("errorImportLabelEmpty"),
     errorImportUrlEmpty = browser.i18n.getMessage("errorImportUrlEmpty"),
     errorImportColorEmpty = browser.i18n.getMessage("errorImportColorEmpty"),
+    inputEnableRegExp = browser.i18n.getMessage("inputEnableRegExp"),
     exportFile = null;
 
 const markersKey = '__em-markers__';
+const searchModeKey = '__em-search-mode__';
 const exportFileName = 'ribbons.json';
 
 function onError(error) {
@@ -158,8 +160,19 @@ $(document).ready(() => {
     }
   });
 
+  browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
+    let storedSearchModeBool = storedSearchMode[searchModeKey] || false;
+    $('#enable-regexp').prop('checked', storedSearchModeBool);
+  }, onError);
+
+  $('#enable-regexp').change((event) => {
+    let enableRegexpValue = $(event.target).is(':checked');
+    browser.storage.local.set({ [searchModeKey] : enableRegexpValue }).then(null, onError);
+  });
+
   $('.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
   $('.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
   $('.import-file-label').html(inputChooseFile);
   $('#import-warning').html(importWarning);
+  $('#enable-regexp-label').html(inputEnableRegExp);
 });

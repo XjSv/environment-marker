@@ -116,9 +116,9 @@
     "message": "Clear All",
     "description": "Clear All button label."
   },
-  "buttonImportExport": {
-    "message": "Import / Export",
-    "description": "Import / Export button label."
+  "buttonOptions": {
+    "message": "Options",
+    "description": "Options button label."
   },
 
   "buttonExport": {
@@ -132,6 +132,10 @@
   "inputChooseFile": {
     "message": "Choose file",
     "description": "Choose file input label."
+  },
+  "inputEnableRegExp": {
+    "message": "Enable RegExp",
+    "description": "Enable RegExp input label."
   },
   "importWarning": {
     "message": "Warning: Importing ribbons will override everything!",
