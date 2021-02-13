@@ -358,12 +358,14 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
     settingSize = 'normal';
   }
 
-  let innerSettingsContainer = $( "<div/>", { "class": "setting" }),
+  let settingUrlDisplay = truncateString(settingUrl, 30),
+      settingUrlDisplayEncoded = he.encode(settingUrlDisplay),
+      innerSettingsContainer = $( "<div/>", { "class": "setting" }),
       displayContainer = $( "<div/>", { "class": "row no-gutters my-1 align-items-center display-container" }),
       displayString =
         '<div class="row d-flex align-items-center">' +
           '<div class="col-3 align-self-center"><b>' + truncateString(settingLabel, 30) + '</b></div>' +
-          '<div class="col-4 align-self-center">' + truncateString(settingUrl, 30) + '</div> ' +
+          '<div class="col-4 align-self-center">' + settingUrlDisplayEncoded + '</div> ' +
           '<div class="col-5 align-self-center">' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + '</div> ' +
         '</div>';
 
@@ -620,7 +622,7 @@ $(document).ready(() => {
     clearAll();
   });
 
-  $('.import-export').click(() => {
+  $('.options').click(() => {
     browser.runtime.openOptionsPage();
   });
 
