@@ -217,8 +217,8 @@ function saveSwatches(swatches) {
 /* Show error or success messages */
 function showMessage(textMsg, errorFlag = false) {
   let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
-  if ($('.outer-wrapper .message-container .alert').length) {
-    $('.outer-wrapper .message-container .alert').remove();
+  if ($('.alert-dismissible').length) {
+    $(".alert-dismissible").alert('close');
   }
 
   $('.outer-wrapper .message-container').append(
@@ -226,6 +226,10 @@ function showMessage(textMsg, errorFlag = false) {
     '<button type="button" class="close" data-dismiss="alert" aria-label="' + ariaLabelAlertClose + '">' +
     '<span aria-hidden="true">&times;</span></button></div>'
   );
+
+  window.setTimeout(function() {
+    $(".alert-dismissible").alert('close');
+  }, 3000);
 }
 
 /* Search stored array of object for the url */
@@ -251,8 +255,8 @@ function saveSettings() {
           objectExists = searchStoredMarkers(settingUrl, storedArray);
 
       if (!objectExists) {
-        if ($('.outer-wrapper .message-container .alert').length) {
-          $('.outer-wrapper .message-container .alert').remove();
+        if ($('.alert-dismissible').length) {
+          $(".alert-dismissible").alert('close');
         }
 
         $('.settings-input #url').val('');
@@ -618,15 +622,18 @@ $(document).ready(() => {
   /* Display previously saved markers on startup */
   initialize();
 
+  let clearButton = $('.clear'),
+      optionsButton = $('.options');
+
   $('.save').click(() => {
     saveSettings();
   });
 
-  $('.clear').click(() => {
+  clearButton.click(() => {
     clearAll();
   });
 
-  $('.options').click(() => {
+  optionsButton.click(() => {
     browser.runtime.openOptionsPage();
   });
 
@@ -720,8 +727,8 @@ $(document).ready(() => {
   }, onError);
 
   $('.empty-notice').html(noticeNoRibbons);
-  $('.clear').html(buttonClearAll);
-  $('.options').html(buttonOptions);
+  clearButton.html(buttonClearAll);
+  optionsButton.html(buttonOptions);
 
   $('#url').attr('placeholder', inputUrlFragmentPlaceholder);
   $('#color').attr('placeholder', inputColorPlaceholder);

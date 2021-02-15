@@ -28,8 +28,8 @@ function onError(error) {
 /* Show error or success messages */
 function showMessage(textMsg, errorFlag = false) {
   let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
-  if ($('.outer-wrapper .message-container .alert').length) {
-    $('.outer-wrapper .message-container .alert').remove();
+  if ($('.alert-dismissible').length) {
+    $(".alert-dismissible").alert('close');
   }
 
   $('.outer-wrapper .message-container').append(
@@ -37,6 +37,10 @@ function showMessage(textMsg, errorFlag = false) {
     '<button type="button" class="close" data-dismiss="alert" aria-label="' + ariaLabelAlertClose + '">' +
     '<span aria-hidden="true">&times;</span></button></div>'
   );
+
+  window.setTimeout(function() {
+    $(".alert-dismissible").alert('close');
+  }, 3000);
 }
 
 /* Make a URL Object from json text */
@@ -91,7 +95,7 @@ function exportConfig() {
 }
 
 /* Read import file and load all settings into the stoage */
-async function importConfig() {
+function importConfig() {
   let importFileInput = document.getElementById('importFile'),
       importFile = importFileInput.files[0];
 
@@ -151,11 +155,14 @@ async function importConfig() {
 }
 
 $(document).ready(() => {
-  $('.export').click(() => {
+  let exportButton = $('.export'),
+      importButton = $('.import');
+
+  exportButton.click(() => {
     exportConfig();
   });
 
-  $('.import').click(() => {
+  importButton.click(() => {
     importConfig();
   });
 
@@ -177,8 +184,8 @@ $(document).ready(() => {
     }, onError);
   });
 
-  $('.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
-  $('.import').html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
+  exportButton.html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
+  importButton.html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
   $('.import-file-label').html(inputChooseFile);
   $('#import-warning').html(importWarning);
   $('#enable-regexp-label').html(inputEnableRegExp);
