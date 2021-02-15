@@ -50,7 +50,7 @@
   <img width="410" src="screenshots/4-environment-marker-ui-inline-edit.jpg">
 </p>
 
-A browser WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-'). It uses JavaScript's indexOf to determine if the string is found.
+A browser WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-').
 Currently this extension supports Firefox and Chrome. Plans are in place to also support Safari in the near future.
 
 ### Browser Support
