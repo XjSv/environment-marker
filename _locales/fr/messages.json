@@ -72,7 +72,10 @@
     "message": "Importation effectuée!"
   },
   "noticeSettingSaved": {
-    "message": "Paramètres sauvegardés!"
+    "message": "Paramètre enregistré!"
+  },
+  "ariaLabelAlertClose" : {
+    "message": "Fermer"
   },
   "errorNoRibbonsToExport": {
     "message": "Rien à exporter!"

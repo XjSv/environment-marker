@@ -30,7 +30,8 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     colorPickerAriaPalette = browser.i18n.getMessage("colorPickerAriaPalette"),
     colorPickerAriaHue = browser.i18n.getMessage("colorPickerAriaHue"),
     colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity"),
-    displayAt = browser.i18n.getMessage("displayAt");
+    displayAt = browser.i18n.getMessage("displayAt"),
+    ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose");
 
 let pickr = null,
     colorSwatches = [
@@ -218,10 +219,13 @@ function showMessage(textMsg, errorFlag = false) {
   let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
   if ($('.outer-wrapper .message-container .alert').length) {
     $('.outer-wrapper .message-container .alert').remove();
-    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
-  } else {
-    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
   }
+
+  $('.outer-wrapper .message-container').append(
+    '<div class="alert ' + messageClass + ' alert-dismissible fade show col-12" role="alert">' + textMsg +
+    '<button type="button" class="close" data-dismiss="alert" aria-label="' + ariaLabelAlertClose + '">' +
+    '<span aria-hidden="true">&times;</span></button></div>'
+  );
 }
 
 /* Search stored array of object for the url */
@@ -259,12 +263,12 @@ function saveSettings() {
         storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize);
       } else {
         // Duplicate marker error message
-        showMessage(errorDuplicateMarker);
+        showMessage(errorDuplicateMarker, true);
       }
     }, onError);
   } else {
     // Empty input error message
-    settingLabel === '' ? showMessage(errorLabelEmpty) : showMessage(errorUrlEmpty);
+    settingLabel === '' ? showMessage(errorLabelEmpty, true) : showMessage(errorUrlEmpty, true);
   }
 }
 

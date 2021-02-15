@@ -107,6 +107,10 @@
     "message": "Setting saved!",
     "description": "Settings saved successful notice message."
   },
+  "ariaLabelAlertClose" : {
+    "message": "Close",
+    "description": "Alert message close button label."
+  },
   "errorNoRibbonsToExport": {
     "message": "Nothing to export!",
     "description": "Nothing to export error message."

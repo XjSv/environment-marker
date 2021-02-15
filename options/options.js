@@ -14,6 +14,7 @@ let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     errorImportColorEmpty = browser.i18n.getMessage("errorImportColorEmpty"),
     inputEnableRegExp = browser.i18n.getMessage("inputEnableRegExp"),
     noticeSettingSaved = browser.i18n.getMessage("noticeSettingSaved"),
+    ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose"),
     exportFile = null;
 
 const markersKey = '__em-markers__';
@@ -32,9 +33,9 @@ function showMessage(textMsg, errorFlag = false) {
   }
 
   $('.outer-wrapper .message-container').append(
-      '<div class="alert ' + messageClass + ' alert-dismissible fade show"  role="alert">' + textMsg +
-      '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-      '<span aria-hidden="true">&times;</span></button></div>'
+    '<div class="alert ' + messageClass + ' alert-dismissible fade show" role="alert">' + textMsg +
+    '<button type="button" class="close" data-dismiss="alert" aria-label="' + ariaLabelAlertClose + '">' +
+    '<span aria-hidden="true">&times;</span></button></div>'
   );
 }
 
@@ -145,7 +146,7 @@ async function importConfig() {
 
     reader.readAsText(importFile); // Read the uploaded file
   } else {
-    showMessage(errorChooseFile);
+    showMessage(errorChooseFile, true);
   }
 }
 

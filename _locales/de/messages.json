@@ -72,7 +72,10 @@
     "message": "Erfolgreich importiert!"
   },
   "noticeSettingSaved": {
-    "message": "Einstellungen gespeichert!"
+    "message": "Einstellung gespeichert!"
+  },
+  "ariaLabelAlertClose" : {
+    "message": "Schließen"
   },
   "errorNoRibbonsToExport": {
     "message": "Nichts zu exportieren!"

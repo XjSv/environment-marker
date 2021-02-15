@@ -72,7 +72,10 @@
     "message": "Importado correctamente!"
   },
   "noticeSettingSaved": {
-    "message": "Se guardó la configuración!"
+    "message": "Configuración guardada!"
+  },
+  "ariaLabelAlertClose" : {
+    "message": "Cerrar"
   },
   "errorNoRibbonsToExport": {
     "message": "Nada que exportar!"
