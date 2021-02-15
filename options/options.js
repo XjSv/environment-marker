@@ -13,6 +13,7 @@ let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     errorImportUrlEmpty = browser.i18n.getMessage("errorImportUrlEmpty"),
     errorImportColorEmpty = browser.i18n.getMessage("errorImportColorEmpty"),
     inputEnableRegExp = browser.i18n.getMessage("inputEnableRegExp"),
+    noticeSettingSaved = browser.i18n.getMessage("noticeSettingSaved"),
     exportFile = null;
 
 const markersKey = '__em-markers__';
@@ -28,10 +29,13 @@ function showMessage(textMsg, errorFlag = false) {
   let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
   if ($('.outer-wrapper .message-container .alert').length) {
     $('.outer-wrapper .message-container .alert').remove();
-    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
-  } else {
-    $('.outer-wrapper .message-container').append('<div class="alert ' + messageClass + ' col-12">' + textMsg + '</div>');
   }
+
+  $('.outer-wrapper .message-container').append(
+      '<div class="alert ' + messageClass + ' alert-dismissible fade show"  role="alert">' + textMsg +
+      '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+      '<span aria-hidden="true">&times;</span></button></div>'
+  );
 }
 
 /* Make a URL Object from json text */
@@ -167,7 +171,9 @@ $(document).ready(() => {
 
   $('#enable-regexp').change((event) => {
     let enableRegexpValue = $(event.target).is(':checked');
-    browser.storage.local.set({ [searchModeKey] : enableRegexpValue }).then(null, onError);
+    browser.storage.local.set({ [searchModeKey] : enableRegexpValue }).then(() => {
+      showMessage(noticeSettingSaved);
+    }, onError);
   });
 
   $('.export').html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);

@@ -71,6 +71,9 @@
   "noticeSuccessImport": {
     "message": "Importation effectuée!"
   },
+  "noticeSettingSaved": {
+    "message": "Paramètres sauvegardés!"
+  },
   "errorNoRibbonsToExport": {
     "message": "Rien à exporter!"
   },

@@ -103,6 +103,10 @@
     "message": "Imported successfully!",
     "description": "Import successful notice message."
   },
+  "noticeSettingSaved": {
+    "message": "Setting saved!",
+    "description": "Settings saved successful notice message."
+  },
   "errorNoRibbonsToExport": {
     "message": "Nothing to export!",
     "description": "Nothing to export error message."

@@ -71,6 +71,9 @@
   "noticeSuccessImport": {
     "message": "Importado correctamente!"
   },
+  "noticeSettingSaved": {
+    "message": "Se guardó la configuración!"
+  },
   "errorNoRibbonsToExport": {
     "message": "Nada que exportar!"
   },
