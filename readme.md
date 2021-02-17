@@ -53,7 +53,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 
 ### Browser Support
 - Firefox
-- Chrome
+- Chrome & Chromium based browser such as Brave
 - Safari (coming soon...)
 
 ### Features
