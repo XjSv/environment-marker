@@ -84,6 +84,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * [Bootstrap 4](https://getbootstrap.com/)
 * [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
+* [he](https://github.com/mathiasbynens/he)
 
 
 ## Installation
@@ -175,3 +176,4 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 * [Bootstrap 4](https://getbootstrap.com/)
 * [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
+* [he](https://github.com/mathiasbynens/he)
