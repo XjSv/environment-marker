@@ -44,9 +44,7 @@
 ## About The Project
 
 <p align="center">
-  <img width="410" src="screenshots/1-environment-marker-ui-empty.jpg">
   <img width="410" src="screenshots/2-environment-marker-ui-data-input.jpg">
-  <img width="410" src="screenshots/3-environment-marker-ui-filled.jpg">
   <img width="410" src="screenshots/4-environment-marker-ui-inline-edit.jpg">
 </p>
 
