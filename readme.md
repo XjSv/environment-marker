@@ -66,6 +66,8 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
   - ht<span>tp://</span>qa.
   - ht<span>tp://</span>prod.
   - environment-marker
+  - *.google.com
+  - (?<!books).google.com
   
 * **Configurable Ribbon Positions** - Choose where to position the ribbon (top left, top right, bottom left, bottom right).
 * **Configurable Ribbon Sizes** - Choose one of 5 sizes (extra small, small, normal, large, extra large).

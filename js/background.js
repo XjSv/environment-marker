@@ -34,11 +34,11 @@ function updateContent(tabId) {
     browser.tabs.get(tabId).then((tab) => {
       if (tab.url !== '') {
         browser.storage.local.get(markersKey).then((storedArray) => {
-
           browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
-            let searchModeRegExp = storedSearchMode[searchModeKey] || false;
 
+            let searchModeRegExp = storedSearchMode[searchModeKey] || false;
             if (storedArray[markersKey]) {
+
               for (let storedObject of storedArray[markersKey]) {
 
                 let urlFound = false;
@@ -73,8 +73,6 @@ function updateContent(tabId) {
               }
             }
           }, onError);
-
-
         }, onError);
       }
     }, onError);
