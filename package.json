@@ -9,7 +9,7 @@
     "webextension-polyfill": "^0.7.0"
   },
   "devDependencies": {
-    "archiver": "^5.1.0",
+    "archiver": "^5.2.0",
     "autoprefixer": "^10.1.0",
     "cssnano": "^4.1.10",
     "gulp": "^4.0.2",
