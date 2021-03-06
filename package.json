@@ -6,7 +6,7 @@
   "license": "MPL-2.0",
   "main": "js/background.js",
   "dependencies": {
-    "webextension-polyfill": "^0.6.0"
+    "webextension-polyfill": "^0.7.0"
   },
   "devDependencies": {
     "archiver": "^5.1.0",
