@@ -1,8 +1,10 @@
 {
   "name": "environment-marker",
-  "version": "2.1.0",
+  "version": "2.5.0",
   "description": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
-  "main": "background.js",
+  "author": "Armand Tresova <atresova@gmail.com> (https://www.armandtresova.com/)",
+  "license": "MPL-2.0",
+  "main": "js/background.js",
   "dependencies": {
     "webextension-polyfill": "^0.6.0"
   },
@@ -20,6 +22,7 @@
     "postcss": "^8.2.1"
   },
   "scripts": {
+    "develop": "node node_modules/gulp/bin/gulp.js --color --gulpfile gulpfile.js default",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node scripts/build.js"
   },
@@ -27,10 +30,12 @@
     "type": "git",
     "url": "git+https://github.com/XjSv/environment-marker.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/XjSv/environment-marker/issues"
   },
-  "homepage": "https://github.com/XjSv/environment-marker#readme"
+  "homepage": "https://github.com/XjSv/environment-marker#readme",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/XjSv"
+  }
 }
