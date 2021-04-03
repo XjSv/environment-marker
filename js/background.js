@@ -3,6 +3,7 @@ const TAB_COUNT_COLOR_LOW = '#28a745';
 const TAB_COUNT_COLOR_HIGH ='#dc3545';
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
+const fontKey = '__em-font__';
 
 /* generic error handler */
 function onError(error) {
@@ -50,25 +51,31 @@ function updateContent(tabId) {
                 }
 
                 if (urlFound) {
-                  browser.tabs.executeScript(tabId, {
-                    file: '/js/content.min.js'
-                  }).then(() => {
-                    browser.tabs.sendMessage(tabId, {
-                      command: 'addRibbon',
-                      url: storedObject.settingUrl,
-                      color: storedObject.settingColor,
-                      label: storedObject.settingLabel,
-                      position: storedObject.settingPosition,
-                      size: storedObject.settingSize
-                    }).then(response => {
-                      //console.log("Message from the content script:");
-                      //console.log(response.response);
-                    }).catch(onError);
-                  }, onError);
+                  browser.storage.local.get(fontKey).then((storedFont) => {
+                    let fontString = storedFont[fontKey] || '';
 
-                  browser.tabs.insertCSS(tabId, {
-                    file: '/css/content.min.css'
-                  }).then(null, onError);
+                    browser.tabs.executeScript(tabId, {
+                      file: '/js/content.min.js'
+                    }).then(() => {
+                      browser.tabs.sendMessage(tabId, {
+                        command: 'addRibbon',
+                        url: storedObject.settingUrl,
+                        color: storedObject.settingColor,
+                        label: storedObject.settingLabel,
+                        fontSize: storedObject.settingFontSize,
+                        position: storedObject.settingPosition,
+                        size: storedObject.settingSize,
+                        font: fontString
+                      }).then(response => {
+                        //console.log("Message from the content script:");
+                        //console.log(response.response);
+                      }).catch(onError);
+                    }, onError);
+
+                    browser.tabs.insertCSS(tabId, {
+                      file: '/css/content.min.css'
+                    }).then(null, onError);
+                  });
                 }
               }
             }
@@ -79,16 +86,19 @@ function updateContent(tabId) {
   }
 }
 
-browser.tabs.onRemoved.addListener((tabId) => {
+browser.tabs.onRemoved.addListener((tabId, removeInfo) => {
   updateCount(tabId, true);
 });
 
-browser.tabs.onCreated.addListener((tabId) => {
-  updateCount(tabId, false);
+browser.tabs.onCreated.addListener((tab) => {
+  updateCount(tab.id, false);
 });
 
-browser.tabs.onUpdated.addListener((tabId) => {
-  updateContent(tabId);
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  // Only run update once after the page is finished loading
+  if (changeInfo.status === 'complete') {
+    updateContent(tabId);
+  }
 });
 
 updateCount();

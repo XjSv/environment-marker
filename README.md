@@ -5,6 +5,7 @@
   </a>
 
   <h3 align="center">Environment Marker</h3>
+  <p align="center">[![CodeQL](https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml)</p>
 
   <p align="center">
     A Browser Extension
@@ -77,6 +78,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * **Reusable Color Swatch** - The last 7 colors used will be available from the color swatch.
 * **RegExp** - When enabled the URL fragment can be used with RegExp instead of searching using indexOf.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
+* **Font Picker** - Ability to select a font for the ribbons.
 
 ### Built With
 * [Font Awesome](https://fontawesome.com/)
@@ -85,6 +87,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
+* [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
 
 
 ## Installation
@@ -177,3 +180,4 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 * [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
+* [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)

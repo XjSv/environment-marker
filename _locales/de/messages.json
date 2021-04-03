@@ -8,6 +8,9 @@
   "inputUrlFragmentPlaceholder": {
     "message": "URL-Fragment"
   },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp"
+  },
   "inputColorPlaceholder": {
     "message": "Farbe"
   },
@@ -72,9 +75,9 @@
     "message": "Erfolgreich importiert!"
   },
   "noticeSettingSaved": {
-    "message": "Einstellung gespeichert!"
+    "message": "Einstellungen gespeichert!"
   },
-  "ariaLabelAlertClose" : {
+  "ariaLabelAlertClose": {
     "message": "Schließen"
   },
   "errorNoRibbonsToExport": {
@@ -89,6 +92,21 @@
   "buttonOptions": {
     "message": "Optionen"
   },
+  "optionsSettingsSection": {
+    "message": "Einstellungen"
+  },
+  "optionsExportImportSection": {
+    "message": "Exportieren / Importieren"
+  },
+  "inputFontLabel": {
+    "message": "Font"
+  },
+  "inputFontHelpText": {
+    "message": "Schriften werden global auf alle Bänder angewendet."
+  },
+  "inputRegExpHelpText": {
+    "message": "Aktiviere reguläre Ausdrücke im URL-Fragment Feld."
+  },
   "buttonExport": {
     "message": "Exportieren"
   },
@@ -99,7 +117,7 @@
     "message": "Datei auswählen"
   },
   "inputEnableRegExp": {
-    "message": "Aktivieren Sie RegExp"
+    "message": "RegExp"
   },
   "importWarning": {
     "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!"

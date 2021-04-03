@@ -2,11 +2,14 @@
   "extensionName": {
     "message": "Environment Marker"
   },
-  "extensionDescription": {
+    "extensionDescription": {
     "message": "Un navigateur WebExtension qui ajoute un marqueur de couleur (ruban) à la page selon que l'URL contient une chaîne donnée."
   },
   "inputUrlFragmentPlaceholder": {
     "message": "Fragment d’URL"
+  },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp"
   },
   "inputColorPlaceholder": {
     "message": "Couleur"
@@ -72,9 +75,9 @@
     "message": "Importation effectuée!"
   },
   "noticeSettingSaved": {
-    "message": "Paramètre enregistré!"
+    "message": "Paramètres sauvegardés!"
   },
-  "ariaLabelAlertClose" : {
+  "ariaLabelAlertClose": {
     "message": "Fermer"
   },
   "errorNoRibbonsToExport": {
@@ -89,6 +92,21 @@
   "buttonOptions": {
     "message": "Options"
   },
+  "optionsSettingsSection": {
+    "message": "Paramètres"
+  },
+  "optionsExportImportSection": {
+    "message": "Exporter / Importer"
+  },
+  "inputFontLabel": {
+    "message": "Police"
+  },
+  "inputFontHelpText": {
+    "message": "Les polices sont appliquées globalement à tous les rubans."
+  },
+  "inputRegExpHelpText": {
+    "message": "Activer les expressions régulières dans le champ de fragment d'URL."
+  },
   "buttonExport": {
     "message": "Exporter"
   },
@@ -99,7 +117,7 @@
     "message": "Choisir un fichier"
   },
   "inputEnableRegExp": {
-    "message": "Activer RegExp"
+    "message": "RegExp"
   },
   "importWarning": {
     "message": "Attention: l'importation de rubans annulera tout!"

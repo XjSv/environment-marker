@@ -8,6 +8,9 @@
   "inputUrlFragmentPlaceholder": {
     "message": "Fragmento de URL"
   },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp"
+  },
   "inputColorPlaceholder": {
     "message": "Color"
   },
@@ -74,7 +77,7 @@
   "noticeSettingSaved": {
     "message": "Configuración guardada!"
   },
-  "ariaLabelAlertClose" : {
+  "ariaLabelAlertClose": {
     "message": "Cerrar"
   },
   "errorNoRibbonsToExport": {
@@ -89,6 +92,21 @@
   "buttonOptions": {
     "message": "Opciones"
   },
+  "optionsSettingsSection": {
+    "message": "Configuración"
+  },
+  "optionsExportImportSection": {
+    "message": "Exportar / Importar"
+  },
+  "inputFontLabel": {
+    "message": "Fuente"
+  },
+  "inputFontHelpText": {
+    "message": "Las fuentes se aplican globalmente a todas las cintas."
+  },
+  "inputRegExpHelpText": {
+    "message": "Habilitar expresiones regulares en el campo de fragmentos de URL."
+  },
   "buttonExport": {
     "message": "Exportar"
   },
@@ -99,7 +117,7 @@
     "message": "Elegir archivo"
   },
   "inputEnableRegExp": {
-    "message": "Habilitar RegExp"
+    "message": "RegExp"
   },
   "importWarning": {
     "message": "Advertencia: La importación de cintas anulará todo!"
