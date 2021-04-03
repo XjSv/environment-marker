@@ -78,7 +78,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * **Reusable Color Swatch** - The last 7 colors used will be available from the color swatch.
 * **RegExp** - When enabled the URL fragment can be used with RegExp instead of searching using indexOf.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
-* **Font Picker** - Ability to select a font for the ribbons.
+* **Font Picker** - Ability to select fonts for the ribbons. Font come from Google Fonts.
 
 ### Built With
 * [Font Awesome](https://fontawesome.com/)
