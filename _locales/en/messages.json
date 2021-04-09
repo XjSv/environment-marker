@@ -4,8 +4,8 @@
     "description": "The name of the extension."
   },
   "extensionDescription": {
-    "message": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
-    "description":"The description of the extension."
+    "message": "Provides a way to add a color indicator or marker (ribbon) on a web page depending on the URL.",
+    "description": "The description of the extension."
   },
 
   "inputUrlFragmentPlaceholder": {
@@ -122,6 +122,10 @@
   "errorChooseFile": {
     "message": "Choose a file!",
     "description": "Import no file selected error message."
+  },
+  "errorFileEmptyOrFormat": {
+    "message": "File empty or format not correct.",
+    "description": "Import file empty or the format is not correct error message."
   },
 
   "buttonClearAll": {

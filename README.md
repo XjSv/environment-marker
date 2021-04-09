@@ -50,11 +50,11 @@
 </p>
 
 A browser WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-').
-Currently this extension supports Firefox and Chrome. Plans are in place to also support Safari in the near future.
+Currently this extension supports Firefox and Chromium based browser such as Microsoft Edge or Brave. Plans are in place to also support Safari in the near future.
 
 ### Browser Support
 - Firefox
-- Chrome & Chromium based browser such as Brave
+- Chrome & Chromium based browser such as <a href="https://www.microsoft.com/edge" target="_blank">Microsoft Edge</a> or <a href="https://brave.com/" target="_blank">Brave</a>
 - Safari (coming soon...)
 
 ### Features

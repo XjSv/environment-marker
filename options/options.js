@@ -20,6 +20,7 @@ let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     inputFontLabel = browser.i18n.getMessage("inputFontLabel"),
     inputFontHelpText = browser.i18n.getMessage("inputFontHelpText"),
     inputRegExpHelpText = browser.i18n.getMessage("inputRegExpHelpText"),
+    errorFileEmptyOrFormat = browser.i18n.getMessage("errorFileEmptyOrFormat"),
     exportFile = null;
 
 let languageCode = browser.i18n.getUILanguage(),
@@ -107,6 +108,8 @@ function importConfig() {
   let importFileInput = document.getElementById('importFile'),
       importFile = importFileInput.files[0];
 
+  console.log(importConfig);
+
   if (importFile) {
     const reader = new FileReader();
 
@@ -114,8 +117,7 @@ function importConfig() {
     reader.addEventListener('load', function() {
       let importConfigObjects = JSON.parse(reader.result); // Parse the result into an object
 
-      if (importConfigObjects.length > 0) {
-
+      if (importConfigObjects.length > 0 && importConfigObjects.hasOwnProperty('url')) {
         let storedArray = [],
             errorMessages = '';
 
@@ -153,6 +155,8 @@ function importConfig() {
             showMessage(noticeSuccessImport);
           }, onError);
         }
+      } else {
+        showMessage(errorFileEmptyOrFormat, true);
       }
     });
 

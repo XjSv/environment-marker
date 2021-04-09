@@ -3,7 +3,7 @@
     "message": "Environment Marker"
   },
   "extensionDescription": {
-    "message": "Eine Browser-WebExtension, die der Seite eine Farbmarkierung (Multifunktionsleiste) hinzufügt, je nachdem, ob die URL eine bestimmte Zeichenfolge enthält."
+    "message": "Bietet eine Möglichkeit, einer Webseite abhängig von der URL einen Farbindikator oder eine Markierung (Multifunktionsleiste) hinzuzufügen."
   },
   "inputUrlFragmentPlaceholder": {
     "message": "URL-Fragment"
@@ -85,6 +85,9 @@
   },
   "errorChooseFile": {
     "message": "Datei auswählen!"
+  },
+  "errorFileEmptyOrFormat": {
+    "message": "Datei leer oder Format nicht korrekt."
   },
   "buttonClearAll": {
     "message": "Alles Löschen"
