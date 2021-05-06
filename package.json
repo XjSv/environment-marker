@@ -19,7 +19,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify-es": "^2.0.0",
     "merge-stream": "^2.0.0",
-    "postcss": "^8.2.13"
+    "postcss": "^8.2.14"
   },
   "scripts": {
     "develop": "node node_modules/gulp/bin/gulp.js --color --gulpfile gulpfile.js default",
