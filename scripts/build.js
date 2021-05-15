@@ -124,7 +124,7 @@ archive_firefox.file(__dirname + '/../options/options.min.js', { name: 'options/
 archive_firefox.file(__dirname + '/../options/options.min.css', { name: 'options/options.min.css' });
 
 // Language files (i18n)
-archive_chromium.directory(__dirname + '/../_locales/', '_locales');
+archive_firefox.directory(__dirname + '/../_locales/', '_locales');
 
 //archive_firefox.directory(__dirname + '/../popup/', 'popup');
 //archive_firefox.directory(__dirname + '/../options/', 'options');
