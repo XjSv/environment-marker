@@ -5,8 +5,6 @@
   </a>
 
   <h3 align="center">Environment Marker</h3>
-  <p align="center">[![CodeQL](https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml)</p>
-
   <p align="center">
     A Browser Extension
     <br />
@@ -23,6 +21,7 @@
     ·
     <a href="https://github.com/XjSv/environment-marker/issues">Request Feature</a>
   </p>
+  <p align="center"><img src="https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml/badge.svg?branch=master"/></p>
 </p>
 
 
