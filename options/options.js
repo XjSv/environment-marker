@@ -108,8 +108,6 @@ function importConfig() {
   let importFileInput = document.getElementById('importFile'),
       importFile = importFileInput.files[0];
 
-  console.log(importConfig);
-
   if (importFile) {
     const reader = new FileReader();
 
@@ -117,7 +115,7 @@ function importConfig() {
     reader.addEventListener('load', function() {
       let importConfigObjects = JSON.parse(reader.result); // Parse the result into an object
 
-      if (importConfigObjects.length > 0 && importConfigObjects.hasOwnProperty('url')) {
+      if (importConfigObjects.length > 0 && importConfigObjects[0].hasOwnProperty('url')) {
         let storedArray = [],
             errorMessages = '';
 
