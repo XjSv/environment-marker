@@ -1,161 +1,145 @@
 .em-ribbon-wrapper {
-  overflow: hidden;
   position: fixed;
   pointer-events: none;
   z-index: 999999;
 
   .em-ribbon {
-    font-family: "HelveticaNeue-CondensedBold", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    font-family: "HelveticaNeue-CondensedBold", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     position: relative;
     text-align: center;
     font-size: 14px;
-    padding: 6px 0 8px 0;
     width: 100%;
     box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
-    letter-spacing: 1px;
     pointer-events: none;
     opacity: 0.7;
+    overflow: hidden;
+
+    .em-ribbon-label {
+      max-width: 80%;
+    }
   }
 
-  .em-top-left-ribbon {
-    transform: rotate(-45deg);
-  }
-  .em-top-right-ribbon {
-    transform: rotate(45deg);
-  }
-  .em-bottom-left-ribbon {
-    transform: rotate(45deg);
-  }
+  .em-top-left-ribbon,
   .em-bottom-right-ribbon {
     transform: rotate(-45deg);
   }
+  .em-top-right-ribbon,
+  .em-bottom-left-ribbon {
+    transform: rotate(45deg);
+  }
 
   .em-extra-small-ribbon {
-    padding: 2px 0 4px 0;
-    font-size: 8px;
+    height: 16px;
 
     &.em-top-left-ribbon {
       left: -20%;
-      top: 20%;
+      top: 50px;
     }
     &.em-top-right-ribbon {
       left: 20%;
-      top: 20%;
+      top: 50px;
     }
     &.em-bottom-left-ribbon {
-      bottom: -65%;
+      bottom: 50px;
       left: -20%;
     }
     &.em-bottom-right-ribbon {
-      bottom: -65%;
+      bottom: 50px;
       left: 20%;
     }
   }
   .em-small-ribbon {
-    padding: 4px 0 6px 0;
-    font-size: 10px;
+    height: 20px;
 
     &.em-top-left-ribbon {
       left: -20%;
-      top: 20%;
+      top: 50px;
     }
     &.em-top-right-ribbon {
       left: 20%;
-      top: 20%;
+      top: 50px;
     }
     &.em-bottom-left-ribbon {
-      bottom: -65%;
+      bottom: 50px;
       left: -20%;
     }
     &.em-bottom-right-ribbon {
-      bottom: -65%;
+      bottom: 50px;
       left: 20%;
     }
   }
   .em-normal-ribbon {
-    padding: 6px 0 8px 0;
-    font-size: 14px;
+    height: 24px;
 
     &.em-top-left-ribbon {
-      left: -25%;
-      top: 10%;
+      left: -20%;
+      top: 50px;
     }
     &.em-top-right-ribbon {
-      left: 25%;
-      top: 10%;
+      left: 20%;
+      top: 50px;
     }
     &.em-bottom-left-ribbon {
-      bottom: -65%;
-      left: -25%;
+      bottom: 50px;
+      left: -20%;
     }
     &.em-bottom-right-ribbon {
-      bottom: -65%;
-      left: 25%;
+      bottom: 50px;
+      left: 20%;
     }
   }
   .em-large-ribbon {
-    padding: 18px 0 24px 0;
-    font-size: 24px;
+    height: 30px;
 
     &.em-top-left-ribbon {
-      left: -30%;
-      top: 10%;
+      left: -20%;
+      top: 45px;
     }
     &.em-top-right-ribbon {
-      left: 30%;
-      top: 10%;
+      left: 20%;
+      top: 45px;
     }
     &.em-bottom-left-ribbon {
-      left: -30%;
-      bottom: -45%;
+      left: -20%;
+      bottom: 45px;
     }
     &.em-bottom-right-ribbon {
-      left: 30%;
-      bottom: -45%;
+      left: 20%;
+      bottom: 45px;
     }
   }
   .em-extra-large-ribbon {
-    padding: 30px 0 40px 0;
-    font-size: 32px;
+    height: 36px;
 
     &.em-top-left-ribbon {
-      left: -30%;
-      top: 10%;
+      left: -21%;
+      top: 40px;
     }
     &.em-top-right-ribbon {
-      left: 30%;
-      top: 10%;
+      left: 21%;
+      top: 40px;
     }
     &.em-bottom-left-ribbon {
-      left: -30%;
-      bottom: -50%;
+      left: -21%;
+      bottom: 40px;
     }
     &.em-bottom-right-ribbon {
-      left: 30%;
-      bottom: -50%;
+      left: 21%;
+      bottom: 40px;
     }
   }
 }
 
-.em-extra-small-ribbon-wrapper {
-  width: 125px;
-  height: 125px;
-}
-.em-small-ribbon-wrapper {
-  width: 150px;
-  height: 150px;
-}
-.em-normal-ribbon-wrapper {
-  width: 175px;
-  height: 175px;
-}
-.em-large-ribbon-wrapper {
-  width: 225px;
-  height: 155px;
-}
+.em-extra-small-ribbon-wrapper,
+.em-small-ribbon-wrapper,
+.em-normal-ribbon-wrapper,
+.em-large-ribbon-wrapper,
 .em-extra-large-ribbon-wrapper {
-  width: 335px;
-  height: 245px;
+  width: 200px;
 }
 
 .em-top-left-wrapper {
