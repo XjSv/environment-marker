@@ -14,6 +14,10 @@
     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker?utm_source=github&utm_medium=referral&utm_content=get-the-addon-link&utm_campaign=github">Firefox Addons</a>
     .
     <a target="_blank" href="https://chrome.google.com/webstore/detail/environment-marker/cjnmfjkimfbollcepfbhpahipampinhb">Chrome Web Store</a>
+    .
+    <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/environment-marker/iggchogopggbmjgplniemfaghmdkhlip">Edge Add-ons</a>
+    ·
+    <a target="_blank" href="https://addons.opera.com/en/extensions/details/environment-marker/">Opera addons</a>
     ·
     <a href="https://github.com/XjSv/environment-marker/issues">Report Bug</a>
     ·
@@ -50,11 +54,14 @@
 </p>
 
 A browser WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-').
-Currently this extension supports Firefox and Chromium based browser such as Microsoft Edge or Brave. Plans are in place to also support Safari in the near future.
+Currently, this extension supports Firefox and Chromium based browser such as Microsoft Edge, Opera and Brave. Plans are in place to also support Safari in the near future.
 
 ### Browser Support
 - Firefox
-- Chrome & Chromium based browser such as <a href="https://www.microsoft.com/edge" target="_blank">Microsoft Edge</a> or <a href="https://brave.com/" target="_blank">Brave</a>
+- Chrome & Chromium based browser
+  - Microsoft Edge
+  - Opera
+  - Brave
 - Safari (coming soon...)
 
 ### Features
