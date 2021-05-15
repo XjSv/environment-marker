@@ -18,6 +18,7 @@
 
     let ribbonWrapper = document.createElement('div'),
         ribbon = document.createElement('div'),
+        ribbonText = document.createElement('div'),
         textColor = getContrastYIQ(color);
 
     // For backwards compatibility for users that already have ribbons configured.
@@ -34,7 +35,9 @@
 
     ribbonWrapper.className = 'em-ribbon-wrapper em-' + position + '-wrapper em-' + size + '-ribbon-wrapper';
     ribbon.className = 'em-ribbon em-' + size + '-ribbon em-' + position + '-ribbon';
-    ribbon.textContent = truncateString(label, 10);
+    ribbonText.className = 'em-ribbon-label';
+    ribbonText.textContent = label;
+    ribbon.appendChild(ribbonText);
     ribbonWrapper.appendChild(ribbon);
 
     if (fontData) {
@@ -55,7 +58,7 @@
 
       if (fontLocation === 'google') {
         let googleFontStylesheet = document.createElement('link');
-            googleFontStylesheet.href = 'https://fonts.googleapis.com/css?family=' + font + '&display=swap';
+            googleFontStylesheet.href = 'https://fonts.googleapis.com/css?family=' + font + ':' + variant + '&display=swap';
             googleFontStylesheet.type = 'text/css';
             googleFontStylesheet.rel = 'stylesheet';
             googleFontStylesheet.className = 'em-google-stylesheet';
@@ -70,13 +73,6 @@
       ribbon.setAttribute('style', "background-color: " + color + "; color: " + textColor + "; font-size: " + fontSize + "px;");
     }
     document.body.appendChild(ribbonWrapper);
-  }
-
-  function truncateString(str, num) {
-    if (str.length <= num) {
-      return str
-    }
-    return str.slice(0, num) + '...'
   }
 
   function getContrastYIQ(hexColor) {
