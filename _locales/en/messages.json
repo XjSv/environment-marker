@@ -24,6 +24,22 @@
     "message": "Label",
     "description": "Label input field placeholder."
   },
+  "selectFontSizeLabel": {
+    "message": "Font Size",
+    "description": "Font Size select field placeholder."
+  },
+  "selectPositionLabel": {
+    "message": "Position",
+    "description": "Position select field label."
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Ribbon Size",
+    "description": "Ribbon Size select field label."
+  },
+  "buttonSaveLabel": {
+    "message": "Save",
+    "description": "Save button label."
+  },
 
   "positionSelectTopLeft": {
     "message": "Top Left",

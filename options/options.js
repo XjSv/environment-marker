@@ -21,6 +21,7 @@ let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     inputFontHelpText = browser.i18n.getMessage("inputFontHelpText"),
     inputRegExpHelpText = browser.i18n.getMessage("inputRegExpHelpText"),
     errorFileEmptyOrFormat = browser.i18n.getMessage("errorFileEmptyOrFormat"),
+    buttonOptions = browser.i18n.getMessage("buttonOptions"),
     exportFile = null;
 
 let languageCode = browser.i18n.getUILanguage(),
@@ -166,6 +167,7 @@ function importConfig() {
 
 $(document).ready(() => {
   $('html').attr('lang', languageCode);
+  document.title = 'Environment Marker - ' + buttonOptions;
 
   let exportButton = $('.export'),
       importButton = $('.import');

@@ -17,6 +17,18 @@
   "inputLabelPlaceholder": {
     "message": "Beschriftung"
   },
+  "selectFontSizeLabel": {
+    "message": "Schriftgröße"
+  },
+  "selectPositionLabel": {
+    "message": "Position"
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Ribbon-Größe"
+  },
+  "buttonSaveLabel": {
+    "message": "Speichern"
+  },
   "positionSelectTopLeft": {
     "message": "Oben Links"
   },

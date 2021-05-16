@@ -17,6 +17,18 @@
   "inputLabelPlaceholder": {
     "message": "Etiqueta"
   },
+  "selectFontSizeLabel": {
+    "message": "Tamaño de Funte"
+  },
+  "selectPositionLabel": {
+    "message": "Posición"
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Tamaño de Cinta"
+  },
+  "buttonSaveLabel": {
+    "message": "Guardar"
+  },
   "positionSelectTopLeft": {
     "message": "Superior Izquierdo"
   },

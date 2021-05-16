@@ -17,6 +17,18 @@
   "inputLabelPlaceholder": {
     "message": "Étiquette"
   },
+  "selectFontSizeLabel": {
+    "message": "Taille de la Police"
+  },
+  "selectPositionLabel": {
+    "message": "Position"
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Taille du Ruban"
+  },
+  "buttonSaveLabel": {
+    "message": "Enregistrer"
+  },
   "positionSelectTopLeft": {
     "message": "En Haut à Gauche"
   },

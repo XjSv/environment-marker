@@ -2,6 +2,10 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     inputUrlFragmentRegExpPlaceholder = browser.i18n.getMessage("inputUrlFragmentRegExpPlaceholder"),
     inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder"),
     inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder"),
+    selectFontSizeLabel = browser.i18n.getMessage("selectFontSizeLabel"),
+    selectPositionLabel = browser.i18n.getMessage("selectPositionLabel"),
+    selectRibbonSizeLabel = browser.i18n.getMessage("inputLabelPlaceholder"),
+    buttonSaveLabel = browser.i18n.getMessage("buttonSaveLabel"),
     positionSelectTopLeft = browser.i18n.getMessage("positionSelectTopLeft"),
     positionSelectTopRight = browser.i18n.getMessage("positionSelectTopRight"),
     positionSelectBottomLeft = browser.i18n.getMessage("positionSelectBottomLeft"),
@@ -429,6 +433,10 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
 
   let displayLabelUrl = $( "<div/>", {
     "class": "col-10 display-labelUrl",
+    "tabindex": "0",
+    "aria-label": "Edit Ribbon",
+    "aria-pressed": "false",
+    "aria-controls": "edit-container-" + settingIndex,
     html: displayString,
     click: function() {
       displayContainer.hide();
@@ -438,6 +446,10 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
 
   let displayColor = $( "<div/>", {
     "class": "col-1 display-color",
+    "tabindex": "0",
+    "aria-label": "Edit Ribbon",
+    "aria-pressed": "false",
+    "aria-controls": "edit-container-" + settingIndex,
     html: '<div class="display-color-color" style="background-color: ' + settingColor + ';"></div>',
     click: function() {
       displayContainer.hide();
@@ -451,6 +463,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
 
   let deleteBtn = $( "<button/>", {
     "class": "btn btn-danger btn-sm delete",
+    "aria-label": "Delete Ribbon",
     html: '<i class="fas fa-trash fa-lg"></i>',
     click: function() {
       $(this).parent().parent().parent().remove();
@@ -460,6 +473,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
 
   let editContainer = $( "<div/>", {
     "class": "row no-gutters my-3 edit-container",
+    "id": "edit-container-" + settingIndex,
     "style": "display: none;"
   });
 
@@ -803,7 +817,7 @@ $(document).ready(() => {
       }, onError);
     });
 
-    pickr.on('init', instance => {
+    pickr.on('init', (instance) => {
       $('.pcr-button').attr('tabindex', '2');
     });
   }, onError);
@@ -812,17 +826,30 @@ $(document).ready(() => {
   clearButton.html(buttonClearAll);
   optionsButton.html(buttonOptions);
 
+  let url_input = $('#url'),
+      color_input = $('#color'),
+      label_input = $('#label');
+
   browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
     let searchModeRegExp = storedSearchMode[searchModeKey] || false;
     if (searchModeRegExp) {
-      $('#url').attr('placeholder', inputUrlFragmentRegExpPlaceholder);
+      url_input.attr('placeholder', inputUrlFragmentRegExpPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentRegExpPlaceholder);
     } else {
-      $('#url').attr('placeholder', inputUrlFragmentPlaceholder);
+      url_input.attr('placeholder', inputUrlFragmentPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentPlaceholder);
     }
   });
 
-  $('#color').attr('placeholder', inputColorPlaceholder);
-  $('#label').attr('placeholder', inputLabelPlaceholder);
+  color_input.attr('placeholder', inputColorPlaceholder);
+  color_input.attr('aria-label', inputColorPlaceholder);
+  label_input.attr('placeholder', inputLabelPlaceholder);
+  label_input.attr('aria-label', inputLabelPlaceholder);
+
+  $('#font-size').attr('aria-label', selectFontSizeLabel);
+  $('#position').attr('aria-label', selectPositionLabel);
+  $('#size').attr('aria-label', selectRibbonSizeLabel);
+  $('#save').attr('aria-label', buttonSaveLabel);
 
   $('#position option[value="top-left"]').html(positionSelectTopLeft);
   $('#position option[value="top-right"]').html(positionSelectTopRight);
