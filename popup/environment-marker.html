@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/popup/environment-marker.min.css"/>
@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/libraries/fontawesome/css/fontawesome.min.css" >
     <link rel="stylesheet" href="/libraries/fontawesome/css/solid.min.css">
     <link rel="stylesheet" href="/libraries/bootstrap/css/bootstrap.min.css">
+    <title>Environment Marker</title>
   </head>
 <body>
   <div class="container-fluid outer-wrapper">
@@ -24,16 +25,25 @@
             <input tabindex="2" type="color" placeholder="" name="color" id="color" class="form-control color-picker" value="#42445a">
           </div>
           <div class="col-1">
-            <button tabindex="6" class="btn btn-primary btn-sm save"><i class="fas fa-save fa-lg"></i></button>
+            <button tabindex="7" id="save" class="btn btn-primary btn-sm save"><i class="fas fa-save fa-lg"></i></button>
           </div>
         </div>
 
         <div class="row no-gutters">
-          <div class="col-6 pr-1">
+          <div class="col-4 pr-1">
             <input tabindex="3" type="text" placeholder="" name="label" id="label" class="form-control">
           </div>
+          <div class="col-2">
+            <select tabindex="4" name="font-size" id="font-size" class="form-control">
+              <option value="10">10px</option>
+              <option value="12">12px</option>
+              <option selected="selected" value="14">14px</option>
+              <option value="16">16px</option>
+              <option value="18">18px</option>
+            </select>
+          </div>
           <div class="col-3">
-            <select tabindex="4" name="position" id="position" class="form-control">
+            <select tabindex="5" name="position" id="position" class="form-control">
               <option selected="selected" value="top-left"></option>
               <option value="top-right"></option>
               <option value="bottom-left"></option>
@@ -41,7 +51,7 @@
             </select>
           </div>
           <div class="col-3">
-            <select tabindex="5" name="size" id="size" class="form-control">
+            <select tabindex="6" name="size" id="size" class="form-control">
               <option value="extra-small"></option>
               <option value="small"></option>
               <option selected="selected" value="normal"></option>

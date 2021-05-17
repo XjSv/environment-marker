@@ -3,16 +3,31 @@
     "message": "Environment Marker"
   },
   "extensionDescription": {
-    "message": "Un navegador WebExtension que agrega un marcador de color (cinta) a la página dependiendo de si la URL contiene una cadena determinada."
+    "message": "Proporciona una forma de agregar un indicador de color o marcador (cinta) en una página web según la URL."
   },
   "inputUrlFragmentPlaceholder": {
     "message": "Fragmento de URL"
+  },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp"
   },
   "inputColorPlaceholder": {
     "message": "Color"
   },
   "inputLabelPlaceholder": {
     "message": "Etiqueta"
+  },
+  "selectFontSizeLabel": {
+    "message": "Tamaño de Funte"
+  },
+  "selectPositionLabel": {
+    "message": "Posición"
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Tamaño de Cinta"
+  },
+  "buttonSaveLabel": {
+    "message": "Guardar"
   },
   "positionSelectTopLeft": {
     "message": "Superior Izquierdo"
@@ -74,7 +89,7 @@
   "noticeSettingSaved": {
     "message": "Configuración guardada!"
   },
-  "ariaLabelAlertClose" : {
+  "ariaLabelAlertClose": {
     "message": "Cerrar"
   },
   "errorNoRibbonsToExport": {
@@ -83,11 +98,29 @@
   "errorChooseFile": {
     "message": "Elige un archivo!"
   },
+  "errorFileEmptyOrFormat": {
+    "message": "Archivo vacío o formato incorrecto."
+  },
   "buttonClearAll": {
     "message": "Borrar Todo"
   },
   "buttonOptions": {
     "message": "Opciones"
+  },
+  "optionsSettingsSection": {
+    "message": "Configuración"
+  },
+  "optionsExportImportSection": {
+    "message": "Exportar / Importar"
+  },
+  "inputFontLabel": {
+    "message": "Fuente"
+  },
+  "inputFontHelpText": {
+    "message": "Las fuentes se aplican globalmente a todas las cintas."
+  },
+  "inputRegExpHelpText": {
+    "message": "Habilitar expresiones regulares en el campo de fragmentos de URL."
   },
   "buttonExport": {
     "message": "Exportar"
@@ -99,7 +132,7 @@
     "message": "Elegir archivo"
   },
   "inputEnableRegExp": {
-    "message": "Habilitar RegExp"
+    "message": "RegExp"
   },
   "importWarning": {
     "message": "Advertencia: La importación de cintas anulará todo!"

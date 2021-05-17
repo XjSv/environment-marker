@@ -1,38 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/libraries/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/libraries/fontawesome/css/fontawesome.min.css" >
     <link rel="stylesheet" href="/libraries/fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="/libraries/fontpicker/jquery.fontpicker.min.css">
     <link rel="stylesheet" href="/options/options.min.css"/>
+    <title>Environment Marker - Options</title>
 </head>
 <body>
     <div class="container outer-wrapper">
         <div class="row">
             <div class="col-12 message-container"></div>
         </div>
-        <div class="row my-2 justify-content-around align-items-center export-import-container">
-            <div class="align-self-center">
-                <button class="btn btn-primary btn-sm export"></button>
+
+        <div class="settings-wrap">
+            <h4 id="settings-section-label"></h4>
+            <div class="row form-group my-3 font-picker-container">
+                <label id="font-label" for="font-picker" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input type="text" name="font-picker" id="font-picker" aria-describedby="font-picker-help-block">
+                    <small id="font-picker-help-block" class="form-text text-muted"></small>
+                </div>
             </div>
-            <div class="align-self-center">
-                <input class="d-none import-file" type="file" id="importFile" name="importFile" accept=".json">
-                <label class="import-file-label" for="importFile"></label>
-                <button class="btn btn-secondary btn-sm import"></button>
-            </div>
-        </div>
-        <div class="row my-2 justify-content-around align-items-center export-import-container">
-            <div class="align-self-center">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enable-regexp">
-                    <label id="enable-regexp-label" class="custom-control-label" for="enable-regexp"></label>
+
+            <div class="row form-group my-3 enable-regexp-container">
+                <label id="enable-regexp-label" class="col-sm-3 col-form-label" for="enable-regexp"></label>
+                <div class="col-sm-9">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="enable-regexp" class="custom-control-input" id="enable-regexp" aria-describedby="enable-regexp-help-block">
+                        <label class="custom-control-label" for="enable-regexp"></label>
+                    </div>
+                    <small id="enable-regexp-help-block" class="form-text text-muted"></small>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="import-warning" class="alert alert-warning" role="alert"></div>
+
+        <div class="export-import-wrap">
+            <h4 id="export-import-section-label"></h4>
+            <div class="row my-3 export-import-container">
+                <div class="col-12">
+                    <input class="d-none import-file" type="file" id="importFile" name="importFile" accept=".json">
+                    <label class="import-file-label" for="importFile"></label>
+                    <button class="btn btn-secondary btn-sm import"></button>
+                    <button class="btn btn-primary btn-sm export"></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div id="import-warning" class="alert alert-warning" role="alert"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,6 +59,7 @@
     <script src="/libraries/browser-polyfill.min.js"></script>
     <script src="/libraries/jquery.slim.min.js"></script>
     <script src="/libraries/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/libraries/fontpicker/jquery.fontpicker.min.js"></script>
     <script src="/options/options.min.js"></script>
 </body>
 </html>

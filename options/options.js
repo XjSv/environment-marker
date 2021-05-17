@@ -15,10 +15,20 @@ let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     inputEnableRegExp = browser.i18n.getMessage("inputEnableRegExp"),
     noticeSettingSaved = browser.i18n.getMessage("noticeSettingSaved"),
     ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose"),
+    optionsSettingsSection = browser.i18n.getMessage("optionsSettingsSection"),
+    optionsExportImportSection = browser.i18n.getMessage("optionsExportImportSection"),
+    inputFontLabel = browser.i18n.getMessage("inputFontLabel"),
+    inputFontHelpText = browser.i18n.getMessage("inputFontHelpText"),
+    inputRegExpHelpText = browser.i18n.getMessage("inputRegExpHelpText"),
+    errorFileEmptyOrFormat = browser.i18n.getMessage("errorFileEmptyOrFormat"),
+    buttonOptions = browser.i18n.getMessage("buttonOptions"),
     exportFile = null;
 
+let languageCode = browser.i18n.getUILanguage(),
+    languageCodeTwoChar = languageCode.split('-')[0];
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
+const fontKey = '__em-font__';
 const exportFileName = 'ribbons.json';
 
 function onError(error) {
@@ -29,7 +39,7 @@ function onError(error) {
 function showMessage(textMsg, errorFlag = false) {
   let messageClass = errorFlag ? 'alert-danger' : 'alert-success';
   if ($('.alert-dismissible').length) {
-    $(".alert-dismissible").alert('close');
+    $('.alert-dismissible').alert('close');
   }
 
   $('.outer-wrapper .message-container').append(
@@ -39,7 +49,7 @@ function showMessage(textMsg, errorFlag = false) {
   );
 
   window.setTimeout(function() {
-    $(".alert-dismissible").alert('close');
+    $('.alert-dismissible').alert('close');
   }, 3000);
 }
 
@@ -106,8 +116,7 @@ function importConfig() {
     reader.addEventListener('load', function() {
       let importConfigObjects = JSON.parse(reader.result); // Parse the result into an object
 
-      if (importConfigObjects.length > 0) {
-
+      if (importConfigObjects.length > 0 && importConfigObjects[0].hasOwnProperty('url')) {
         let storedArray = [],
             errorMessages = '';
 
@@ -145,6 +154,8 @@ function importConfig() {
             showMessage(noticeSuccessImport);
           }, onError);
         }
+      } else {
+        showMessage(errorFileEmptyOrFormat, true);
       }
     });
 
@@ -155,6 +166,9 @@ function importConfig() {
 }
 
 $(document).ready(() => {
+  $('html').attr('lang', languageCode);
+  document.title = 'Environment Marker - ' + buttonOptions;
+
   let exportButton = $('.export'),
       importButton = $('.import');
 
@@ -189,4 +203,73 @@ $(document).ready(() => {
   $('.import-file-label').html(inputChooseFile);
   $('#import-warning').html(importWarning);
   $('#enable-regexp-label').html(inputEnableRegExp);
+
+  $('#settings-section-label').html('<i class="fas fa-cog"></i> ' + optionsSettingsSection);
+  $('#export-import-section-label').html('<i class="fas fa-sync-alt"></i> ' + optionsExportImportSection);
+  $('#font-label').html(inputFontLabel);
+  $('#font-picker-help-block').html(inputFontHelpText);
+  $('#enable-regexp-help-block').html(inputRegExpHelpText);
+
+  $('#font-picker').fontpicker({
+    lang: languageCodeTwoChar,
+    variants: true,
+    lazyLoad: true,
+    showClear: true,
+    nrRecents: 0,
+    localFonts: {
+      "Arial": {
+        "category": "sans-serif",
+        "variants": "400,400i,600,600i"
+      },
+      "Georgia": {
+        "category": "serif",
+        "variants": "400,400i,600,600i"
+      },
+      "Times New Roman": {
+        "category": "serif",
+        "variants": "400,400i,600,600i"
+      },
+      "Verdana": {
+        "category": "sans-serif",
+        "variants": "400,400i,600,600i",
+      }/*,
+      "Action Man": {},
+      "Bauer": {
+        "category": "display",
+        "variants": "400,400i,600,600i",
+        "subsets": "latin-ext,latin"
+      },
+      "Bubble": {
+        "category": "display",
+        "variants": "400,400i,600,600i",
+        "subsets": "latin-ext,latin"
+      }*/
+    },
+    localFontsUrl: '/libraries/fontpicker/fonts/',
+    onSelect: function(fontObject) {
+      let fontStoreValue = fontObject.fontType + ':' + fontObject.fontSpec;
+
+      browser.storage.local.set({[fontKey] : fontStoreValue}).then(() => {
+        showMessage(noticeSettingSaved);
+      });
+    }
+  });
+
+  browser.storage.local.get(fontKey).then((storedFont) => {
+    let fontString = storedFont[fontKey] || '';
+
+    if (fontString) {
+      let fontTmp = fontString.split(':'),
+          font = fontTmp[1],
+          variant = fontTmp[2];
+
+      $('#font-picker').val(font + ':' + variant).trigger('change');
+    }
+  });
+
+  $('.fp-clear').click(() => {
+    browser.storage.local.set({[fontKey] : ''}).then(() => {
+      showMessage(noticeSettingSaved);
+    });
+  });
 });

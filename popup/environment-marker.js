@@ -1,6 +1,11 @@
 let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlaceholder"),
+    inputUrlFragmentRegExpPlaceholder = browser.i18n.getMessage("inputUrlFragmentRegExpPlaceholder"),
     inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder"),
     inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder"),
+    selectFontSizeLabel = browser.i18n.getMessage("selectFontSizeLabel"),
+    selectPositionLabel = browser.i18n.getMessage("selectPositionLabel"),
+    selectRibbonSizeLabel = browser.i18n.getMessage("inputLabelPlaceholder"),
+    buttonSaveLabel = browser.i18n.getMessage("buttonSaveLabel"),
     positionSelectTopLeft = browser.i18n.getMessage("positionSelectTopLeft"),
     positionSelectTopRight = browser.i18n.getMessage("positionSelectTopRight"),
     positionSelectBottomLeft = browser.i18n.getMessage("positionSelectBottomLeft"),
@@ -33,7 +38,8 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     displayAt = browser.i18n.getMessage("displayAt"),
     ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose");
 
-let pickr = null,
+let languageCode = browser.i18n.getUILanguage(),
+    pickr = null,
     colorSwatches = [
       'rgba(244, 67,  54, 1)',
       'rgba(233, 30,  99, 1)',
@@ -46,9 +52,17 @@ let pickr = null,
 const swatchesKey = '__em-swatches__';
 const markersKey = '__em-markers__';
 const dbVersionKey = '__em-version__';
+const searchModeKey = '__em-search-mode__';
 const maxSwatches = 7;
 const hide = 'none';
 const show = 'block';
+const fontSizeMap = [
+  {value: '10', label: '10px'},
+  {value: '12', label: '12px'},
+  {value: '14', label: '14px'},
+  {value: '16', label: '16px'},
+  {value: '18', label: '18px'},
+];
 const positionsMap = [
   {value: 'top-left', label: positionSelectTopLeft},
   {value: 'top-right', label: positionSelectTopRight},
@@ -150,7 +164,8 @@ function initialize() {
               settingColor: storedResults[storedMarker][0],
               settingLabel: storedResults[storedMarker][1],
               settingPosition: storedResults[storedMarker][2],
-              settingSize: storedResults[storedMarker][3]
+              settingSize: storedResults[storedMarker][3],
+              settingFontSize: storedResults[storedMarker][4]
             };
             convertedArray.push(storeObject);
           }
@@ -172,9 +187,9 @@ function initialize() {
       }, onError);
     } else {
       // Version is saved in the db
-      if (versionCompare(extensionVersion, storedVersion, {zeroExtend: true}) > 0) {
+      //if (versionCompare(extensionVersion, storedVersion, {zeroExtend: true}) > 0) {
         // For future updates (when version number increases)
-      }
+      //}
       initializeDisplay();
     }
   }, onError);
@@ -183,15 +198,20 @@ function initialize() {
 function initializeDisplay() {
   browser.storage.local.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [];
+
     if (storedArray.length > 0) {
+      $('.setting').remove();
       showOrHideEmptyNotice(hide);
-      for (let storedObject of storedArray) {
+
+      for (let index in storedArray) {
         displaySetting(
-            storedObject.settingUrl,
-            storedObject.settingColor,
-            storedObject.settingLabel,
-            storedObject.settingPosition,
-            storedObject.settingSize
+            index,
+            storedArray[index].settingUrl,
+            storedArray[index].settingColor,
+            storedArray[index].settingLabel,
+            storedArray[index].settingPosition,
+            storedArray[index].settingSize,
+            storedArray[index].settingFontSize
         );
       }
     } else {
@@ -202,9 +222,8 @@ function initializeDisplay() {
 
 function showOrHideEmptyNotice(action = null) {
   if (action === null) {
-    browser.storage.local.get(markersKey).then((storedArray) => {
-      $('.empty-notice').css('display', storedArray[markersKey].length > 0 ? 'none' : 'block');
-    }, onError);
+    // Only executes on delete
+    initializeDisplay();
   } else {
     $('.empty-notice').css('display', action);
   }
@@ -233,9 +252,13 @@ function showMessage(textMsg, errorFlag = false) {
 }
 
 /* Search stored array of object for the url */
-function searchStoredMarkers(url, storedArray) {
+function searchStoredMarkers(url, storedArray, notIndex = null) {
+  if (notIndex) {
+    notIndex = Number(notIndex);
+  }
+
   for (let i = 0; i < storedArray.length; i++) {
-    if (storedArray[i].settingUrl === url) {
+    if (storedArray[i].settingUrl === url && i !== notIndex) {
       return storedArray[i];
     }
   }
@@ -246,6 +269,7 @@ function saveSettings() {
   let settingUrl = $('.settings-input #url').val(),
       settingColor = pickr.getSelectedColor().toHEXA().toString(0),
       settingLabel = $('.settings-input #label').val(),
+      settingFontSize = $('.settings-input #font-size').val(),
       settingPosition = $('.settings-input #position').val(),
       settingSize = $('.settings-input #size').val();
 
@@ -259,12 +283,14 @@ function saveSettings() {
           $(".alert-dismissible").alert('close');
         }
 
+        // Reset input elements for the next entry
         $('.settings-input #url').val('');
         $('.settings-input #label').val('');
+        $('.settings-input #font-size').val('14');
         $('.settings-input #position').val('top-left');
         $('.settings-input #size').val('normal');
 
-        storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize);
+        storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize);
       } else {
         // Duplicate marker error message
         showMessage(errorDuplicateMarker, true);
@@ -277,56 +303,70 @@ function saveSettings() {
 }
 
 /* Store a new setting in local storage */
-function storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize) {
+function storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize) {
   let storedArray = storedResults[markersKey] || [];
   let storeObject = {
     settingUrl: settingUrl,
     settingColor: settingColor,
     settingLabel: settingLabel,
     settingPosition: settingPosition,
-    settingSize: settingSize
+    settingSize: settingSize,
+    settingFontSize: settingFontSize
   };
 
   storedArray.push(storeObject);
+  let settingIndex =  storedArray.length + 1;
 
   browser.storage.local.set({ [markersKey] : storedArray }).then(() => {
     showOrHideEmptyNotice(hide);
-    displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize);
+    displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize);
   }, onError);
 }
 
 /* Update settings */
-function updateSetting(settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, replacePrevious) {
+function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious) {
   browser.storage.local.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
-        settingExists = searchStoredMarkers(settingUrl, storedArray);
+        settingExists = searchStoredMarkers(newSettingUrl, storedArray, indexEditVal);
 
-    if (settingExists) {
-      let updatedArray = storedArray.filter(function(obj) {
-        if (obj.settingUrl === settingUrl) {
-          obj.settingUrl = newSettingUrl;
-          obj.settingColor = settingColor;
-          obj.settingLabel = settingLabel;
-          obj.settingPosition = settingPosition;
-          obj.settingSize = settingSize;
+    indexEditVal = Number(indexEditVal);
+
+    if (!settingExists) {
+      let updatedArray = storedArray.filter(function(currentObj, index) {
+        if (currentObj.settingUrl === settingUrl && index === indexEditVal) {
+          currentObj.settingUrl = newSettingUrl;
+          currentObj.settingColor = settingColor;
+          currentObj.settingLabel = settingLabel;
+          currentObj.settingFontSize = settingFontSize;
+          currentObj.settingPosition = settingPosition;
+          currentObj.settingSize = settingSize;
         }
         return true;
       });
 
+      // Save in DB
       browser.storage.local.set({ [markersKey] : updatedArray }).then(() => {
-        displaySetting(newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, replacePrevious);
+        displaySetting(indexEditVal, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious);
       }, onError);
+    } else {
+      // Duplicate marker error message
+      showMessage(errorDuplicateMarker, true);
     }
   }, onError);
 }
 
-function deleteSetting(settingUrl) {
+function deleteSetting(settingUrl, settingIndex) {
   browser.storage.local.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
         settingExists = searchStoredMarkers(settingUrl, storedArray);
 
+    settingIndex = Number(settingIndex);
+
     if (settingExists) {
-      let filteredArray = storedArray.filter(function(obj) { return obj.settingUrl !== settingUrl; });
+      let filteredArray = storedArray.filter(function(currentObj, index) {
+        return currentObj.settingUrl !== settingUrl && index !== settingIndex;
+      });
+
       browser.storage.local.set({ [markersKey] : filteredArray }).then(() => {
         showOrHideEmptyNotice();
       }, onError);
@@ -337,14 +377,28 @@ function deleteSetting(settingUrl) {
 /* Clear all settings from the display and storage */
 function clearAll() {
   $('.settings-container .setting').each((index, element) => {
-    element.remove();
+    $(element).remove();
   });
   browser.storage.local.set({ [markersKey] : [] }).then(null, onError);
   showOrHideEmptyNotice(show);
 }
 
 /* Display a setting in the setting box */
-function displaySetting(settingUrl, settingColor, settingLabel, settingPosition, settingSize, replacePrevious = null) {
+function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious = null) {
+  // For backwards compatibility for users that already have ribbons configured.
+  // @TODO: Remove sometime in the future
+  let settingFontSizeDisplay = '14px';
+  if (settingFontSize !== undefined) {
+    settingFontSizeDisplay = fontSizeMap.reduce(function(accumulator, currentValue) {
+      if (currentValue.value === settingFontSize) {
+        accumulator = currentValue.label;
+      }
+      return accumulator;
+    }, {});
+  } else {
+    settingFontSize = '14';
+  }
+
   let settingPositionDisplay = positionsMap.reduce(function(accumulator, currentValue) {
     if (currentValue.value === settingPosition) {
       accumulator = currentValue.label;
@@ -374,11 +428,15 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
         '<div class="row d-flex align-items-center">' +
           '<div class="col-3 align-self-center"><b>' + truncateString(settingLabel, 30) + '</b></div>' +
           '<div class="col-4 align-self-center">' + settingUrlDisplayEncoded + '</div> ' +
-          '<div class="col-5 align-self-center">' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + '</div> ' +
+          '<div class="col-5 align-self-center">' + settingFontSizeDisplay + ', ' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + '</div> ' +
         '</div>';
 
   let displayLabelUrl = $( "<div/>", {
     "class": "col-10 display-labelUrl",
+    "tabindex": "0",
+    "aria-label": "Edit Ribbon",
+    "aria-pressed": "false",
+    "aria-controls": "edit-container-" + settingIndex,
     html: displayString,
     click: function() {
       displayContainer.hide();
@@ -388,6 +446,10 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
 
   let displayColor = $( "<div/>", {
     "class": "col-1 display-color",
+    "tabindex": "0",
+    "aria-label": "Edit Ribbon",
+    "aria-pressed": "false",
+    "aria-controls": "edit-container-" + settingIndex,
     html: '<div class="display-color-color" style="background-color: ' + settingColor + ';"></div>',
     click: function() {
       displayContainer.hide();
@@ -401,15 +463,17 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
 
   let deleteBtn = $( "<button/>", {
     "class": "btn btn-danger btn-sm delete",
+    "aria-label": "Delete Ribbon",
     html: '<i class="fas fa-trash fa-lg"></i>',
     click: function() {
       $(this).parent().parent().parent().remove();
-      deleteSetting(settingUrl);
+      deleteSetting(settingUrl, settingIndex);
     }
   });
 
   let editContainer = $( "<div/>", {
     "class": "row no-gutters my-3 edit-container",
+    "id": "edit-container-" + settingIndex,
     "style": "display: none;"
   });
 
@@ -419,7 +483,13 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
 
   let editUrlInput = $( "<input/>", {
     "class": "form-control edit-url",
+    "placeholder": inputUrlFragmentPlaceholder,
     value: settingUrl
+  });
+
+  let editIndexHiddenInput = $( "<input/>", {
+    type: "hidden",
+    value: settingIndex
   });
 
   let editColorInputContainer = $( "<div/>", {
@@ -432,16 +502,33 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   });
 
   let editLabelInputContainer = $( "<div/>", {
-    "class": "col-5 pr-2 edit-label-container"
+    "class": "col-3 pr-2 edit-label-container"
   });
 
   let editLabelInput = $( "<input/>", {
     "class": "form-control edit-label",
+    "placeholder": inputLabelPlaceholder,
     value: settingLabel
   });
 
+  let optionsSelectFontSizeContainer = $( "<div/>", {
+    "class": "col-2 pr-2 edit-font-size-container"
+  });
+
+  let optionsSelectFontSize = $( "<select/>", {
+    "class": "form-control edit-font-size"
+  });
+
+  for (let i = 0; i < fontSizeMap.length; i++) {
+    if (fontSizeMap[i].value === settingFontSize) {
+      optionsSelectFontSize.append(new Option(fontSizeMap[i].label, fontSizeMap[i].value, true, true));
+    } else {
+      optionsSelectFontSize.append(new Option(fontSizeMap[i].label, fontSizeMap[i].value));
+    }
+  }
+
   let optionsSelectPositionContainer = $( "<div/>", {
-    "class": "col-3 pr-2 edit-position-container"
+    "class": "col-3 edit-position-container"
   });
 
   let optionsSelectPosition = $( "<select/>", {
@@ -480,18 +567,21 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
     "class": "btn btn-success btn-sm update",
     html: '<i class="fas fa-pencil-alt fa-lg"></i>',
     click: function() {
-      let urlEditVal = editUrlInput.val(),
+      let indexEditVal = editIndexHiddenInput.val(),
+          urlEditVal = editUrlInput.val(),
           colorEditVal = editColorInput.val(),
           labelEditVal = editLabelInput.val(),
+          fontSizeEditVal = optionsSelectFontSize.val(),
           positionEditVal = optionsSelectPosition.val(),
           sizeEditVal = optionsSelectSize.val();
 
       if (urlEditVal !== settingUrl ||
           colorEditVal !== settingColor ||
           labelEditVal !== settingLabel ||
+          fontSizeEditVal !== settingFontSize ||
           positionEditVal !== settingPosition ||
           sizeEditVal !== settingSize) {
-        updateSetting(settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal, innerSettingsContainer);
+        updateSetting(indexEditVal, settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal, fontSizeEditVal, innerSettingsContainer);
       }
     }
   });
@@ -511,11 +601,14 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
       editLabelInput.val(settingLabel);
       optionsSelectPosition.val(settingPosition);
       optionsSelectSize.val(settingSize);
+      optionsSelectFontSize.val(settingFontSize);
     }
   });
 
   editUrlInputContainer.append(editUrlInput);
+  editUrlInputContainer.append(editIndexHiddenInput);
   editColorInputContainer.append(editColorInput);
+  optionsSelectFontSizeContainer.append(optionsSelectFontSize);
   optionsSelectPositionContainer.append(optionsSelectPosition);
   optionsSelectSizeContainer.append(optionsSelectSize);
   updateBtnContainer.append(updateBtn);
@@ -526,6 +619,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
   editContainer.append(editColorInputContainer);
   editContainer.append(updateBtnContainer);
   editContainer.append(editLabelInputContainer);
+  editContainer.append(optionsSelectFontSizeContainer);
   editContainer.append(optionsSelectPositionContainer);
   editContainer.append(optionsSelectSizeContainer);
   editContainer.append(cancelBtnContainer);
@@ -558,7 +652,7 @@ function displaySetting(settingUrl, settingColor, settingLabel, settingPosition,
       swatches: colorSwatches,
       components: {
         preview: true,
-        opacity: false,
+        opacity: true,
         hue: true,
         interaction: {
           hex: false,
@@ -622,6 +716,8 @@ $(document).ready(() => {
   /* Display previously saved markers on startup */
   initialize();
 
+  $('html').attr('lang', languageCode);
+
   let clearButton = $('.clear'),
       optionsButton = $('.options');
 
@@ -663,7 +759,7 @@ $(document).ready(() => {
       swatches: colorSwatches,
       components: {
         preview: true,
-        opacity: false,
+        opacity: true,
         hue: true,
         interaction: {
           hex: false,
@@ -721,7 +817,7 @@ $(document).ready(() => {
       }, onError);
     });
 
-    pickr.on('init', instance => {
+    pickr.on('init', (instance) => {
       $('.pcr-button').attr('tabindex', '2');
     });
   }, onError);
@@ -730,9 +826,30 @@ $(document).ready(() => {
   clearButton.html(buttonClearAll);
   optionsButton.html(buttonOptions);
 
-  $('#url').attr('placeholder', inputUrlFragmentPlaceholder);
-  $('#color').attr('placeholder', inputColorPlaceholder);
-  $('#label').attr('placeholder', inputLabelPlaceholder);
+  let url_input = $('#url'),
+      color_input = $('#color'),
+      label_input = $('#label');
+
+  browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
+    let searchModeRegExp = storedSearchMode[searchModeKey] || false;
+    if (searchModeRegExp) {
+      url_input.attr('placeholder', inputUrlFragmentRegExpPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentRegExpPlaceholder);
+    } else {
+      url_input.attr('placeholder', inputUrlFragmentPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentPlaceholder);
+    }
+  });
+
+  color_input.attr('placeholder', inputColorPlaceholder);
+  color_input.attr('aria-label', inputColorPlaceholder);
+  label_input.attr('placeholder', inputLabelPlaceholder);
+  label_input.attr('aria-label', inputLabelPlaceholder);
+
+  $('#font-size').attr('aria-label', selectFontSizeLabel);
+  $('#position').attr('aria-label', selectPositionLabel);
+  $('#size').attr('aria-label', selectRibbonSizeLabel);
+  $('#save').attr('aria-label', buttonSaveLabel);
 
   $('#position option[value="top-left"]').html(positionSelectTopLeft);
   $('#position option[value="top-right"]').html(positionSelectTopRight);

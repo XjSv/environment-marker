@@ -3,16 +3,31 @@
     "message": "Environment Marker"
   },
   "extensionDescription": {
-    "message": "Eine Browser-WebExtension, die der Seite eine Farbmarkierung (Multifunktionsleiste) hinzufügt, je nachdem, ob die URL eine bestimmte Zeichenfolge enthält."
+    "message": "Bietet eine Möglichkeit, einer Webseite abhängig von der URL einen Farbindikator oder eine Markierung (Multifunktionsleiste) hinzuzufügen."
   },
   "inputUrlFragmentPlaceholder": {
     "message": "URL-Fragment"
+  },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp"
   },
   "inputColorPlaceholder": {
     "message": "Farbe"
   },
   "inputLabelPlaceholder": {
     "message": "Beschriftung"
+  },
+  "selectFontSizeLabel": {
+    "message": "Schriftgröße"
+  },
+  "selectPositionLabel": {
+    "message": "Position"
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Ribbon-Größe"
+  },
+  "buttonSaveLabel": {
+    "message": "Speichern"
   },
   "positionSelectTopLeft": {
     "message": "Oben Links"
@@ -72,9 +87,9 @@
     "message": "Erfolgreich importiert!"
   },
   "noticeSettingSaved": {
-    "message": "Einstellung gespeichert!"
+    "message": "Einstellungen gespeichert!"
   },
-  "ariaLabelAlertClose" : {
+  "ariaLabelAlertClose": {
     "message": "Schließen"
   },
   "errorNoRibbonsToExport": {
@@ -83,11 +98,29 @@
   "errorChooseFile": {
     "message": "Datei auswählen!"
   },
+  "errorFileEmptyOrFormat": {
+    "message": "Datei leer oder Format nicht korrekt."
+  },
   "buttonClearAll": {
     "message": "Alles Löschen"
   },
   "buttonOptions": {
     "message": "Optionen"
+  },
+  "optionsSettingsSection": {
+    "message": "Einstellungen"
+  },
+  "optionsExportImportSection": {
+    "message": "Exportieren / Importieren"
+  },
+  "inputFontLabel": {
+    "message": "Font"
+  },
+  "inputFontHelpText": {
+    "message": "Schriften werden global auf alle Bänder angewendet."
+  },
+  "inputRegExpHelpText": {
+    "message": "Aktiviere reguläre Ausdrücke im URL-Fragment Feld."
   },
   "buttonExport": {
     "message": "Exportieren"
@@ -99,7 +132,7 @@
     "message": "Datei auswählen"
   },
   "inputEnableRegExp": {
-    "message": "Aktivieren Sie RegExp"
+    "message": "RegExp"
   },
   "importWarning": {
     "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!"

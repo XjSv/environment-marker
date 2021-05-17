@@ -3,16 +3,31 @@
     "message": "Environment Marker"
   },
   "extensionDescription": {
-    "message": "Un navigateur WebExtension qui ajoute un marqueur de couleur (ruban) à la page selon que l'URL contient une chaîne donnée."
+    "message": "Fournit un moyen d'ajouter un indicateur de couleur ou un marqueur (ruban) sur une page Web en fonction de l'URL."
   },
   "inputUrlFragmentPlaceholder": {
     "message": "Fragment d’URL"
+  },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp"
   },
   "inputColorPlaceholder": {
     "message": "Couleur"
   },
   "inputLabelPlaceholder": {
     "message": "Étiquette"
+  },
+  "selectFontSizeLabel": {
+    "message": "Taille de la Police"
+  },
+  "selectPositionLabel": {
+    "message": "Position"
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Taille du Ruban"
+  },
+  "buttonSaveLabel": {
+    "message": "Enregistrer"
   },
   "positionSelectTopLeft": {
     "message": "En Haut à Gauche"
@@ -72,9 +87,9 @@
     "message": "Importation effectuée!"
   },
   "noticeSettingSaved": {
-    "message": "Paramètre enregistré!"
+    "message": "Paramètres sauvegardés!"
   },
-  "ariaLabelAlertClose" : {
+  "ariaLabelAlertClose": {
     "message": "Fermer"
   },
   "errorNoRibbonsToExport": {
@@ -83,11 +98,29 @@
   "errorChooseFile": {
     "message": "Choisir un fichier!"
   },
+  "errorFileEmptyOrFormat": {
+    "message": "Fichier vide ou format incorrect."
+  },
   "buttonClearAll": {
     "message": "Effacer Tout"
   },
   "buttonOptions": {
     "message": "Options"
+  },
+  "optionsSettingsSection": {
+    "message": "Paramètres"
+  },
+  "optionsExportImportSection": {
+    "message": "Exporter / Importer"
+  },
+  "inputFontLabel": {
+    "message": "Police"
+  },
+  "inputFontHelpText": {
+    "message": "Les polices sont appliquées globalement à tous les rubans."
+  },
+  "inputRegExpHelpText": {
+    "message": "Activer les expressions régulières dans le champ de fragment d'URL."
   },
   "buttonExport": {
     "message": "Exporter"
@@ -99,7 +132,7 @@
     "message": "Choisir un fichier"
   },
   "inputEnableRegExp": {
-    "message": "Activer RegExp"
+    "message": "RegExp"
   },
   "importWarning": {
     "message": "Attention: l'importation de rubans annulera tout!"

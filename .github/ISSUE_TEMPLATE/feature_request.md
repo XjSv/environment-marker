@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest a idea or feature for this extension
+name: Feature Request
+about: Suggest an idea or feature for this extension
 title: ''
 labels: enhancement
 assignees: XjSv

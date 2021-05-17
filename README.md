@@ -5,7 +5,6 @@
   </a>
 
   <h3 align="center">Environment Marker</h3>
-
   <p align="center">
     A Browser Extension
     <br />
@@ -13,11 +12,16 @@
     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker?utm_source=github&utm_medium=referral&utm_content=get-the-addon-link&utm_campaign=github">Firefox Addons</a>
     .
     <a target="_blank" href="https://chrome.google.com/webstore/detail/environment-marker/cjnmfjkimfbollcepfbhpahipampinhb">Chrome Web Store</a>
+    .
+    <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/environment-marker/iggchogopggbmjgplniemfaghmdkhlip">Edge Add-ons</a>
+    ·
+    <a target="_blank" href="https://addons.opera.com/en/extensions/details/environment-marker/">Opera addons</a>
     ·
     <a href="https://github.com/XjSv/environment-marker/issues">Report Bug</a>
     ·
     <a href="https://github.com/XjSv/environment-marker/issues">Request Feature</a>
   </p>
+  <p align="center"><img src="https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml/badge.svg?branch=master"/></p>
 </p>
 
 
@@ -49,11 +53,14 @@
 </p>
 
 A browser WebExtension that adds a color marker (ribbon) to the page depending on whether the URL contains a given string (e.g. 'ht<span>tp://</span>dev-', 'ht<span>tp://</span>qa-',  'ht<span>tp://</span>prod-').
-Currently this extension supports Firefox and Chrome. Plans are in place to also support Safari in the near future.
+Currently, this extension supports Firefox and Chromium based browser such as Microsoft Edge, Opera and Brave. Plans are in place to also support Safari in the near future.
 
 ### Browser Support
 - Firefox
-- Chrome & Chromium based browser such as Brave
+- Chrome & Chromium based browser
+  - Microsoft Edge
+  - Opera
+  - Brave
 - Safari (coming soon...)
 
 ### Features
@@ -77,6 +84,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * **Reusable Color Swatch** - The last 7 colors used will be available from the color swatch.
 * **RegExp** - When enabled the URL fragment can be used with RegExp instead of searching using indexOf.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. I plan to make this configurable in the future.
+* **Font Picker** - Ability to select fonts for the ribbons. Font come from Google Fonts.
 
 ### Built With
 * [Font Awesome](https://fontawesome.com/)
@@ -85,6 +93,7 @@ Currently this extension supports Firefox and Chrome. Plans are in place to also
 * [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
+* [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
 
 
 ## Installation
@@ -177,3 +186,4 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 * [jQuery](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
+* [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)

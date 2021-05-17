@@ -1,7 +1,63 @@
+html {
+  background: #ffffff;
+  margin: 0;
+}
+
+body {
+  min-height: 400px;
+  min-width: 600px;
+}
+
 .outer-wrapper {
-  .export-import-container {
-    .import-file-label {
-      cursor: pointer;
+  .fas {
+    margin-right: 10px;
+  }
+  h4 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #cccccc;
+  }
+
+  .settings-wrap {
+    line-height: 1;
+    margin-bottom: 15px;
+
+    .font-picker-container {
+      #font-label {
+        font-weight: 600;
+      }
+    }
+    .enable-regexp-container {
+      > div {
+        padding-top: 10px;
+      }
+      .custom-control {
+        display: inline-block;
+      }
+      #enable-regexp-label {
+        font-weight: 600;
+      }
+      #enable-regexp {
+        margin-top: 15px;
+      }
+      #enable-regexp-help-block {
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
+  .export-import-wrap {
+    margin-top: 25px;
+    .export-import-container {
+      .import-file-label {
+        cursor: pointer;
+        padding-right: 10px;
+        position: relative;
+        top: 2px;
+      }
     }
   }
 }
