@@ -89,8 +89,8 @@ Currently, this extension supports Firefox and Chromium based browser such as Mi
 ### Built With
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
-* [Bootstrap 4](https://getbootstrap.com/)
-* [jQuery](https://jquery.com/)
+* [Bootstrap 5](https://getbootstrap.com/)
+* [jQuery Slim](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
@@ -182,8 +182,8 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 ## Acknowledgements
 * [Font Awesome](https://fontawesome.com/)
 * [Pickr](https://simonwep.github.io/pickr/)
-* [Bootstrap 4](https://getbootstrap.com/)
-* [jQuery](https://jquery.com/)
+* [Bootstrap 5](https://getbootstrap.com/)
+* [jQuery Slim](https://jquery.com/)
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
