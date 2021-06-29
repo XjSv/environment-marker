@@ -44,8 +44,8 @@ function showMessage(textMsg, errorFlag = false) {
 
   $('.outer-wrapper .message-container').append(
     '<div class="alert ' + messageClass + ' alert-dismissible fade show" role="alert">' + textMsg +
-    '<button type="button" class="close" data-dismiss="alert" aria-label="' + ariaLabelAlertClose + '">' +
-    '<span aria-hidden="true">&times;</span></button></div>'
+    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="' + ariaLabelAlertClose + '"></button>' +
+    '</div>'
   );
 
   window.setTimeout(function() {

@@ -9,7 +9,7 @@ const {
 // Load plugins
 let uglify = require('gulp-uglify-es').default;
 let rename = require('gulp-rename');
-let sass = require('gulp-sass');
+let sass = require('gulp-sass')(require('sass'));
 let sourcemaps = require('gulp-sourcemaps')
 let autoprefixer = require('autoprefixer');
 let postcss = require('gulp-postcss');

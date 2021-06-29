@@ -242,8 +242,8 @@ function showMessage(textMsg, errorFlag = false) {
 
   $('.outer-wrapper .message-container').append(
     '<div class="alert ' + messageClass + ' alert-dismissible fade show col-12" role="alert">' + textMsg +
-    '<button type="button" class="close" data-dismiss="alert" aria-label="' + ariaLabelAlertClose + '">' +
-    '<span aria-hidden="true">&times;</span></button></div>'
+    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="' + ariaLabelAlertClose + '"></button>' +
+    '</div>'
   );
 
   window.setTimeout(function() {
@@ -423,9 +423,9 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   let settingUrlDisplay = truncateString(settingUrl, 30),
       settingUrlDisplayEncoded = he.encode(settingUrlDisplay),
       innerSettingsContainer = $( "<div/>", { "class": "setting" }),
-      displayContainer = $( "<div/>", { "class": "row no-gutters my-1 align-items-center display-container" }),
+      displayContainer = $( "<div/>", { "class": "my-1 align-items-center display-container" }),
       displayString =
-        '<div class="row d-flex align-items-center">' +
+        '<div class="d-flex align-items-center">' +
           '<div class="col-3 align-self-center"><b>' + truncateString(settingLabel, 30) + '</b></div>' +
           '<div class="col-4 align-self-center">' + settingUrlDisplayEncoded + '</div> ' +
           '<div class="col-5 align-self-center">' + settingFontSizeDisplay + ', ' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + '</div> ' +
@@ -472,13 +472,13 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   });
 
   let editContainer = $( "<div/>", {
-    "class": "row no-gutters my-3 edit-container",
+    "class": "my-3 edit-container",
     "id": "edit-container-" + settingIndex,
     "style": "display: none;"
   });
 
   let editUrlInputContainer = $( "<div/>", {
-    "class": "col-10 pr-1 mb-2 edit-url-container"
+    "class": "w-100 pe-1 edit-url-container"
   });
 
   let editUrlInput = $( "<input/>", {
@@ -493,7 +493,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   });
 
   let editColorInputContainer = $( "<div/>", {
-    "class": "col-1 pr-1 mb-2 edit-color"
+    "class": "flex-shrink-1 px-1 edit-color"
   });
 
   let editColorInput = $( "<input/>", {
@@ -502,7 +502,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   });
 
   let editLabelInputContainer = $( "<div/>", {
-    "class": "col-3 pr-2 edit-label-container"
+    "class": "w-50 pe-1 edit-label-container"
   });
 
   let editLabelInput = $( "<input/>", {
@@ -512,11 +512,11 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   });
 
   let optionsSelectFontSizeContainer = $( "<div/>", {
-    "class": "col-2 pr-2 edit-font-size-container"
+    "class": "px-1 edit-font-size-container"
   });
 
   let optionsSelectFontSize = $( "<select/>", {
-    "class": "form-control edit-font-size"
+    "class": "form-select edit-font-size"
   });
 
   for (let i = 0; i < fontSizeMap.length; i++) {
@@ -528,11 +528,11 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   }
 
   let optionsSelectPositionContainer = $( "<div/>", {
-    "class": "col-3 edit-position-container"
+    "class": "px-1 edit-position-container"
   });
 
   let optionsSelectPosition = $( "<select/>", {
-    "class": "form-control edit-position"
+    "class": "form-select edit-position"
   });
 
   for (let i = 0; i < positionsMap.length; i++) {
@@ -544,11 +544,11 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   }
 
   let optionsSelectSizeContainer = $( "<div/>", {
-    "class": "col-3 pr-2 edit-size-container"
+    "class": "px-1 edit-size-container"
   });
 
   let optionsSelectSize = $( "<select/>", {
-    "class": "form-control edit-size"
+    "class": "form-select edit-size"
   });
 
   for (let i = 0; i < sizesMap.length; i++) {
@@ -560,7 +560,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   }
 
   let updateBtnContainer = $( "<div/>", {
-    "class": "col-1 mb-2 edit-delete"
+    "class": "flex-shrink-1 ps-1 edit-update"
   });
 
   let updateBtn = $( "<button/>", {
@@ -587,7 +587,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   });
 
   let cancelBtnContainer = $( "<div/>", {
-    "class": "col-1 edit-cancel"
+    "class": "flex-shrink-1 ps-1 edit-cancel"
   });
 
   let cancelBtn = $( "<button/>", {
@@ -605,6 +605,14 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     }
   });
 
+  let editFirstRow = $( "<div/>", {
+    "class": "d-flex mb-2"
+  });
+
+  let editSecondRow = $( "<div/>", {
+    "class": "d-flex"
+  });
+
   editUrlInputContainer.append(editUrlInput);
   editUrlInputContainer.append(editIndexHiddenInput);
   editColorInputContainer.append(editColorInput);
@@ -615,14 +623,18 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   editLabelInputContainer.append(editLabelInput);
   cancelBtnContainer.append(cancelBtn);
 
-  editContainer.append(editUrlInputContainer);
-  editContainer.append(editColorInputContainer);
-  editContainer.append(updateBtnContainer);
-  editContainer.append(editLabelInputContainer);
-  editContainer.append(optionsSelectFontSizeContainer);
-  editContainer.append(optionsSelectPositionContainer);
-  editContainer.append(optionsSelectSizeContainer);
-  editContainer.append(cancelBtnContainer);
+  editFirstRow.append(editUrlInputContainer);
+  editFirstRow.append(editColorInputContainer);
+  editFirstRow.append(updateBtnContainer);
+
+  editSecondRow.append(editLabelInputContainer);
+  editSecondRow.append(optionsSelectFontSizeContainer);
+  editSecondRow.append(optionsSelectPositionContainer);
+  editSecondRow.append(optionsSelectSizeContainer);
+  editSecondRow.append(cancelBtnContainer);
+
+  editContainer.append(editFirstRow);
+  editContainer.append(editSecondRow);
 
   deleteBtnContainer.append(deleteBtn);
 
