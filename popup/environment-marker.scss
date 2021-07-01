@@ -37,6 +37,9 @@ body {
       width: 100%;
       min-width: 29px;
     }
+    .label-input-container {
+      width: 40%;
+    }
   }
 
   .settings-container {
@@ -115,6 +118,18 @@ body {
             height: 100% !important;
             width: 100% !important;
           }
+        }
+        .edit-label-container {
+          width: 35%;
+        }
+        .edit-font-size-container {
+          width: 16%;
+        }
+        .edit-position-container {
+          width: 22%;
+        }
+        .edit-size-container {
+          width: 22%;
         }
         .update,
         .cancel {

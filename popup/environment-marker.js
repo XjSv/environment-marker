@@ -502,7 +502,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   });
 
   let editLabelInputContainer = $( "<div/>", {
-    "class": "w-50 pe-1 edit-label-container"
+    "class": "pe-1 edit-label-container"
   });
 
   let editLabelInput = $( "<input/>", {

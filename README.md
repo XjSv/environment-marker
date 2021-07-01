@@ -146,7 +146,8 @@ There are a couple of options for installation.
 
 ## Usage
 
-See [Usage](https://github.com/XjSv/environment-marker/wiki/Usage) instructions in the [Wiki](https://github.com/XjSv/environment-marker/wiki)
+See [Usage](https://github.com/XjSv/environment-marker/wiki/Usage) instructions in the [Wiki](https://github.com/XjSv/environment-marker/wiki)  
+See [Opera Usage](https://github.com/XjSv/environment-marker/wiki/Opera-Usage) instructions in the [Wiki](https://github.com/XjSv/environment-marker/wiki) for specific Opera related settings.
 
 ## Roadmap
 
