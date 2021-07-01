@@ -12,7 +12,7 @@
 <body>
     <div class="container outer-wrapper">
         <div class="row">
-            <div class="col-12 message-container"></div>
+            <div class="message-container"></div>
         </div>
 
         <div class="settings-wrap">
@@ -21,18 +21,17 @@
                 <label id="font-label" for="font-picker" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
                     <input type="text" name="font-picker" id="font-picker" aria-describedby="font-picker-help-block">
-                    <small id="font-picker-help-block" class="form-text text-muted"></small>
+                    <div id="font-picker-help-block" class="form-text"></div>
                 </div>
             </div>
 
             <div class="row form-group my-3 enable-regexp-container">
                 <label id="enable-regexp-label" class="col-sm-3 col-form-label" for="enable-regexp"></label>
                 <div class="col-sm-9">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" name="enable-regexp" class="custom-control-input" id="enable-regexp" aria-describedby="enable-regexp-help-block">
-                        <label class="custom-control-label" for="enable-regexp"></label>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" name="enable-regexp" class="form-check-input" id="enable-regexp" checked>
+                        <label class="form-check-label form-text" for="enable-regexp" id="enable-regexp-help-block"></label>
                     </div>
-                    <small id="enable-regexp-help-block" class="form-text text-muted"></small>
                 </div>
             </div>
         </div>

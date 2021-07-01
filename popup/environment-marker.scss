@@ -25,6 +25,7 @@ body {
     .pickr {
       height: 100%;
       width: 100%;
+      min-width: 29px;
 
       .pcr-button {
         height: 100% !important;
@@ -34,6 +35,10 @@ body {
     .save {
       height: 100%;
       width: 100%;
+      min-width: 29px;
+    }
+    .label-input-container {
+      width: 40%;
     }
   }
 
@@ -107,16 +112,30 @@ body {
         .pickr {
           height: 100%;
           width: 100%;
+          min-width: 29px;
 
           .pcr-button {
             height: 100% !important;
             width: 100% !important;
           }
         }
+        .edit-label-container {
+          width: 35%;
+        }
+        .edit-font-size-container {
+          width: 16%;
+        }
+        .edit-position-container {
+          width: 22%;
+        }
+        .edit-size-container {
+          width: 22%;
+        }
         .update,
         .cancel {
           height: 100%;
           width: 100%;
+          min-width: 29px;
         }
       }
     }

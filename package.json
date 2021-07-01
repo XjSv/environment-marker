@@ -1,6 +1,6 @@
 {
   "name": "environment-marker",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
   "author": "Armand Tresova <atresova@gmail.com> (https://www.armandtresova.com/)",
   "license": "MPL-2.0",
@@ -10,21 +10,22 @@
   },
   "devDependencies": {
     "archiver": "^5.3.0",
-    "autoprefixer": "^10.1.0",
-    "cssnano": "^5.0.2",
+    "autoprefixer": "^10.2.6",
+    "cssnano": "^5.0.6",
     "gulp": "^4.0.2",
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify-es": "^2.0.0",
     "merge-stream": "^2.0.0",
-    "postcss": "^8.2.15"
+    "postcss": "^8.3.5",
+    "sass": "^1.35.1"
   },
   "scripts": {
     "develop": "node node_modules/gulp/bin/gulp.js --color --gulpfile gulpfile.js default",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node scripts/build.js"
+    "build": "gulp production && node scripts/build.js"
   },
   "repository": {
     "type": "git",
