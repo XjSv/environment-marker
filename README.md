@@ -33,7 +33,7 @@
   * [Features](#features)
   * [Built With](#built-with)
 - [Installation](#installation)
-  * [1 - Install From Firefox.com or the Chrome Web Store (Recommended)](#1---install-from-firefoxcom-or-the-chrome-web-store--recommended-)
+  * [1 - Install From Firefox.com or the Chromium Web Stores (Recommended)](#1---install-from-firefoxcom-or-the-chromium-web-stores--recommended-)
   * [2 - Build & Install From File (Firefox)](#2---build---install-from-file--firefox-)
 - [Development](#development)
 - [Usage](#usage)
@@ -100,15 +100,17 @@ Currently, this extension supports Firefox and Chromium based browser such as Mi
 
 There are a couple of options for installation.
 
-### 1 - Install From Firefox.com or the Chrome Web Store (Recommended)
+### 1 - Install From Firefox.com or the Chromium Web Stores (Recommended)
 - Firefox: <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker/">Environment Marker on Addons.mozilla.org (AMO)</a>
 - Chrome: <a target="_blank" href="https://chrome.google.com/webstore/detail/environment-marker/cjnmfjkimfbollcepfbhpahipampinhb">Environment Marker on Chrome Web Store</a>
+- Edge: <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/environment-marker/iggchogopggbmjgplniemfaghmdkhlip">Environment Marker on Edge Add-ons</a>
+- Opera: <a target="_blank" href="https://addons.opera.com/en/extensions/details/environment-marker/">Environment Marker on Opera addons</a>
 
 ### 2 - Build & Install From File (Firefox)
 
 **Note:** Pre-built files are available for: 
 - Firefox: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker-firefox.zip">build/environment-marker-firefox.zip</a>
-- Chrome: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker-chrome.zip">build/environment-marker-chrome.zip</a>
+- Chrome, Edge & Opera: <a target="_blank" href="https://github.com/XjSv/environment-marker/blob/master/build/environment-marker-chromium.zip">build/environment-marker-chromium.zip</a>
 
 **Step 1** - Build it
 1. Install dependencies
