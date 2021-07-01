@@ -25,7 +25,7 @@
   "scripts": {
     "develop": "node node_modules/gulp/bin/gulp.js --color --gulpfile gulpfile.js default",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node scripts/build.js"
+    "build": "gulp production && node scripts/build.js"
   },
   "repository": {
     "type": "git",
