@@ -1,5 +1,9 @@
-export_languages: ["de","es","fr"]
+export_languages:
+  - de
+  - es
+  - fr
 files:
   - source: /_locales/en/*.json
     translation: /_locales/%two_letters_code%/%original_file_name%
-    excluded_target_languages: ["en"]
+    excluded_target_languages:
+      - en
