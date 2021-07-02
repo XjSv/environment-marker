@@ -1,1 +1,143 @@
+{
+  "extensionDescription": {
+    "message": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string."
+  },
+  "inputUrlFragmentPlaceholder": {
+    "message": "URL fragment"
+  },
+  "inputColorPlaceholder": {
+    "message": "Color"
+  },
+  "inputLabelPlaceholder": {
+    "message": "Label"
+  },
+  "positionSelectTopLeft": {
+    "message": "Top Left"
+  },
+  "positionSelectTopRight": {
+    "message": "Top Right"
+  },
+  "positionSelectBottomLeft": {
+    "message": "Bottom Left"
+  },
+  "positionSelectBottomRight": {
+    "message": "Bottom Right"
+  },
+  "sizeSelectExtraSmall": {
+    "message": "Extra Small"
+  },
+  "sizeSelectSmall": {
     "message": "Small"
+  },
+  "sizeSelectNormal": {
+    "message": "Normal"
+  },
+  "sizeSelectLarge": {
+    "message": "Large"
+  },
+  "sizeSelectExtraLarge": {
+    "message": "Extra Large"
+  },
+  "displayAt": {
+    "message": "at"
+  },
+  "noticeNoRibbons": {
+    "message": "There are no ribbons saved"
+  },
+  "errorDuplicateMarker": {
+    "message": "Marker for this URL already exists!"
+  },
+  "errorLabelEmpty": {
+    "message": "Enter Label!"
+  },
+  "errorUrlEmpty": {
+    "message": "Enter URL!"
+  },
+  "errorImportLabelEmpty": {
+    "message": "Missing label value in import file."
+  },
+  "errorImportUrlEmpty": {
+    "message": "Missing URL value in import file."
+  },
+  "errorImportColorEmpty": {
+    "message": "Missing color value in import file."
+  },
+  "noticeSuccessExport": {
+    "message": "Export successful!"
+  },
+  "noticeSuccessImport": {
+    "message": "Imported successfully!"
+  },
+  "noticeSettingSaved": {
+    "message": "Settings saved!"
+  },
+  "errorNoRibbonsToExport": {
+    "message": "Nothing to export!"
+  },
+  "errorChooseFile": {
+    "message": "Choose a file!"
+  },
+  "buttonClearAll": {
+    "message": "Clear All"
+  },
+  "buttonOptions": {
+    "message": "Options"
+  },
+  "buttonExport": {
+    "message": "Export"
+  },
+  "buttonImport": {
+    "message": "Import"
+  },
+  "inputChooseFile": {
+    "message": "Choose file"
+  },
+  "inputEnableRegExp": {
+    "message": "Enable RegExp"
+  },
+  "importWarning": {
+    "message": "Warning: Importing ribbons will override everything!"
+  },
+  "colorPickerUiDialog": {
+    "message": "color picker dialog"
+  },
+  "colorPickerBtnToggle": {
+    "message": "toggle color picker dialog"
+  },
+  "colorPickerBtnSwatch": {
+    "message": "color swatch"
+  },
+  "colorPickerBtnLastColor": {
+    "message": "use previous color"
+  },
+  "colorPickerBtnSave": {
+    "message": "Save"
+  },
+  "colorPickerBtnCancel": {
+    "message": "Cancel"
+  },
+  "colorPickerBtnClear": {
+    "message": "Clear"
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "save and close"
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "cancel and close"
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "clear and close"
+  },
+  "colorPickerAriaInput": {
+    "message": "color input field"
+  },
+  "colorPickerAriaPalette": {
+    "message": "color selection area"
+  },
+  "colorPickerAriaHue": {
+    "message": "hue selection slider"
+  },
+  "colorPickerAriaOpacity": {
+    "message": "selection slider"
+  }
+}
