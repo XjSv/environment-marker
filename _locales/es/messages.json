@@ -24,7 +24,7 @@
     "description": "Label input field placeholder."
   },
   "selectFontSizeLabel": {
-    "message": "Tamaño de Funte",
+    "message": "Tamaño de Fuente",
     "description": "Font Size select field placeholder."
   },
   "selectPositionLabel": {
