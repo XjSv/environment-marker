@@ -8,7 +8,7 @@
     "description": "The description of the extension."
   },
   "inputUrlFragmentPlaceholder": {
-    "message": "Fragment d’URL",
+    "message": "Fragment d'URL",
     "description": "URL fragment input field placeholder."
   },
   "inputUrlFragmentRegExpPlaceholder": {
