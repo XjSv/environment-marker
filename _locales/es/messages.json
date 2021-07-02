@@ -1,182 +1,242 @@
 {
   "extensionName": {
-    "message": "Environment Marker"
+    "message": "Environment Marker",
+    "description": "The name of the extension."
   },
   "extensionDescription": {
-    "message": "Proporciona una forma de agregar un indicador de color o marcador (cinta) en una página web según la URL."
+    "message": "Proporciona una forma de agregar un indicador de color o marcador (cinta) en una página web según la URL.",
+    "description": "The description of the extension."
   },
   "inputUrlFragmentPlaceholder": {
-    "message": "Fragmento de URL"
+    "message": "Fragmento de URL",
+    "description": "URL fragment input field placeholder."
   },
   "inputUrlFragmentRegExpPlaceholder": {
-    "message": "RegExp"
+    "message": "RegExp",
+    "description": "URL fragment input field placeholder when using RegExp."
   },
   "inputColorPlaceholder": {
-    "message": "Color"
+    "message": "Color",
+    "description": "Color input field placeholder."
   },
   "inputLabelPlaceholder": {
-    "message": "Etiqueta"
+    "message": "Etiqueta",
+    "description": "Label input field placeholder."
   },
   "selectFontSizeLabel": {
-    "message": "Tamaño de Funte"
+    "message": "Tamaño de Fuente",
+    "description": "Font Size select field placeholder."
   },
   "selectPositionLabel": {
-    "message": "Posición"
+    "message": "Posición",
+    "description": "Position select field label."
   },
   "selectRibbonSizeLabel": {
-    "message": "Tamaño de Cinta"
+    "message": "Tamaño de Cinta",
+    "description": "Ribbon Size select field label."
   },
   "buttonSaveLabel": {
-    "message": "Guardar"
+    "message": "Guardar",
+    "description": "Save button label."
   },
   "positionSelectTopLeft": {
-    "message": "Superior Izquierdo"
+    "message": "Superior Izquierdo",
+    "description": "Top Left option label for the Position select field."
   },
   "positionSelectTopRight": {
-    "message": "Superior Derecha"
+    "message": "Superior Derecha",
+    "description": "Top Right option label for the Position select field."
   },
   "positionSelectBottomLeft": {
-    "message": "Inferior Izquierda"
+    "message": "Inferior Izquierda",
+    "description": "Bottom Left option label for the Position select field."
   },
   "positionSelectBottomRight": {
-    "message": "Inferior Derecha"
+    "message": "Inferior Derecha",
+    "description": "Bottom Right option label for the Position select field."
   },
   "sizeSelectExtraSmall": {
-    "message": "Extra Pequeña"
+    "message": "Extra Pequeña",
+    "description": "Extra Small option label for the Size select field."
   },
   "sizeSelectSmall": {
-    "message": "Pequeño"
+    "message": "Pequeño",
+    "description": "Small option label for the Size select field."
   },
   "sizeSelectNormal": {
-    "message": "Normal"
+    "message": "Normal",
+    "description": "Normal option label for the Size select field."
   },
   "sizeSelectLarge": {
-    "message": "Grande"
+    "message": "Grande",
+    "description": "Large option label for the Size select field."
   },
   "sizeSelectExtraLarge": {
-    "message": "Extra Grande"
+    "message": "Extra Grande",
+    "description": "Extra Large option label for the Size select field."
   },
   "displayAt": {
-    "message": "a la"
+    "message": "a la",
+    "description": "Word used to indicate the position of the ribbon."
   },
   "noticeNoRibbons": {
-    "message": "No hay cintas guardadas"
+    "message": "No hay cintas guardadas",
+    "description": "No ribbons saved notice."
   },
   "errorDuplicateMarker": {
-    "message": "Marcador para esta URL ya existe!"
+    "message": "Marcador para esta URL ya existe!",
+    "description": "Duplicate marker error message."
   },
   "errorLabelEmpty": {
-    "message": "Escriba Etiqueta!"
+    "message": "Escriba Etiqueta!",
+    "description": "Empty label error message."
   },
   "errorUrlEmpty": {
-    "message": "Escriba URL!"
+    "message": "Escriba URL!",
+    "description": "Empty URL error message."
   },
   "errorImportLabelEmpty": {
-    "message": "Falta el valor de la etiqueta en el archivo de importación."
+    "message": "Falta el valor de la etiqueta en el archivo de importación.",
+    "description": "Error message when the label field is empty in the import file."
   },
   "errorImportUrlEmpty": {
-    "message": "Falta el valor de URL en el archivo de importación."
+    "message": "Falta el valor de URL en el archivo de importación.",
+    "description": "Error message when the URL field is empty in the import file."
   },
   "errorImportColorEmpty": {
-    "message": "Falta el valor de color en el archivo de importación."
+    "message": "Falta el valor de color en el archivo de importación.",
+    "description": "Error message when the color field is empty in the import file."
   },
   "noticeSuccessExport": {
-    "message": "Exportación correcta!"
+    "message": "Exportación correcta!",
+    "description": "Export successful notice message."
   },
   "noticeSuccessImport": {
-    "message": "Importado correctamente!"
+    "message": "Importado correctamente!",
+    "description": "Import successful notice message."
   },
   "noticeSettingSaved": {
-    "message": "Configuración guardada!"
+    "message": "Configuración guardada!",
+    "description": "Settings saved successful notice message."
   },
   "ariaLabelAlertClose": {
-    "message": "Cerrar"
+    "message": "Cerrar",
+    "description": "Alert message close button label."
   },
   "errorNoRibbonsToExport": {
-    "message": "Nada que exportar!"
+    "message": "Nada que exportar!",
+    "description": "Nothing to export error message."
   },
   "errorChooseFile": {
-    "message": "Elige un archivo!"
+    "message": "Elige un archivo!",
+    "description": "Import no file selected error message."
   },
   "errorFileEmptyOrFormat": {
-    "message": "Archivo vacío o formato incorrecto."
+    "message": "Archivo vacío o formato incorrecto.",
+    "description": "Import file empty or the format is not correct error message."
   },
   "buttonClearAll": {
-    "message": "Borrar Todo"
+    "message": "Borrar Todo",
+    "description": "Clear All button label."
   },
   "buttonOptions": {
-    "message": "Opciones"
+    "message": "Opciones",
+    "description": "Options button label."
   },
   "optionsSettingsSection": {
-    "message": "Configuración"
+    "message": "Configuración",
+    "description": "Options Settings section label."
   },
   "optionsExportImportSection": {
-    "message": "Exportar / Importar"
+    "message": "Exportar / Importar",
+    "description": "Options Export / Import section label."
   },
   "inputFontLabel": {
-    "message": "Fuente"
+    "message": "Fuente",
+    "description": "Font input label."
   },
   "inputFontHelpText": {
-    "message": "Las fuentes se aplican globalmente a todas las cintas."
+    "message": "Las fuentes se aplican globalmente a todas las cintas.",
+    "description": "Font input help text."
   },
   "inputRegExpHelpText": {
-    "message": "Habilitar expresiones regulares en el campo de fragmentos de URL."
+    "message": "Habilitar expresiones regulares en el campo de fragmentos de URL.",
+    "description": "RegExp Enable input help text."
   },
   "buttonExport": {
-    "message": "Exportar"
+    "message": "Exportar",
+    "description": "Export button label."
   },
   "buttonImport": {
-    "message": "Importar"
+    "message": "Importar",
+    "description": "Import button label."
   },
   "inputChooseFile": {
-    "message": "Elegir archivo"
+    "message": "Elegir archivo",
+    "description": "Choose file input label."
   },
   "inputEnableRegExp": {
-    "message": "RegExp"
+    "message": "RegExp",
+    "description": "RegExp Enable input label."
   },
   "importWarning": {
-    "message": "Advertencia: La importación de cintas anulará todo!"
+    "message": "Advertencia: La importación de cintas anulará todo!",
+    "description": "Warning message when importing ribbons."
   },
   "colorPickerUiDialog": {
-    "message": "diálogo selector de color"
+    "message": "diálogo selector de color",
+    "description": "Color picker's dialog label."
   },
   "colorPickerBtnToggle": {
-    "message": "alternancia diálogo del selector de color"
+    "message": "alternancia diálogo del selector de color",
+    "description": "Color picker's 'toggle color picker dialog' button label."
   },
   "colorPickerBtnSwatch": {
-    "message": "muestrario de colores"
+    "message": "muestrario de colores",
+    "description": "Color picker's 'color swatch' button label."
   },
   "colorPickerBtnLastColor": {
-    "message": "usar el color anterior"
+    "message": "usar el color anterior",
+    "description": "Color picker's 'use previous color' button label."
   },
   "colorPickerBtnSave": {
-    "message": "Guardar"
+    "message": "Guardar",
+    "description": "Color picker's Save button label."
   },
   "colorPickerBtnCancel": {
-    "message": "Cancelar"
+    "message": "Cancelar",
+    "description": "Color picker's Cancel button label."
   },
   "colorPickerBtnClear": {
-    "message": "Borrar"
+    "message": "Borrar",
+    "description": "Color picker's Clear button label."
   },
   "colorPickerAriaBtnSave": {
-    "message": "guardar y cerrar"
+    "message": "guardar y cerrar",
+    "description": "Color picker's save and close aria label."
   },
   "colorPickerAriaBtnCancel": {
-    "message": "cancelar y cerrar"
+    "message": "cancelar y cerrar",
+    "description": "Color picker's cancel and close aria label."
   },
   "colorPickerAriaBtnClear": {
-    "message": "borrar y cerrar"
+    "message": "borrar y cerrar",
+    "description": "Color picker's clear and close aria label."
   },
   "colorPickerAriaInput": {
-    "message": "campo de entrada de color"
+    "message": "campo de entrada de color",
+    "description": "Color picker's Input aria label."
   },
   "colorPickerAriaPalette": {
-    "message": "área de selección de color"
+    "message": "área de selección de color",
+    "description": "Color picker's Palette aria label."
   },
   "colorPickerAriaHue": {
-    "message": "control deslizante de selección de matiz"
+    "message": "control deslizante de selección de matiz",
+    "description": "Color picker's Hue aria label."
   },
   "colorPickerAriaOpacity": {
-    "message": "control deslizante de selección"
+    "message": "control deslizante de selección",
+    "description": "Color picker's Opacity aria label."
   }
 }
