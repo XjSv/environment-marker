@@ -1,8 +1,5 @@
-"export_languages": ["es", "de", "fr"]
-"files": [
-  {
-    "source" : "/_locales/en/*.json",
-    "translation" : "/_locales/%two_letters_code%/%original_file_name%"
-    "excluded_target_languages": ["en"]
-  }
-]
+export_languages: ["es", "de", "fr"]
+files:
+  - source: /_locales/en/*.json
+    translation: /_locales/%two_letters_code%/%original_file_name%
+    excluded_target_languages: ["en"]
