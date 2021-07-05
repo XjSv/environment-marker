@@ -83,6 +83,14 @@
     "message": "at",
     "description": "Word used to indicate the position of the ribbon."
   },
+  "ariaLabelEditRibbon": {
+    "message": "Edit Ribbon",
+    "description": "Edit Ribbon Accessibility Label"
+  },
+  "ariaLabelDeleteRibbon": {
+    "message": "Delete Ribbon",
+    "description": "Delete Ribbon Accessibility Label"
+  },
 
   "noticeNoRibbons": {
     "message": "There are no ribbons saved",

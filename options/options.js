@@ -1,7 +1,4 @@
-let errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
-    errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty"),
-    errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty"),
-    noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport"),
+let noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport"),
     noticeSuccessImport = browser.i18n.getMessage("noticeSuccessImport"),
     errorNoRibbonsToExport = browser.i18n.getMessage("errorNoRibbonsToExport"),
     errorChooseFile = browser.i18n.getMessage("errorChooseFile"),
