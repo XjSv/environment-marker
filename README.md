@@ -21,7 +21,7 @@
     ·
     <a href="https://github.com/XjSv/environment-marker/issues">Request Feature</a>
   </p>
-  <p align="center"><img src="https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml/badge.svg?branch=master"/></p>
+  <p align="center"><img src="https://github.com/XjSv/environment-marker/actions/workflows/codeql-analysis.yml/badge.svg?branch=master"/> <img src="https://badges.crowdin.net/environment-marker/localized.svg"/></p>
 </p>
 
 
