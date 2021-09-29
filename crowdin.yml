@@ -4,5 +4,5 @@ export_languages:
   - es
   - fr
 files:
-  - source: /crowdin.json
+  - source: /crowdin-source.json
     translation: /_locales/%two_letters_code%/%original_file_name%
