@@ -182,7 +182,7 @@
     "description": "RegExp Enable input help text."
   },
   "inputTabCounterHelpText": {
-    "message": "Enable the opened tabs counter.",
+    "message": "Enable the tab counter.",
     "description": "Tab Counter Enable input help text."
   },
 
