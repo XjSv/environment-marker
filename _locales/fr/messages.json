@@ -79,6 +79,14 @@
     "message": "à",
     "description": "Word used to indicate the position of the ribbon."
   },
+  "ariaLabelEditRibbon": {
+    "message": "Modifier le Ruban",
+    "description": "Edit Ribbon Accessibility Label"
+  },
+  "ariaLabelDeleteRibbon": {
+    "message": "Supprimer le Ruban",
+    "description": "Delete Ribbon Accessibility Label"
+  },
   "noticeNoRibbons": {
     "message": "Il n'y a pas de rubans enregistrés",
     "description": "No ribbons saved notice."
@@ -163,6 +171,10 @@
     "message": "Activer les expressions régulières dans le champ de fragment d'URL.",
     "description": "RegExp Enable input help text."
   },
+  "inputTabCounterHelpText": {
+    "message": "Activer le compteur d'onglets.",
+    "description": "Tab Counter Enable input help text."
+  },
   "buttonExport": {
     "message": "Exporter",
     "description": "Export button label."
@@ -178,6 +190,10 @@
   "inputEnableRegExp": {
     "message": "RegExp",
     "description": "RegExp Enable input label."
+  },
+  "inputEnableTabCounter": {
+    "message": "Compteur d'onglets",
+    "description": "Tab Counter Enable input label."
   },
   "importWarning": {
     "message": "Attention: l'importation de rubans annulera tout!",
