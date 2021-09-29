@@ -10,6 +10,7 @@ let noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport"),
     errorImportUrlEmpty = browser.i18n.getMessage("errorImportUrlEmpty"),
     errorImportColorEmpty = browser.i18n.getMessage("errorImportColorEmpty"),
     inputEnableRegExp = browser.i18n.getMessage("inputEnableRegExp"),
+    inputEnableTabCounter = browser.i18n.getMessage("inputEnableTabCounter"),
     noticeSettingSaved = browser.i18n.getMessage("noticeSettingSaved"),
     ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose"),
     optionsSettingsSection = browser.i18n.getMessage("optionsSettingsSection"),
@@ -17,6 +18,7 @@ let noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport"),
     inputFontLabel = browser.i18n.getMessage("inputFontLabel"),
     inputFontHelpText = browser.i18n.getMessage("inputFontHelpText"),
     inputRegExpHelpText = browser.i18n.getMessage("inputRegExpHelpText"),
+    inputTabCounterHelpText = browser.i18n.getMessage("inputTabCounterHelpText"),
     errorFileEmptyOrFormat = browser.i18n.getMessage("errorFileEmptyOrFormat"),
     buttonOptions = browser.i18n.getMessage("buttonOptions"),
     exportFile = null;
@@ -25,6 +27,7 @@ let languageCode = browser.i18n.getUILanguage(),
     languageCodeTwoChar = languageCode.split('-')[0];
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
+const tabCounterKey = '__em-tab-counter__';
 const fontKey = '__em-font__';
 const exportFileName = 'ribbons.json';
 
@@ -195,17 +198,31 @@ $(document).ready(() => {
     }, onError);
   });
 
+  browser.storage.local.get(tabCounterKey).then((storedTabCounter) => {
+    let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
+    $('#enable-tab-counter').prop('checked', storedTabCounterBool);
+  }, onError);
+
+  $('#enable-tab-counter').change((event) => {
+    let enableTabCounterValue = $(event.target).is(':checked');
+    browser.storage.local.set({ [tabCounterKey] : enableTabCounterValue }).then(() => {
+      showMessage(noticeSettingSaved);
+    }, onError);
+  });
+
   exportButton.html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
   importButton.html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
   $('.import-file-label').html(inputChooseFile);
   $('#import-warning').html(importWarning);
   $('#enable-regexp-label').html(inputEnableRegExp);
+  $('#enable-tab-counter-label').html(inputEnableTabCounter);
 
   $('#settings-section-label').html('<i class="fas fa-cog"></i> ' + optionsSettingsSection);
   $('#export-import-section-label').html('<i class="fas fa-sync-alt"></i> ' + optionsExportImportSection);
   $('#font-label').html(inputFontLabel);
   $('#font-picker-help-block').html(inputFontHelpText);
   $('#enable-regexp-help-block').html(inputRegExpHelpText);
+  $('#enable-tab-counter-help-block').html(inputTabCounterHelpText);
 
   $('#font-picker').fontpicker({
     lang: languageCodeTwoChar,

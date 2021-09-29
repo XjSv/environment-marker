@@ -28,14 +28,17 @@ body {
         font-weight: 600;
       }
     }
-    .enable-regexp-container {
+    .enable-regexp-container,
+    .enable-tab-counter-container {
       > div {
         padding-top: 10px;
       }
-      #enable-regexp-label {
+      #enable-regexp-label,
+      #enable-tab-counter-label {
         font-weight: 600;
       }
-      #enable-regexp-help-block {
+      #enable-regexp-help-block,
+      #enable-tab-counter-help-block {
         display: inline-block;
         margin: 0;
         position: relative;

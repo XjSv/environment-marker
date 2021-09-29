@@ -181,6 +181,10 @@
     "message": "Enable Regular Expressions in the URL fragment field.",
     "description": "RegExp Enable input help text."
   },
+  "inputTabCounterHelpText": {
+    "message": "Enable the opened tabs counter.",
+    "description": "Tab Counter Enable input help text."
+  },
 
   "buttonExport": {
     "message": "Export",
@@ -197,6 +201,10 @@
   "inputEnableRegExp": {
     "message": "RegExp",
     "description": "RegExp Enable input label."
+  },
+  "inputEnableTabCounter": {
+    "message": "Tab Counter",
+    "description": "Tab Counter Enable input label."
   },
   "importWarning": {
     "message": "Warning: Importing ribbons will override everything!",

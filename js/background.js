@@ -3,6 +3,7 @@ const TAB_COUNT_COLOR_LOW = '#28a745';
 const TAB_COUNT_COLOR_HIGH ='#dc3545';
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
+const tabCounterKey = '__em-tab-counter__';
 const fontKey = '__em-font__';
 
 /* generic error handler */
@@ -11,21 +12,29 @@ function onError(error) {
 }
 
 function updateCount(tabId, isOnRemoved) {
-  browser.tabs.query({}).then((tabs) => {
-    let length = tabs.length;
+  browser.storage.local.get(tabCounterKey).then((storedTabCounter) => {
+    let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
 
-    // onRemoved fires too early and the count is one too many.
-    // see https://bugzilla.mozilla.org/show_bug.cgi?id=1396758
-    if (isOnRemoved && tabId && tabs.map((t) => { return t.id; }).includes(tabId)) {
-        length--;
-    }
+    if (storedTabCounterBool) {
+      browser.tabs.query({}).then((tabs) => {
+        let length = tabs.length;
 
-    browser.browserAction.setBadgeText({ text: length.toString() });
+        // onRemoved fires too early and the count is one too many.
+        // see https://bugzilla.mozilla.org/show_bug.cgi?id=1396758
+        if (isOnRemoved && tabId && tabs.map((t) => { return t.id; }).includes(tabId)) {
+            length--;
+        }
 
-    if (length > TAB_COUNT_COLOR_LIMIT) {
-        browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
+        browser.browserAction.setBadgeText({ text: length.toString() });
+
+        if (length > TAB_COUNT_COLOR_LIMIT) {
+            browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
+        } else {
+            browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
+        }
+      });
     } else {
-        browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
+      browser.browserAction.setBadgeText({ text: '' });
     }
   });
 }
