@@ -79,6 +79,14 @@
     "message": "um",
     "description": "Word used to indicate the position of the ribbon."
   },
+  "ariaLabelEditRibbon": {
+    "message": "Editiere Ribbon",
+    "description": "Edit Ribbon Accessibility Label"
+  },
+  "ariaLabelDeleteRibbon": {
+    "message": "Ribbon Löschen",
+    "description": "Delete Ribbon Accessibility Label"
+  },
   "noticeNoRibbons": {
     "message": "Es sind keine Bänder gespeichert",
     "description": "No ribbons saved notice."
@@ -163,6 +171,10 @@
     "message": "Aktiviere reguläre Ausdrücke im URL-Fragment Feld.",
     "description": "RegExp Enable input help text."
   },
+  "inputTabCounterHelpText": {
+    "message": "Aktiviere den Tab-Zähler.",
+    "description": "Tab Counter Enable input help text."
+  },
   "buttonExport": {
     "message": "Exportieren",
     "description": "Export button label."
@@ -178,6 +190,10 @@
   "inputEnableRegExp": {
     "message": "RegExp",
     "description": "RegExp Enable input label."
+  },
+  "inputEnableTabCounter": {
+    "message": "Tab-Zähler",
+    "description": "Tab Counter Enable input label."
   },
   "importWarning": {
     "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!",
