@@ -1,6 +1,6 @@
 export_languages:
   - de
-  - es
+  - es-ES
   - fr
 files:
   - source: /_locales/en/*.json
