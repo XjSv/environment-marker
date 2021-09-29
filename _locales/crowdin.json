@@ -1,0 +1,270 @@
+{
+  "extensionName": {
+    "message": "Environment Marker",
+    "description": "The name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Provides a way to add a color indicator or marker (ribbon) on a web page depending on the URL.",
+    "description": "The description of the extension."
+  },
+
+  "inputUrlFragmentPlaceholder": {
+    "message": "URL fragment",
+    "description": "URL fragment input field placeholder."
+  },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "RegExp",
+    "description": "URL fragment input field placeholder when using RegExp."
+  },
+  "inputColorPlaceholder": {
+    "message": "Color",
+    "description": "Color input field placeholder."
+  },
+  "inputLabelPlaceholder": {
+    "message": "Label",
+    "description": "Label input field placeholder."
+  },
+  "selectFontSizeLabel": {
+    "message": "Font Size",
+    "description": "Font Size select field placeholder."
+  },
+  "selectPositionLabel": {
+    "message": "Position",
+    "description": "Position select field label."
+  },
+  "selectRibbonSizeLabel": {
+    "message": "Ribbon Size",
+    "description": "Ribbon Size select field label."
+  },
+  "buttonSaveLabel": {
+    "message": "Save",
+    "description": "Save button label."
+  },
+
+  "positionSelectTopLeft": {
+    "message": "Top Left",
+    "description": "Top Left option label for the Position select field."
+  },
+  "positionSelectTopRight": {
+    "message": "Top Right",
+    "description": "Top Right option label for the Position select field."
+  },
+  "positionSelectBottomLeft": {
+    "message": "Bottom Left",
+    "description": "Bottom Left option label for the Position select field."
+  },
+  "positionSelectBottomRight": {
+    "message": "Bottom Right",
+    "description": "Bottom Right option label for the Position select field."
+  },
+
+  "sizeSelectExtraSmall": {
+    "message": "Extra Small",
+    "description": "Extra Small option label for the Size select field."
+  },
+  "sizeSelectSmall": {
+    "message": "Small",
+    "description": "Small option label for the Size select field."
+  },
+  "sizeSelectNormal": {
+    "message": "Normal",
+    "description": "Normal option label for the Size select field."
+  },
+  "sizeSelectLarge": {
+    "message": "Large",
+    "description": "Large option label for the Size select field."
+  },
+  "sizeSelectExtraLarge": {
+    "message": "Extra Large",
+    "description": "Extra Large option label for the Size select field."
+  },
+
+  "displayAt": {
+    "message": "at",
+    "description": "Word used to indicate the position of the ribbon."
+  },
+  "ariaLabelEditRibbon": {
+    "message": "Edit Ribbon",
+    "description": "Edit Ribbon Accessibility Label"
+  },
+  "ariaLabelDeleteRibbon": {
+    "message": "Delete Ribbon",
+    "description": "Delete Ribbon Accessibility Label"
+  },
+
+  "noticeNoRibbons": {
+    "message": "There are no ribbons saved",
+    "description": "No ribbons saved notice."
+  },
+
+  "errorDuplicateMarker": {
+    "message": "Marker for this URL already exists!",
+    "description": "Duplicate marker error message."
+  },
+  "errorLabelEmpty": {
+    "message": "Enter Label!",
+    "description": "Empty label error message."
+  },
+  "errorUrlEmpty": {
+    "message": "Enter URL!",
+    "description": "Empty URL error message."
+  },
+
+  "errorImportLabelEmpty": {
+    "message": "Missing label value in import file.",
+    "description": "Error message when the label field is empty in the import file."
+  },
+  "errorImportUrlEmpty": {
+    "message": "Missing URL value in import file.",
+    "description": "Error message when the URL field is empty in the import file."
+  },
+  "errorImportColorEmpty": {
+    "message": "Missing color value in import file.",
+    "description": "Error message when the color field is empty in the import file."
+  },
+
+  "noticeSuccessExport": {
+    "message": "Export successful!",
+    "description": "Export successful notice message."
+  },
+  "noticeSuccessImport": {
+    "message": "Imported successfully!",
+    "description": "Import successful notice message."
+  },
+  "noticeSettingSaved": {
+    "message": "Setting saved!",
+    "description": "Settings saved successful notice message."
+  },
+  "ariaLabelAlertClose" : {
+    "message": "Close",
+    "description": "Alert message close button label."
+  },
+  "errorNoRibbonsToExport": {
+    "message": "Nothing to export!",
+    "description": "Nothing to export error message."
+  },
+  "errorChooseFile": {
+    "message": "Choose a file!",
+    "description": "Import no file selected error message."
+  },
+  "errorFileEmptyOrFormat": {
+    "message": "File empty or format not correct.",
+    "description": "Import file empty or the format is not correct error message."
+  },
+
+  "buttonClearAll": {
+    "message": "Clear All",
+    "description": "Clear All button label."
+  },
+  "buttonOptions": {
+    "message": "Options",
+    "description": "Options button label."
+  },
+
+  "optionsSettingsSection": {
+    "message": "Settings",
+    "description": "Options Settings section label."
+  },
+  "optionsExportImportSection": {
+    "message": "Export / Import",
+    "description": "Options Export / Import section label."
+  },
+  "inputFontLabel": {
+    "message": "Font",
+    "description": "Font input label."
+  },
+  "inputFontHelpText": {
+    "message": "Fonts are applied globally to all ribbons.",
+    "description": "Font input help text."
+  },
+  "inputRegExpHelpText": {
+    "message": "Enable Regular Expressions in the URL fragment field.",
+    "description": "RegExp Enable input help text."
+  },
+  "inputTabCounterHelpText": {
+    "message": "Enable the tab counter.",
+    "description": "Tab Counter Enable input help text."
+  },
+
+  "buttonExport": {
+    "message": "Export",
+    "description": "Export button label."
+  },
+  "buttonImport": {
+    "message": "Import",
+    "description": "Import button label."
+  },
+  "inputChooseFile": {
+    "message": "Choose file",
+    "description": "Choose file input label."
+  },
+  "inputEnableRegExp": {
+    "message": "RegExp",
+    "description": "RegExp Enable input label."
+  },
+  "inputEnableTabCounter": {
+    "message": "Tab Counter",
+    "description": "Tab Counter Enable input label."
+  },
+  "importWarning": {
+    "message": "Warning: Importing ribbons will override everything!",
+    "description": "Warning message when importing ribbons."
+  },
+
+  "colorPickerUiDialog": {
+    "message": "color picker dialog",
+    "description": "Color picker's dialog label."
+  },
+  "colorPickerBtnToggle": {
+    "message": "toggle color picker dialog",
+    "description": "Color picker's 'toggle color picker dialog' button label."
+  },
+  "colorPickerBtnSwatch": {
+    "message": "color swatch",
+    "description": "Color picker's 'color swatch' button label."
+  },
+  "colorPickerBtnLastColor": {
+    "message": "use previous color",
+    "description": "Color picker's 'use previous color' button label."
+  },
+  "colorPickerBtnSave": {
+    "message": "Save",
+    "description": "Color picker's Save button label."
+  },
+  "colorPickerBtnCancel": {
+    "message": "Cancel",
+    "description": "Color picker's Cancel button label."
+  },
+  "colorPickerBtnClear": {
+    "message": "Clear",
+    "description": "Color picker's Clear button label."
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "save and close",
+    "description": "Color picker's save and close aria label."
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "cancel and close",
+    "description": "Color picker's cancel and close aria label."
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "clear and close",
+    "description": "Color picker's clear and close aria label."
+  },
+  "colorPickerAriaInput": {
+    "message": "color input field",
+    "description": "Color picker's Input aria label."
+  },
+  "colorPickerAriaPalette": {
+    "message": "color selection area",
+    "description": "Color picker's Palette aria label."
+  },
+  "colorPickerAriaHue": {
+    "message": "hue selection slider",
+    "description": "Color picker's Hue aria label."
+  },
+  "colorPickerAriaOpacity": {
+    "message": "selection slider",
+    "description": "Color picker's Opacity aria label."
+  }
+}
