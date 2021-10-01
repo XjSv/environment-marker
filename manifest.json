@@ -18,9 +18,14 @@
     "activeTab",
     "storage"
   ],
-  "minimum_chrome_version": "36",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "environment-marker@armandtresova.com",
+      "strict_min_version": "57.0"
+    }
+  },
   "browser_action": {
-    "chrome_style": false,
+    "browser_style": false,
     "theme_icons": [{
         "light": "/images/icons/environment-marker-32.png",
         "dark": "/images/icons/environment-marker-32.png",
@@ -33,7 +38,7 @@
     "default_popup": "/popup/environment-marker.html"
   },
   "options_ui": {
-    "chrome_style": false,
+    "browser_style": false,
     "page": "/options/options.html"
   },
   "background": {
