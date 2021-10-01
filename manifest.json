@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/XjSv/environment-marker",
   "default_locale": "en",
@@ -27,9 +27,9 @@
   "browser_action": {
     "browser_style": false,
     "theme_icons": [{
-      "light": "/images/icons/environment-marker-32.png",
-      "dark": "/images/icons/environment-marker-32.png",
-      "size": 32
+        "light": "/images/icons/environment-marker-32.png",
+        "dark": "/images/icons/environment-marker-32.png",
+        "size": 32
     }],
     "default_icon": {
       "32": "/images/icons/environment-marker-32.png"

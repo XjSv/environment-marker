@@ -36,6 +36,8 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     colorPickerAriaHue = browser.i18n.getMessage("colorPickerAriaHue"),
     colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity"),
     displayAt = browser.i18n.getMessage("displayAt"),
+    ariaLabelEditRibbon = browser.i18n.getMessage("ariaLabelEditRibbon"),
+    ariaLabelDeleteRibbon = browser.i18n.getMessage("ariaLabelDeleteRibbon"),
     ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose");
 
 let languageCode = browser.i18n.getUILanguage(),
@@ -434,7 +436,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   let displayLabelUrl = $( "<div/>", {
     "class": "col-10 display-labelUrl",
     "tabindex": "0",
-    "aria-label": "Edit Ribbon",
+    "aria-label": ariaLabelEditRibbon,
     "aria-pressed": "false",
     "aria-controls": "edit-container-" + settingIndex,
     html: displayString,
@@ -447,7 +449,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   let displayColor = $( "<div/>", {
     "class": "col-1 display-color",
     "tabindex": "0",
-    "aria-label": "Edit Ribbon",
+    "aria-label": ariaLabelEditRibbon,
     "aria-pressed": "false",
     "aria-controls": "edit-container-" + settingIndex,
     html: '<div class="display-color-color" style="background-color: ' + settingColor + ';"></div>',
@@ -463,7 +465,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
 
   let deleteBtn = $( "<button/>", {
     "class": "btn btn-danger btn-sm delete",
-    "aria-label": "Delete Ribbon",
+    "aria-label": ariaLabelDeleteRibbon,
     html: '<i class="fas fa-trash fa-lg"></i>',
     click: function() {
       $(this).parent().parent().parent().remove();

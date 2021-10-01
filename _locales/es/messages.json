@@ -79,6 +79,14 @@
     "message": "a la",
     "description": "Word used to indicate the position of the ribbon."
   },
+  "ariaLabelEditRibbon": {
+    "message": "Editar Cinta",
+    "description": "Edit Ribbon Accessibility Label"
+  },
+  "ariaLabelDeleteRibbon": {
+    "message": "Eliminar Cinta",
+    "description": "Delete Ribbon Accessibility Label"
+  },
   "noticeNoRibbons": {
     "message": "No hay cintas guardadas",
     "description": "No ribbons saved notice."
@@ -163,6 +171,10 @@
     "message": "Habilitar expresiones regulares en el campo de fragmentos de URL.",
     "description": "RegExp Enable input help text."
   },
+  "inputTabCounterHelpText": {
+    "message": "Activar el contador de pestañas.",
+    "description": "Tab Counter Enable input help text."
+  },
   "buttonExport": {
     "message": "Exportar",
     "description": "Export button label."
@@ -178,6 +190,10 @@
   "inputEnableRegExp": {
     "message": "RegExp",
     "description": "RegExp Enable input label."
+  },
+  "inputEnableTabCounter": {
+    "message": "Contador de pestaña",
+    "description": "Tab Counter Enable input label."
   },
   "importWarning": {
     "message": "Advertencia: La importación de cintas anulará todo!",
