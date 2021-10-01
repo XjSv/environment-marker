@@ -1,6 +1,6 @@
 {
   "name": "environment-marker",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
   "author": "Armand Tresova <atresova@gmail.com> (https://www.armandtresova.com/)",
   "license": "MPL-2.0",
