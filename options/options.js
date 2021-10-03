@@ -28,8 +28,10 @@ let languageCode = browser.i18n.getUILanguage(),
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
 const tabCounterKey = '__em-tab-counter__';
+const swatchesKey = '__em-swatches__';
+const dbVersionKey = '__em-version__';
 const fontKey = '__em-font__';
-const exportFileName = 'ribbons.json';
+const exportFileName = 'environment-marker-export.json';
 
 function onError(error) {
   console.log(error);
@@ -69,37 +71,71 @@ function makeJsonExportFile(text) {
 
 /* Get all configurations from the storage and output a json file */
 function exportConfig() {
-  browser.storage.local.get(markersKey).then((storedResults) => {
-    let storedArray = storedResults[markersKey] || [],
-        configurations = [];
+  let configurations = {
+    markers: [],
+    settings: []
+  };
 
-    if (storedArray.length > 0) {
-      for (let storedObject of storedArray) {
-        configurations.push({
-          "url" : storedObject.settingUrl,
-          "color" : storedObject.settingColor,
-          "label" : storedObject.settingLabel,
-          "position" : storedObject.settingPosition,
-          "size" : storedObject.settingSize
-        });
-      }
+  browser.storage.sync.get(markersKey).then((storedResults) => {
+    let markersStoredArray = storedResults[markersKey] || [];
 
-      let configurations_json = JSON.stringify(configurations);
-      let link = document.createElement('a');
-      link.setAttribute('download', exportFileName);
-      link.href = makeJsonExportFile(configurations_json);
-      document.body.appendChild(link);
-
-      // Wait for the link to be added to the document
-      window.requestAnimationFrame(function () {
-        let event = new MouseEvent('click');
-        link.dispatchEvent(event);
-        document.body.removeChild(link);
-
-        showMessage(noticeSuccessExport);
-      });
-    } else {
+    if (markersStoredArray.length == 0) {
       showMessage(errorNoRibbonsToExport, true);
+    } else {
+      browser.storage.sync.get(fontKey).then((storedResults) => {
+        let fontStoredString = storedResults[fontKey] || '';
+        browser.storage.sync.get(searchModeKey).then((storedResults) => {
+          let searchModeStoredBool = storedResults[searchModeKey] || false;
+          browser.storage.sync.get(tabCounterKey).then((storedResults) => {
+            let tabCounterStoredBool = storedResults[tabCounterKey] || false;
+            browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
+              let colorSwatchesStoredArray = storedSwatchesArray[swatchesKey];
+
+              for (let storedObject of markersStoredArray) {
+                configurations.markers.push({
+                  "url": storedObject.settingUrl,
+                  "color": storedObject.settingColor,
+                  "label": storedObject.settingLabel,
+                  "position": storedObject.settingPosition,
+                  "size": storedObject.settingSize
+                });
+              }
+
+              configurations.settings.push({
+                "fontString": fontStoredString
+              });
+
+              configurations.settings.push({
+                "searchModeBool": searchModeStoredBool
+              });
+
+              configurations.settings.push({
+                "tabCounterBool": tabCounterStoredBool
+              });
+
+              configurations.settings.push({
+                "colorSwatchesArray": colorSwatchesStoredArray
+              });
+
+              let configurations_json = JSON.stringify(configurations);
+              let link = document.createElement('a');
+              link.setAttribute('download', exportFileName);
+              link.href = makeJsonExportFile(configurations_json);
+              document.body.appendChild(link);
+
+              // Wait for the link to be added to the document
+              window.requestAnimationFrame(function () {
+                let event = new MouseEvent('click');
+                link.dispatchEvent(event);
+                document.body.removeChild(link);
+
+                showMessage(noticeSuccessExport);
+              });
+
+            }, onError);
+          }, onError);
+        }, onError);
+      }, onError);
     }
   }, onError);
 }
@@ -116,30 +152,56 @@ function importConfig() {
     reader.addEventListener('load', function() {
       let importConfigObjects = JSON.parse(reader.result); // Parse the result into an object
 
-      if (importConfigObjects.length > 0 && importConfigObjects[0].hasOwnProperty('url')) {
+      if (importConfigObjects.hasOwnProperty('markers') && importConfigObjects.hasOwnProperty('settings')) {
         let storedArray = [],
             errorMessages = '';
 
-        for (let importConfigObject of importConfigObjects) {
-          if (importConfigObject.url !== '' && importConfigObject.color !== '' && importConfigObject.label !== '') {
-            let storeObject = {
-              settingUrl: importConfigObject.url,
-              settingColor: importConfigObject.color,
-              settingLabel: importConfigObject.label,
-              settingPosition: importConfigObject.position,
-              settingSize: importConfigObject.size
-            };
-            storedArray.push(storeObject);
-          } else {
-            // Empty field error messages
-            if (importConfigObject.url === '') {
-              errorMessages += '<li>' + errorImportUrlEmpty + '</li>';
+        if (importConfigObjects.settings.length > 0) {
+          for (let importConfigObject of importConfigObjects.settings) {
+            if (importConfigObject.hasOwnProperty('searchModeBool')) {
+              browser.storage.sync.set({[searchModeKey]: importConfigObject.searchModeBool}).then(() => {
+              }, onError);
             }
-            if (importConfigObject.label === '') {
-              errorMessages += '<li>' + errorImportLabelEmpty + '</li>';
+
+            if (importConfigObject.hasOwnProperty('tabCounterBool')) {
+              browser.storage.sync.set({[tabCounterKey]: importConfigObject.tabCounterBool}).then(() => {
+              }, onError);
             }
-            if (importConfigObject.color === '') {
-              errorMessages += '<li>' + errorImportColorEmpty + '</li>';
+
+            if (importConfigObject.hasOwnProperty('fontString')) {
+              browser.storage.sync.set({[fontKey]: importConfigObject.fontString}).then(() => {
+              }, onError);
+            }
+
+            if (importConfigObject.hasOwnProperty('colorSwatchesArray')) {
+              browser.storage.sync.set({[swatchesKey]: importConfigObject.colorSwatchesArray}).then(() => {
+              }, onError);
+            }
+          }
+        }
+
+        if (importConfigObjects.markers.length > 0) {
+          for (let importConfigObject of importConfigObjects.markers) {
+            if (importConfigObject.url !== '' && importConfigObject.color !== '' && importConfigObject.label !== '') {
+              let storeObject = {
+                settingUrl: importConfigObject.url,
+                settingColor: importConfigObject.color,
+                settingLabel: importConfigObject.label,
+                settingPosition: importConfigObject.position,
+                settingSize: importConfigObject.size
+              };
+              storedArray.push(storeObject);
+            } else {
+              // Empty field error messages
+              if (importConfigObject.url === '') {
+                errorMessages += '<li>' + errorImportUrlEmpty + '</li>';
+              }
+              if (importConfigObject.label === '') {
+                errorMessages += '<li>' + errorImportLabelEmpty + '</li>';
+              }
+              if (importConfigObject.color === '') {
+                errorMessages += '<li>' + errorImportColorEmpty + '</li>';
+              }
             }
           }
         }
@@ -150,7 +212,7 @@ function importConfig() {
         if (errorMessages !== '') {
           showMessage('<ul>' + errorMessages + '</ul>', true);
         } else {
-          browser.storage.local.set({ [markersKey] : storedArray }).then(() => {
+          browser.storage.sync.set({[markersKey]: storedArray}).then(() => {
             showMessage(noticeSuccessImport);
           }, onError);
         }
@@ -186,26 +248,26 @@ $(document).ready(() => {
     }
   });
 
-  browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
+  browser.storage.sync.get(searchModeKey).then((storedSearchMode) => {
     let storedSearchModeBool = storedSearchMode[searchModeKey] || false;
     $('#enable-regexp').prop('checked', storedSearchModeBool);
   }, onError);
 
   $('#enable-regexp').change((event) => {
     let enableRegexpValue = $(event.target).is(':checked');
-    browser.storage.local.set({ [searchModeKey] : enableRegexpValue }).then(() => {
+    browser.storage.sync.set({[searchModeKey]: enableRegexpValue }).then(() => {
       showMessage(noticeSettingSaved);
     }, onError);
   });
 
-  browser.storage.local.get(tabCounterKey).then((storedTabCounter) => {
+  browser.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
     let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
     $('#enable-tab-counter').prop('checked', storedTabCounterBool);
   }, onError);
 
   $('#enable-tab-counter').change((event) => {
     let enableTabCounterValue = $(event.target).is(':checked');
-    browser.storage.local.set({ [tabCounterKey] : enableTabCounterValue }).then(() => {
+    browser.storage.sync.set({[tabCounterKey]: enableTabCounterValue }).then(() => {
       showMessage(noticeSettingSaved);
     }, onError);
   });
@@ -263,13 +325,13 @@ $(document).ready(() => {
     onSelect: function(fontObject) {
       let fontStoreValue = fontObject.fontType + ':' + fontObject.fontSpec;
 
-      browser.storage.local.set({[fontKey] : fontStoreValue}).then(() => {
+      browser.storage.sync.set({[fontKey]: fontStoreValue}).then(() => {
         showMessage(noticeSettingSaved);
-      });
+      }, onError);
     }
   });
 
-  browser.storage.local.get(fontKey).then((storedFont) => {
+  browser.storage.sync.get(fontKey).then((storedFont) => {
     let fontString = storedFont[fontKey] || '';
 
     if (fontString) {
@@ -282,8 +344,8 @@ $(document).ready(() => {
   });
 
   $('.fp-clear').click(() => {
-    browser.storage.local.set({[fontKey] : ''}).then(() => {
+    browser.storage.sync.set({[fontKey]: ''}).then(() => {
       showMessage(noticeSettingSaved);
-    });
+    }, onError);
   });
 });
