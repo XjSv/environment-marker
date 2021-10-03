@@ -10,9 +10,9 @@
     <br />
     <br />
     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/environment-marker?utm_source=github&utm_medium=referral&utm_content=get-the-addon-link&utm_campaign=github">Firefox Addons</a>
-    .
+    ·
     <a target="_blank" href="https://chrome.google.com/webstore/detail/environment-marker/cjnmfjkimfbollcepfbhpahipampinhb">Chrome Web Store</a>
-    .
+    ·
     <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/environment-marker/iggchogopggbmjgplniemfaghmdkhlip">Edge Add-ons</a>
     ·
     <a target="_blank" href="https://addons.opera.com/en/extensions/details/environment-marker/">Opera addons</a>
