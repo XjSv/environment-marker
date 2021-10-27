@@ -20,7 +20,7 @@
     "gulp-uglify-es": "^3.0.0",
     "merge-stream": "^2.0.0",
     "postcss": "^8.3.11",
-    "sass": "^1.43.3"
+    "sass": "^1.43.4"
   },
   "scripts": {
     "develop": "node node_modules/gulp/bin/gulp.js --color --gulpfile gulpfile.js default",
