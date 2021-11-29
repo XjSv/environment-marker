@@ -12,7 +12,7 @@ function onError(error) {
 }
 
 function updateCount(tabId, isOnRemoved) {
-  browser.storage.local.get(tabCounterKey).then((storedTabCounter) => {
+  browser.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
     let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
 
     if (storedTabCounterBool) {
@@ -43,8 +43,8 @@ function updateContent(tabId) {
   if (tabId !== undefined) {
     browser.tabs.get(tabId).then((tab) => {
       if (tab.url !== '') {
-        browser.storage.local.get(markersKey).then((storedArray) => {
-          browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
+        browser.storage.sync.get(markersKey).then((storedArray) => {
+          browser.storage.sync.get(searchModeKey).then((storedSearchMode) => {
 
             let searchModeRegExp = storedSearchMode[searchModeKey] || false;
             if (storedArray[markersKey]) {
@@ -60,7 +60,7 @@ function updateContent(tabId) {
                 }
 
                 if (urlFound) {
-                  browser.storage.local.get(fontKey).then((storedFont) => {
+                  browser.storage.sync.get(fontKey).then((storedFont) => {
                     let fontString = storedFont[fontKey] || '';
 
                     browser.tabs.executeScript(tabId, {

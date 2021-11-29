@@ -148,14 +148,14 @@ function versionCompare(v1, v2, options) {
 }
 
 function initialize() {
-  browser.storage.local.get(dbVersionKey).then((storedResult) => {
+  browser.storage.sync.get(dbVersionKey).then((storedResult) => {
     let storedVersion = storedResult[dbVersionKey] || '',
         extensionVersion = browser.runtime.getManifest().version;
 
     if (storedVersion === '') {
       // This should process only once for people that have pre v2.3 installed
       // Pre v2.3 did not store the version in the db, therefore it should be empty
-      browser.storage.local.get(null).then((storedResults) => {
+      browser.storage.sync.get(null).then((storedResults) => {
         let storedArray = Object.keys(storedResults);
 
         if (storedArray.length > 0) {
@@ -173,32 +173,36 @@ function initialize() {
           }
 
           // Initial data conversion for pre v2.3 (old data is cleared before inserting the new format)
-          browser.storage.local.clear().then(() => {
-            browser.storage.local.set({ [markersKey] : convertedArray }).then(() => {
-              browser.storage.local.set({ [dbVersionKey] : extensionVersion }).then(() => {
+          browser.storage.sync.clear().then(() => {
+            browser.storage.sync.set({ [markersKey] : convertedArray }).then(() => {
+              browser.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
                 initializeDisplay();
               }, onError);
             }, onError);
           });
         } else {
           // No previous markers saved
-          browser.storage.local.set({ [dbVersionKey] : extensionVersion }).then(() => {
+          browser.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
             initializeDisplay();
           }, onError);
         }
       }, onError);
     } else {
       // Version is saved in the db
-      //if (versionCompare(extensionVersion, storedVersion, {zeroExtend: true}) > 0) {
+      if (versionCompare(extensionVersion, storedVersion, {zeroExtend: true}) > 0) {
         // For future updates (when version number increases)
-      //}
-      initializeDisplay();
+        browser.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
+          initializeDisplay();
+        }, onError);
+      } else {
+        initializeDisplay();
+      }
     }
   }, onError);
 }
 
 function initializeDisplay() {
-  browser.storage.local.get(markersKey).then((storedResults) => {
+  browser.storage.sync.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [];
 
     if (storedArray.length > 0) {
@@ -232,7 +236,7 @@ function showOrHideEmptyNotice(action = null) {
 }
 
 function saveSwatches(swatches) {
-  browser.storage.local.set({ [swatchesKey] : swatches }).then(null, onError);
+  browser.storage.sync.set({ [swatchesKey] : swatches }).then(null, onError);
 }
 
 /* Show error or success messages */
@@ -276,7 +280,7 @@ function saveSettings() {
       settingSize = $('.settings-input #size').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
-    browser.storage.local.get(markersKey).then((storedResults) => {
+    browser.storage.sync.get(markersKey).then((storedResults) => {
       let storedArray = storedResults[markersKey] || [],
           objectExists = searchStoredMarkers(settingUrl, storedArray);
 
@@ -319,7 +323,7 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
   storedArray.push(storeObject);
   let settingIndex =  storedArray.length + 1;
 
-  browser.storage.local.set({ [markersKey] : storedArray }).then(() => {
+  browser.storage.sync.set({ [markersKey] : storedArray }).then(() => {
     showOrHideEmptyNotice(hide);
     displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize);
   }, onError);
@@ -327,7 +331,7 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
 
 /* Update settings */
 function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious) {
-  browser.storage.local.get(markersKey).then((storedResults) => {
+  browser.storage.sync.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
         settingExists = searchStoredMarkers(newSettingUrl, storedArray, indexEditVal);
 
@@ -347,7 +351,7 @@ function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, se
       });
 
       // Save in DB
-      browser.storage.local.set({ [markersKey] : updatedArray }).then(() => {
+      browser.storage.sync.set({ [markersKey] : updatedArray }).then(() => {
         displaySetting(indexEditVal, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious);
       }, onError);
     } else {
@@ -358,7 +362,7 @@ function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, se
 }
 
 function deleteSetting(settingUrl, settingIndex) {
-  browser.storage.local.get(markersKey).then((storedResults) => {
+  browser.storage.sync.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
         settingExists = searchStoredMarkers(settingUrl, storedArray);
 
@@ -369,7 +373,7 @@ function deleteSetting(settingUrl, settingIndex) {
         return currentObj.settingUrl !== settingUrl && index !== settingIndex;
       });
 
-      browser.storage.local.set({ [markersKey] : filteredArray }).then(() => {
+      browser.storage.sync.set({ [markersKey] : filteredArray }).then(() => {
         showOrHideEmptyNotice();
       }, onError);
     }
@@ -381,7 +385,7 @@ function clearAll() {
   $('.settings-container .setting').each((index, element) => {
     $(element).remove();
   });
-  browser.storage.local.set({ [markersKey] : [] }).then(null, onError);
+  browser.storage.sync.set({ [markersKey] : [] }).then(null, onError);
   showOrHideEmptyNotice(show);
 }
 
@@ -653,7 +657,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     $('.settings-container').append(innerSettingsContainer);
   }
 
-  browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+  browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
     if (storedSwatchesArray[swatchesKey]) {
       colorSwatches = storedSwatchesArray[swatchesKey]
     }
@@ -716,7 +720,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     });
 
     pickr.on('show', () => {
-      browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+      browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
         if (storedSwatchesArray[swatchesKey]) {
           colorSwatches = storedSwatchesArray[swatchesKey]
         }
@@ -761,7 +765,7 @@ $(document).ready(() => {
     }
   });
 
-  browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+  browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
     if (storedSwatchesArray[swatchesKey]) {
       colorSwatches = storedSwatchesArray[swatchesKey]
     }
@@ -823,7 +827,7 @@ $(document).ready(() => {
     });
 
     pickr.on('show', () => {
-      browser.storage.local.get(swatchesKey).then((storedSwatchesArray) => {
+      browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
         if (storedSwatchesArray[swatchesKey]) {
           colorSwatches = storedSwatchesArray[swatchesKey]
         }
@@ -844,7 +848,7 @@ $(document).ready(() => {
       color_input = $('#color'),
       label_input = $('#label');
 
-  browser.storage.local.get(searchModeKey).then((storedSearchMode) => {
+  browser.storage.sync.get(searchModeKey).then((storedSearchMode) => {
     let searchModeRegExp = storedSearchMode[searchModeKey] || false;
     if (searchModeRegExp) {
       url_input.attr('placeholder', inputUrlFragmentRegExpPlaceholder);
