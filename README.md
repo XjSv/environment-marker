@@ -94,6 +94,7 @@ Currently, this extension supports Firefox and Chromium based browser such as Mi
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
+* [favico.js](https://github.com/ejci/favico.js)
 
 
 ## Installation
@@ -190,3 +191,4 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
+* [favico.js](https://github.com/ejci/favico.js)

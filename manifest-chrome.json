@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/XjSv/environment-marker",
   "default_locale": "en",
@@ -46,6 +46,7 @@
     "matches": ["<all_urls>"],
     "js": [
       "libraries/browser-polyfill.min.js",
+      "libraries/favico.min.js",
       "js/content.min.js"
     ]
   }]

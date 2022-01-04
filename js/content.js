@@ -16,6 +16,9 @@
     removeExistingRibbon();
     removeExistingStylesheets();
 
+    // Set the a badge/bullet to the websites favicon.
+    changeFavicon(color, textColor);
+
     let ribbonWrapper = document.createElement('div'),
         ribbon = document.createElement('div'),
         ribbonText = document.createElement('div'),
@@ -24,13 +27,13 @@
     // For backwards compatibility for users that already have ribbons configured.
     // @TODO: Remove sometime in the future
     if (fontSize === undefined) {
-      fontSize = '14'
+      fontSize = '14';
     }
 
     // For backwards compatibility for users that already have ribbons configured.
     // @TODO: Remove sometime in the future
     if (size === undefined) {
-      size = 'normal'
+      size = 'normal';
     }
 
     ribbonWrapper.className = 'em-ribbon-wrapper em-' + position + '-wrapper em-' + size + '-ribbon-wrapper';
@@ -106,6 +109,22 @@
   }
 
   /**
+   * Remove any stylesheets that have been previously injected from the page.
+   */
+   function changeFavicon(bgColor, txtColor) {
+    let badge = 1;
+    let favicon = new Favico({
+        bgColor : bgColor,
+        textColor: bgColor,
+        type: 'circle',
+        position: 'down',
+        animation : 'popFade',
+      });
+    //intial value
+    favicon.badge(badge);
+  }
+
+  /**
    * Listen for messages from the background script.
    * Call "insertRibbon()" or "removeExistingRibbon()".
   */
@@ -116,6 +135,7 @@
       removeExistingRibbon();
       removeExistingStylesheets();
     }
+
     return Promise.resolve('done');
   });
 
