@@ -175,6 +175,10 @@
     "message": "Activer le compteur d'onglets.",
     "description": "Tab Counter Enable input help text."
   },
+  "inputEnableFaviconMarkerHelpText": {
+    "message": "Activer le marqueur de Favicon.",
+    "description": "Favicon Marker Enable input help text."
+  },
   "buttonExport": {
     "message": "Exporter",
     "description": "Export button label."
@@ -194,6 +198,10 @@
   "inputEnableTabCounter": {
     "message": "Compteur d'onglets",
     "description": "Tab Counter Enable input label."
+  },
+  "inputEnableFaviconMarker": {
+    "message": "Marqueur de Favicon",
+    "description": "Favicon Marker Enable input label."
   },
   "importWarning": {
     "message": "Attention: l'importation de rubans annulera tout!",
