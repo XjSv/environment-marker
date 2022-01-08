@@ -4,6 +4,7 @@ const TAB_COUNT_COLOR_HIGH ='#dc3545';
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
 const tabCounterKey = '__em-tab-counter__';
+const faviconMarkerKey = '__em-favicon-marker__';
 const fontKey = '__em-font__';
 
 /* generic error handler */
@@ -43,53 +44,55 @@ function updateContent(tabId) {
   if (tabId !== undefined) {
     browser.tabs.get(tabId).then((tab) => {
       if (tab.url !== '') {
-        browser.storage.sync.get(markersKey).then((storedArray) => {
-          browser.storage.sync.get(searchModeKey).then((storedSearchMode) => {
+        browser.storage.sync.get([
+          fontKey,
+          searchModeKey,
+          markersKey,
+          faviconMarkerKey
+         ], function(options) {
+          let fontString = options[fontKey] || '';
+          let searchModeRegExp = options[searchModeKey] || false;
+          let faviconMarker = options[faviconMarkerKey] || false;
 
-            let searchModeRegExp = storedSearchMode[searchModeKey] || false;
-            if (storedArray[markersKey]) {
+          if (options[markersKey]) {
+            for (let storedObject of options[markersKey]) {
 
-              for (let storedObject of storedArray[markersKey]) {
+              let urlFound = false;
+              if (searchModeRegExp) {
+                let regex = new RegExp(storedObject.settingUrl, 'iu');
+                urlFound = regex.test(tab.url);
+              } else {
+                urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
+              }
 
-                let urlFound = false;
-                if (searchModeRegExp) {
-                  let regex = new RegExp(storedObject.settingUrl, 'iu');
-                  urlFound = regex.test(tab.url);
-                } else {
-                  urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
-                }
+              if (urlFound) {
+                browser.tabs.executeScript(tabId, {
+                  file: '/js/content.min.js'
+                }).then(() => {
+                  browser.tabs.sendMessage(tabId, {
+                    command: 'addRibbon',
+                    url: storedObject.settingUrl,
+                    color: storedObject.settingColor,
+                    label: storedObject.settingLabel,
+                    fontSize: storedObject.settingFontSize,
+                    position: storedObject.settingPosition,
+                    size: storedObject.settingSize,
+                    font: fontString,
+                    enableFaviconMarker: faviconMarker
+                  }).then(response => {
+                    //console.log("Message from the content script:");
+                    //console.log(response.response);
+                  }).catch(onError);
+                }, onError);
 
-                if (urlFound) {
-                  browser.storage.sync.get(fontKey).then((storedFont) => {
-                    let fontString = storedFont[fontKey] || '';
-
-                    browser.tabs.executeScript(tabId, {
-                      file: '/js/content.min.js'
-                    }).then(() => {
-                      browser.tabs.sendMessage(tabId, {
-                        command: 'addRibbon',
-                        url: storedObject.settingUrl,
-                        color: storedObject.settingColor,
-                        label: storedObject.settingLabel,
-                        fontSize: storedObject.settingFontSize,
-                        position: storedObject.settingPosition,
-                        size: storedObject.settingSize,
-                        font: fontString
-                      }).then(response => {
-                        //console.log("Message from the content script:");
-                        //console.log(response.response);
-                      }).catch(onError);
-                    }, onError);
-
-                    browser.tabs.insertCSS(tabId, {
-                      file: '/css/content.min.css'
-                    }).then(null, onError);
-                  });
-                }
+                browser.tabs.insertCSS(tabId, {
+                  file: '/css/content.min.css'
+                }).then(null, onError);
               }
             }
-          }, onError);
-        }, onError);
+          }
+
+        });
       }
     }, onError);
   }

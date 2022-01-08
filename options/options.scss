@@ -29,16 +29,19 @@ body {
       }
     }
     .enable-regexp-container,
-    .enable-tab-counter-container {
+    .enable-tab-counter-container,
+    .enable-favicon-marker-container {
       > div {
         padding-top: 10px;
       }
       #enable-regexp-label,
-      #enable-tab-counter-label {
+      #enable-tab-counter-label,
+      #enable-favicon-marker-label {
         font-weight: 600;
       }
       #enable-regexp-help-block,
-      #enable-tab-counter-help-block {
+      #enable-tab-counter-help-block,
+      #enable-favicon-marker-help-block {
         display: inline-block;
         margin: 0;
         position: relative;

@@ -82,7 +82,7 @@ const sizesMap = [
 Pickr.prototype.getSwatches = function() {
   return this._swatchColors.reduce((arr, swatch) => {
     arr.push(swatch.color.toRGBA().toString(0));
-    return arr
+    return arr;
   }, []);
 }
 

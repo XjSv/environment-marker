@@ -12,12 +12,14 @@
   /**
    * Given a URL, background color create a ribbon and add it to the page.
    */
-  function insertRibbon(color, url, label, fontSize, position, size, fontData) {
+  function insertRibbon(color, url, label, fontSize, position, size, fontData, enableFaviconMarker) {
     removeExistingRibbon();
     removeExistingStylesheets();
 
-    // Set the a badge/bullet to the websites favicon.
-    changeFavicon(color, textColor);
+    if (enableFaviconMarker) {
+      // Set the a badge/bullet to the websites favicon.
+      changeFavicon(color, textColor);
+    }
 
     let ribbonWrapper = document.createElement('div'),
         ribbon = document.createElement('div'),
@@ -120,8 +122,8 @@
         position: 'down',
         animation : 'popFade',
       });
-    //intial value
-    favicon.badge(badge);
+
+    favicon.badge(badge); // Intial value
   }
 
   /**
@@ -130,7 +132,7 @@
   */
   browser.runtime.onMessage.addListener( (message) => {
     if (message.command === 'addRibbon') {
-      insertRibbon(message.color, message.url, message.label, message.fontSize, message.position, message.size, message.font);
+      insertRibbon(message.color, message.url, message.label, message.fontSize, message.position, message.size, message.font, message.enableFaviconMarker);
     } else if (message.command === 'reset') {
       removeExistingRibbon();
       removeExistingStylesheets();
