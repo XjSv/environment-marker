@@ -175,6 +175,10 @@
     "message": "Aktiviere den Tab-Zähler.",
     "description": "Tab Counter Enable input help text."
   },
+  "inputEnableFaviconMarkerHelpText": {
+    "message": "Favicon Marker aktivieren.",
+    "description": "Favicon Marker Enable input help text."
+  },
   "buttonExport": {
     "message": "Exportieren",
     "description": "Export button label."
@@ -194,6 +198,10 @@
   "inputEnableTabCounter": {
     "message": "Tab-Zähler",
     "description": "Tab Counter Enable input label."
+  },
+  "inputEnableFaviconMarker": {
+    "message": "Favicon Marker",
+    "description": "Favicon Marker Enable input label."
   },
   "importWarning": {
     "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!",
