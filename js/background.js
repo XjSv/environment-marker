@@ -49,7 +49,8 @@ function updateContent(tabId) {
           searchModeKey,
           markersKey,
           faviconMarkerKey
-         ], function(options) {
+         ]).then((options) => {
+
           let fontString = options[fontKey] || '';
           let searchModeRegExp = options[searchModeKey] || false;
           let faviconMarker = options[faviconMarkerKey] || false;
@@ -91,7 +92,6 @@ function updateContent(tabId) {
               }
             }
           }
-
         });
       }
     }, onError);

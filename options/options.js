@@ -91,7 +91,7 @@ function exportConfig() {
         tabCounterKey,
         swatchesKey,
         faviconMarkerKey
-       ], function(options) {
+       ]).then((options) => {
         let fontStoredString = options[fontKey] || '';
         let searchModeStoredBool = options[searchModeKey] || false;
         let tabCounterStoredBool = options[tabCounterKey] || false;
@@ -142,7 +142,7 @@ function exportConfig() {
 
           showMessage(noticeSuccessExport);
         });
-      });
+       });
     }
   }, onError);
 }
