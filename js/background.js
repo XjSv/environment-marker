@@ -50,7 +50,6 @@ function updateContent(tabId) {
           markersKey,
           faviconMarkerKey
          ]).then((options) => {
-
           let fontString = options[fontKey] || '';
           let searchModeRegExp = options[searchModeKey] || false;
           let faviconMarker = options[faviconMarkerKey] || false;
