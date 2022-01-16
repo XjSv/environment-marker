@@ -175,6 +175,10 @@
     "message": "Activar el contador de pestañas.",
     "description": "Tab Counter Enable input help text."
   },
+  "inputEnableFaviconMarkerHelpText": {
+    "message": "Activar el marcador de Favicon.",
+    "description": "Favicon Marker Enable input help text."
+  },
   "buttonExport": {
     "message": "Exportar",
     "description": "Export button label."
@@ -194,6 +198,10 @@
   "inputEnableTabCounter": {
     "message": "Contador de pestaña",
     "description": "Tab Counter Enable input label."
+  },
+  "inputEnableFaviconMarker": {
+    "message": "Marcador de Favicon",
+    "description": "Favicon Marker Enable input label."
   },
   "importWarning": {
     "message": "Advertencia: La importación de cintas anulará todo!",

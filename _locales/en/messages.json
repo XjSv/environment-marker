@@ -185,6 +185,10 @@
     "message": "Enable the tab counter.",
     "description": "Tab Counter Enable input help text."
   },
+  "inputEnableFaviconMarkerHelpText": {
+    "message": "Enable the Favicon marker.",
+    "description": "Favicon Marker Enable input help text."
+  },
 
   "buttonExport": {
     "message": "Export",
@@ -205,6 +209,10 @@
   "inputEnableTabCounter": {
     "message": "Tab Counter",
     "description": "Tab Counter Enable input label."
+  },
+  "inputEnableFaviconMarker": {
+    "message": "Favicon Marker",
+    "description": "Favicon Marker Enable input label."
   },
   "importWarning": {
     "message": "Warning: Importing ribbons will override everything!",

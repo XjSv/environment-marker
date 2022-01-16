@@ -82,7 +82,7 @@ const sizesMap = [
 Pickr.prototype.getSwatches = function() {
   return this._swatchColors.reduce((arr, swatch) => {
     arr.push(swatch.color.toRGBA().toString(0));
-    return arr
+    return arr;
   }, []);
 }
 
@@ -100,9 +100,9 @@ function onError(error) {
 
 function truncateString(str, num) {
   if (str.length <= num) {
-    return str
+    return str;
   }
-  return str.slice(0, num) + '...'
+  return str.slice(0, num) + '...';
 }
 
 // Gist: https://gist.github.com/TheDistantSea/8021359

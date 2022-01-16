@@ -85,6 +85,7 @@ Currently, this extension supports Firefox and Chromium based browser such as Mi
 * **RegExp** - When enabled the URL fragment can be used with RegExp instead of searching using indexOf.
 * **Tab Counter** - Displays the number of open tabs. Color is green when under 10 tabs and red when above. See <a target="_blank" href="https://github.com/XjSv/environment-marker/wiki/Settings#tab-counter">Tab Counter Settings</a> for more info.
 * **Font Picker** - Ability to select fonts for the ribbons. Font come from Google Fonts.
+* **Favicon Marker** - Ability to set a colored circle marker to the favicon of the site.
 
 ### Built With
 * [Font Awesome](https://fontawesome.com/)
@@ -94,6 +95,7 @@ Currently, this extension supports Firefox and Chromium based browser such as Mi
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
+* [favico.js](https://github.com/ejci/favico.js)
 
 
 ## Installation
@@ -190,3 +192,4 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 * [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
+* [favico.js](https://github.com/ejci/favico.js)
