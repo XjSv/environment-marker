@@ -2,6 +2,7 @@ export_languages:
   - de
   - es-ES
   - fr
+  - zh-CN
 files:
   - source: /_locales/en/*.json
     translation: /_locales/%two_letters_code%/%original_file_name%
