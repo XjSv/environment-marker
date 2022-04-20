@@ -1,0 +1,266 @@
+{
+  "extensionName": {
+    "message": "页面标记者",
+    "description": "The name of the extension."
+  },
+  "extensionDescription": {
+    "message": "提供一种根据 URL 在网页上添加颜色指示器或标记（功能区）的方法。",
+    "description": "The description of the extension."
+  },
+  "inputUrlFragmentPlaceholder": {
+    "message": "URL 片段",
+    "description": "URL fragment input field placeholder."
+  },
+  "inputUrlFragmentRegExpPlaceholder": {
+    "message": "正则表达式",
+    "description": "URL fragment input field placeholder when using RegExp."
+  },
+  "inputColorPlaceholder": {
+    "message": "颜色",
+    "description": "Color input field placeholder."
+  },
+  "inputLabelPlaceholder": {
+    "message": "标签",
+    "description": "Label input field placeholder."
+  },
+  "selectFontSizeLabel": {
+    "message": "字体大小",
+    "description": "Font Size select field placeholder."
+  },
+  "selectPositionLabel": {
+    "message": "位置",
+    "description": "Position select field label."
+  },
+  "selectRibbonSizeLabel": {
+    "message": "标记大小",
+    "description": "Ribbon Size select field label."
+  },
+  "buttonSaveLabel": {
+    "message": "保存",
+    "description": "Save button label."
+  },
+  "positionSelectTopLeft": {
+    "message": "左上",
+    "description": "Top Left option label for the Position select field."
+  },
+  "positionSelectTopRight": {
+    "message": "右上",
+    "description": "Top Right option label for the Position select field."
+  },
+  "positionSelectBottomLeft": {
+    "message": "左下",
+    "description": "Bottom Left option label for the Position select field."
+  },
+  "positionSelectBottomRight": {
+    "message": "右下",
+    "description": "Bottom Right option label for the Position select field."
+  },
+  "sizeSelectExtraSmall": {
+    "message": "超小号",
+    "description": "Extra Small option label for the Size select field."
+  },
+  "sizeSelectSmall": {
+    "message": "较小",
+    "description": "Small option label for the Size select field."
+  },
+  "sizeSelectNormal": {
+    "message": "标准",
+    "description": "Normal option label for the Size select field."
+  },
+  "sizeSelectLarge": {
+    "message": "较大",
+    "description": "Large option label for the Size select field."
+  },
+  "sizeSelectExtraLarge": {
+    "message": "特大",
+    "description": "Extra Large option label for the Size select field."
+  },
+  "displayAt": {
+    "message": "位置",
+    "description": "Word used to indicate the position of the ribbon."
+  },
+  "ariaLabelEditRibbon": {
+    "message": "编辑标签",
+    "description": "Edit Ribbon Accessibility Label"
+  },
+  "ariaLabelDeleteRibbon": {
+    "message": "删除标签",
+    "description": "Delete Ribbon Accessibility Label"
+  },
+  "noticeNoRibbons": {
+    "message": "没有已保存的标签",
+    "description": "No ribbons saved notice."
+  },
+  "errorDuplicateMarker": {
+    "message": "此URL的标签已经存在。",
+    "description": "Duplicate marker error message."
+  },
+  "errorLabelEmpty": {
+    "message": "请输入标签！",
+    "description": "Empty label error message."
+  },
+  "errorUrlEmpty": {
+    "message": "请输入URL！",
+    "description": "Empty URL error message."
+  },
+  "errorImportLabelEmpty": {
+    "message": "导入文件中缺少标签值。",
+    "description": "Error message when the label field is empty in the import file."
+  },
+  "errorImportUrlEmpty": {
+    "message": "导入文件中缺少URL值。",
+    "description": "Error message when the URL field is empty in the import file."
+  },
+  "errorImportColorEmpty": {
+    "message": "导入文件中缺少颜色值。",
+    "description": "Error message when the color field is empty in the import file."
+  },
+  "noticeSuccessExport": {
+    "message": "导出成功！",
+    "description": "Export successful notice message."
+  },
+  "noticeSuccessImport": {
+    "message": "导入成功！",
+    "description": "Import successful notice message."
+  },
+  "noticeSettingSaved": {
+    "message": "设置已保存！",
+    "description": "Settings saved successful notice message."
+  },
+  "ariaLabelAlertClose": {
+    "message": "关闭",
+    "description": "Alert message close button label."
+  },
+  "errorNoRibbonsToExport": {
+    "message": "没有内容可导出！",
+    "description": "Nothing to export error message."
+  },
+  "errorChooseFile": {
+    "message": "请选择文件！",
+    "description": "Import no file selected error message."
+  },
+  "errorFileEmptyOrFormat": {
+    "message": "文件空白或格式不正确。",
+    "description": "Import file empty or the format is not correct error message."
+  },
+  "buttonClearAll": {
+    "message": "全部清除",
+    "description": "Clear All button label."
+  },
+  "buttonOptions": {
+    "message": "设置",
+    "description": "Options button label."
+  },
+  "optionsSettingsSection": {
+    "message": "基础设置",
+    "description": "Options Settings section label."
+  },
+  "optionsExportImportSection": {
+    "message": "导出 / 导入",
+    "description": "Options Export / Import section label."
+  },
+  "inputFontLabel": {
+    "message": "字体",
+    "description": "Font input label."
+  },
+  "inputFontHelpText": {
+    "message": "字体是全局应用于所有标签的。",
+    "description": "Font input help text."
+  },
+  "inputRegExpHelpText": {
+    "message": "在 URL 字段中启用正则表达式。",
+    "description": "RegExp Enable input help text."
+  },
+  "inputTabCounterHelpText": {
+    "message": "启用选项卡计数器。",
+    "description": "Tab Counter Enable input help text."
+  },
+  "inputEnableFaviconMarkerHelpText": {
+    "message": "启用图标标记。",
+    "description": "Favicon Marker Enable input help text."
+  },
+  "buttonExport": {
+    "message": "导出",
+    "description": "Export button label."
+  },
+  "buttonImport": {
+    "message": "导入",
+    "description": "Import button label."
+  },
+  "inputChooseFile": {
+    "message": "选择文件",
+    "description": "Choose file input label."
+  },
+  "inputEnableRegExp": {
+    "message": "正则表达式",
+    "description": "RegExp Enable input label."
+  },
+  "inputEnableTabCounter": {
+    "message": "标签页计数器",
+    "description": "Tab Counter Enable input label."
+  },
+  "inputEnableFaviconMarker": {
+    "message": "图标标记",
+    "description": "Favicon Marker Enable input label."
+  },
+  "importWarning": {
+    "message": "警告: 导入标签将覆盖所有内容!",
+    "description": "Warning message when importing ribbons."
+  },
+  "colorPickerUiDialog": {
+    "message": "颜色选择器对话框",
+    "description": "Color picker's dialog label."
+  },
+  "colorPickerBtnToggle": {
+    "message": "切换颜色选择器对话框",
+    "description": "Color picker's 'toggle color picker dialog' button label."
+  },
+  "colorPickerBtnSwatch": {
+    "message": "色谱图",
+    "description": "Color picker's 'color swatch' button label."
+  },
+  "colorPickerBtnLastColor": {
+    "message": "使用上一个颜色",
+    "description": "Color picker's 'use previous color' button label."
+  },
+  "colorPickerBtnSave": {
+    "message": "保存",
+    "description": "Color picker's Save button label."
+  },
+  "colorPickerBtnCancel": {
+    "message": "撤销",
+    "description": "Color picker's Cancel button label."
+  },
+  "colorPickerBtnClear": {
+    "message": "清空",
+    "description": "Color picker's Clear button label."
+  },
+  "colorPickerAriaBtnSave": {
+    "message": "保存并关闭",
+    "description": "Color picker's save and close aria label."
+  },
+  "colorPickerAriaBtnCancel": {
+    "message": "取消并关闭",
+    "description": "Color picker's cancel and close aria label."
+  },
+  "colorPickerAriaBtnClear": {
+    "message": "清除并关闭",
+    "description": "Color picker's clear and close aria label."
+  },
+  "colorPickerAriaInput": {
+    "message": "颜色输入字段",
+    "description": "Color picker's Input aria label."
+  },
+  "colorPickerAriaPalette": {
+    "message": "颜色选择区域",
+    "description": "Color picker's Palette aria label."
+  },
+  "colorPickerAriaHue": {
+    "message": "色彩选择滑块",
+    "description": "Color picker's Hue aria label."
+  },
+  "colorPickerAriaOpacity": {
+    "message": "选取滑块",
+    "description": "Color picker's Opacity aria label."
+  }
+}
