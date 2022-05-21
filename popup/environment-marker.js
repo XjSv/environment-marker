@@ -17,6 +17,8 @@ let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlace
     sizeSelectExtraLarge = browser.i18n.getMessage("sizeSelectExtraLarge"),
     noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons"),
     buttonClearAll = browser.i18n.getMessage("buttonClearAll"),
+    buttonDisable = browser.i18n.getMessage("buttonDisable"),
+    buttonEnable = browser.i18n.getMessage("buttonEnable"),
     buttonOptions = browser.i18n.getMessage("buttonOptions"),
     errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
     errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty"),
@@ -51,6 +53,7 @@ let languageCode = browser.i18n.getUILanguage(),
       'rgba(33, 150, 243, 1)',
       'rgba(3,  169, 244, 1)'
     ];
+const extensionEnabledKey = '__em-enabled__';
 const swatchesKey = '__em-swatches__';
 const markersKey = '__em-markers__';
 const dbVersionKey = '__em-version__';
@@ -737,6 +740,7 @@ $(document).ready(() => {
   $('html').attr('lang', languageCode);
 
   let clearButton = $('.clear'),
+      toggleButton = $('.toggle'),
       optionsButton = $('.options');
 
   $('.save').click(() => {
@@ -750,6 +754,26 @@ $(document).ready(() => {
   optionsButton.click(() => {
     browser.runtime.openOptionsPage();
   });
+
+  toggleButton.click(() => {
+    browser.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
+      let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
+      browser.storage.sync.set({ [extensionEnabledKey] : !extensionEnabled }).then(() => {
+        let btnLabel = !extensionEnabled ? buttonDisable : buttonEnable;
+        toggleButton.html(btnLabel);
+        toggleButton.attr('class', `btn btn-sm btn-${!extensionEnabled ? 'danger' : 'success'} toggle`);
+
+        browser.runtime.sendMessage({cmd: "toggleExtensionOnOff", data: {value: !extensionEnabled}});
+      }, onError);
+    }, onError);
+  });
+
+  browser.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
+    let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
+    let btnLabel = extensionEnabled ? buttonDisable : buttonEnable;
+    toggleButton.html(btnLabel);
+    toggleButton.attr('class', `btn btn-sm btn-${extensionEnabled ? 'danger' : 'success'} toggle`);
+  }, onError);
 
   $(document).keydown(function(event) {
     // Enter
@@ -842,6 +866,7 @@ $(document).ready(() => {
 
   $('.empty-notice').html(noticeNoRibbons);
   clearButton.html(buttonClearAll);
+  //toggleButton.html(buttonDisable);
   optionsButton.html(buttonOptions);
 
   let url_input = $('#url'),
