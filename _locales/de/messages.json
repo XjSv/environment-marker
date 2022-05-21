@@ -147,6 +147,14 @@
     "message": "Alles Löschen",
     "description": "Clear All button label."
   },
+  "buttonDisable": {
+    "message": "Disable",
+    "description": "Disable extension button label."
+  },
+  "buttonEnable": {
+    "message": "Enable",
+    "description": "Enable extension button label."
+  },
   "buttonOptions": {
     "message": "Optionen",
     "description": "Options button label."
