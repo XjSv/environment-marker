@@ -1,7 +1,7 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "2.9.0",
+  "version": "3.0.0",
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/XjSv/environment-marker",
   "default_locale": "en",
@@ -13,10 +13,12 @@
     "512": "/images/icons/environment-marker-512.png"
   },
   "permissions": [
-    "<all_urls>",
     "tabs",
     "activeTab",
     "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "browser_specific_settings": {
     "gecko": {
@@ -24,7 +26,7 @@
       "strict_min_version": "57.0"
     }
   },
-  "browser_action": {
+  "action": {
     "browser_style": false,
     "theme_icons": [{
         "light": "/images/icons/environment-marker-32.png",
@@ -42,7 +44,7 @@
     "page": "/options/options.html"
   },
   "background": {
-    "scripts": [
+    "service_worker": [
       "libraries/browser-polyfill.min.js",
       "js/background.min.js"
     ]

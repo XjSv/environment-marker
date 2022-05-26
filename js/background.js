@@ -48,22 +48,22 @@ function updateCount(tabId, isOnRemoved) {
             length--;
         }
 
-        browser.browserAction.setBadgeText({ text: length.toString() });
+        browser.action.setBadgeText({ text: length.toString() });
 
         if (length > TAB_COUNT_COLOR_LIMIT) {
-            browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
+            browser.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
         } else {
-            browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
+            browser.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
         }
       });
     } else {
-      browser.browserAction.setBadgeText({ text: '' });
+      browser.action.setBadgeText({ text: '' });
     }
   });
 }
 
 function clearCount() {
-  browser.browserAction.setBadgeText({ text: '' });
+  browser.action.setBadgeText({ text: '' });
 }
 
 function updateContent(tabId) {
@@ -92,8 +92,9 @@ function updateContent(tabId) {
               }
 
               if (urlFound) {
-                browser.tabs.executeScript(tabId, {
-                  file: '/js/content.min.js'
+                browser.scripting.executeScript({
+                  target: {tabId: tabId},
+                  files: ['/js/content.min.js']
                 }).then(() => {
                   browser.tabs.sendMessage(tabId, {
                     command: 'addRibbon',
