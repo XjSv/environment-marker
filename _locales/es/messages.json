@@ -147,6 +147,14 @@
     "message": "Borrar Todo",
     "description": "Clear All button label."
   },
+  "buttonDisable": {
+    "message": "Desactivar",
+    "description": "Disable extension button label."
+  },
+  "buttonEnable": {
+    "message": "Activar",
+    "description": "Enable extension button label."
+  },
   "buttonOptions": {
     "message": "Opciones",
     "description": "Options button label."
