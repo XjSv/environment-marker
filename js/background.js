@@ -1,16 +1,38 @@
 const TAB_COUNT_COLOR_LIMIT = 10;
 const TAB_COUNT_COLOR_LOW = '#28a745';
 const TAB_COUNT_COLOR_HIGH ='#dc3545';
+const extensionEnabledKey = '__em-enabled__';
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
 const tabCounterKey = '__em-tab-counter__';
 const faviconMarkerKey = '__em-favicon-marker__';
 const fontKey = '__em-font__';
 
-/* generic error handler */
+// Generic Error Handler
 function onError(error) {
   console.log(error);
 }
+
+browser.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
+  let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
+  if (extensionEnabled) {
+    initialize();
+  }
+}, onError);
+
+browser.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    if (request.cmd === "toggleExtensionOnOff") {
+      browser.storage.sync.set({ [extensionEnabledKey] :  request.data.value }).then(() => {
+        if (request.data.value) {
+          initialize();
+        } else {
+          removeListeners();
+        }
+      }, onError);
+    }
+  }
+);
 
 function updateCount(tabId, isOnRemoved) {
   browser.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
@@ -40,6 +62,10 @@ function updateCount(tabId, isOnRemoved) {
   });
 }
 
+function clearCount() {
+  browser.browserAction.setBadgeText({ text: '' });
+}
+
 function updateContent(tabId) {
   if (tabId !== undefined) {
     browser.tabs.get(tabId).then((tab) => {
@@ -49,7 +75,7 @@ function updateContent(tabId) {
           searchModeKey,
           markersKey,
           faviconMarkerKey
-         ]).then((options) => {
+          ]).then((options) => {
           let fontString = options[fontKey] || '';
           let searchModeRegExp = options[searchModeKey] || false;
           let faviconMarker = options[faviconMarkerKey] || false;
@@ -97,19 +123,30 @@ function updateContent(tabId) {
   }
 }
 
-browser.tabs.onRemoved.addListener((tabId, removeInfo) => {
+let onRemovedListener = function(tabId, removeInfo) {
   updateCount(tabId, true);
-});
+};
 
-browser.tabs.onCreated.addListener((tab) => {
+let onCreatedListener = function(tab) {
   updateCount(tab.id, false);
-});
-
-browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+};
+let onUpdatedListener = function(tabId, changeInfo, tab) {
   // Only run update once after the page is finished loading
   if (changeInfo.status === 'complete') {
     updateContent(tabId);
   }
-});
+};
 
-updateCount();
+function initialize() {
+  browser.tabs.onRemoved.addListener(onRemovedListener);
+  browser.tabs.onCreated.addListener(onCreatedListener);
+  browser.tabs.onUpdated.addListener(onUpdatedListener);
+  updateCount();
+}
+
+function removeListeners() {
+  browser.tabs.onRemoved.removeListener(onRemovedListener);
+  browser.tabs.onCreated.removeListener(onCreatedListener);
+  browser.tabs.onUpdated.removeListener(onUpdatedListener);
+  clearCount();
+}

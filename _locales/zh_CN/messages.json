@@ -147,6 +147,14 @@
     "message": "全部清除",
     "description": "Clear All button label."
   },
+  "buttonDisable": {
+    "message": "停用",
+    "description": "Disable extension button label."
+  },
+  "buttonEnable": {
+    "message": "启用",
+    "description": "Enable extension button label."
+  },
   "buttonOptions": {
     "message": "设置",
     "description": "Options button label."
