@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "archiver": "^5.3.1",
-    "autoprefixer": "^10.4.7",
+    "autoprefixer": "^10.4.8",
     "cssnano": "^5.1.12",
     "gulp": "^4.0.2",
     "gulp-postcss": "^9.0.1",
