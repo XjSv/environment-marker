@@ -1,48 +1,48 @@
-let inputUrlFragmentPlaceholder = browser.i18n.getMessage("inputUrlFragmentPlaceholder"),
-    inputUrlFragmentRegExpPlaceholder = browser.i18n.getMessage("inputUrlFragmentRegExpPlaceholder"),
-    inputColorPlaceholder = browser.i18n.getMessage("inputColorPlaceholder"),
-    inputLabelPlaceholder = browser.i18n.getMessage("inputLabelPlaceholder"),
-    selectFontSizeLabel = browser.i18n.getMessage("selectFontSizeLabel"),
-    selectPositionLabel = browser.i18n.getMessage("selectPositionLabel"),
-    selectRibbonSizeLabel = browser.i18n.getMessage("inputLabelPlaceholder"),
-    buttonSaveLabel = browser.i18n.getMessage("buttonSaveLabel"),
-    positionSelectTopLeft = browser.i18n.getMessage("positionSelectTopLeft"),
-    positionSelectTopRight = browser.i18n.getMessage("positionSelectTopRight"),
-    positionSelectBottomLeft = browser.i18n.getMessage("positionSelectBottomLeft"),
-    positionSelectBottomRight = browser.i18n.getMessage("positionSelectBottomRight"),
-    sizeSelectExtraSmall = browser.i18n.getMessage("sizeSelectExtraSmall"),
-    sizeSelectSmall = browser.i18n.getMessage("sizeSelectSmall"),
-    sizeSelectNormal = browser.i18n.getMessage("sizeSelectNormal"),
-    sizeSelectLarge = browser.i18n.getMessage("sizeSelectLarge"),
-    sizeSelectExtraLarge = browser.i18n.getMessage("sizeSelectExtraLarge"),
-    noticeNoRibbons = browser.i18n.getMessage("noticeNoRibbons"),
-    buttonClearAll = browser.i18n.getMessage("buttonClearAll"),
-    buttonDisable = browser.i18n.getMessage("buttonDisable"),
-    buttonEnable = browser.i18n.getMessage("buttonEnable"),
-    buttonOptions = browser.i18n.getMessage("buttonOptions"),
-    errorDuplicateMarker = browser.i18n.getMessage("errorDuplicateMarker"),
-    errorLabelEmpty = browser.i18n.getMessage("errorLabelEmpty"),
-    errorUrlEmpty = browser.i18n.getMessage("errorUrlEmpty"),
-    colorPickerUiDialog = browser.i18n.getMessage("colorPickerUiDialog"),
-    colorPickerBtnToggle = browser.i18n.getMessage("colorPickerBtnToggle"),
-    colorPickerBtnSwatch = browser.i18n.getMessage("colorPickerBtnSwatch"),
-    colorPickerBtnLastColor = browser.i18n.getMessage("colorPickerBtnLastColor"),
-    colorPickerBtnSave = browser.i18n.getMessage("colorPickerBtnSave"),
-    colorPickerBtnCancel = browser.i18n.getMessage("colorPickerBtnCancel"),
-    colorPickerBtnClear = browser.i18n.getMessage("colorPickerBtnClear"),
-    colorPickerAriaBtnSave = browser.i18n.getMessage("colorPickerAriaBtnSave"),
-    colorPickerAriaBtnCancel = browser.i18n.getMessage("colorPickerAriaBtnCancel"),
-    colorPickerAriaBtnClear = browser.i18n.getMessage("colorPickerAriaBtnClear"),
-    colorPickerAriaInput = browser.i18n.getMessage("colorPickerAriaInput"),
-    colorPickerAriaPalette = browser.i18n.getMessage("colorPickerAriaPalette"),
-    colorPickerAriaHue = browser.i18n.getMessage("colorPickerAriaHue"),
-    colorPickerAriaOpacity = browser.i18n.getMessage("colorPickerAriaOpacity"),
-    displayAt = browser.i18n.getMessage("displayAt"),
-    ariaLabelEditRibbon = browser.i18n.getMessage("ariaLabelEditRibbon"),
-    ariaLabelDeleteRibbon = browser.i18n.getMessage("ariaLabelDeleteRibbon"),
-    ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose");
+let inputUrlFragmentPlaceholder = chrome.i18n.getMessage("inputUrlFragmentPlaceholder"),
+    inputUrlFragmentRegExpPlaceholder = chrome.i18n.getMessage("inputUrlFragmentRegExpPlaceholder"),
+    inputColorPlaceholder = chrome.i18n.getMessage("inputColorPlaceholder"),
+    inputLabelPlaceholder = chrome.i18n.getMessage("inputLabelPlaceholder"),
+    selectFontSizeLabel = chrome.i18n.getMessage("selectFontSizeLabel"),
+    selectPositionLabel = chrome.i18n.getMessage("selectPositionLabel"),
+    selectRibbonSizeLabel = chrome.i18n.getMessage("inputLabelPlaceholder"),
+    buttonSaveLabel = chrome.i18n.getMessage("buttonSaveLabel"),
+    positionSelectTopLeft = chrome.i18n.getMessage("positionSelectTopLeft"),
+    positionSelectTopRight = chrome.i18n.getMessage("positionSelectTopRight"),
+    positionSelectBottomLeft = chrome.i18n.getMessage("positionSelectBottomLeft"),
+    positionSelectBottomRight = chrome.i18n.getMessage("positionSelectBottomRight"),
+    sizeSelectExtraSmall = chrome.i18n.getMessage("sizeSelectExtraSmall"),
+    sizeSelectSmall = chrome.i18n.getMessage("sizeSelectSmall"),
+    sizeSelectNormal = chrome.i18n.getMessage("sizeSelectNormal"),
+    sizeSelectLarge = chrome.i18n.getMessage("sizeSelectLarge"),
+    sizeSelectExtraLarge = chrome.i18n.getMessage("sizeSelectExtraLarge"),
+    noticeNoRibbons = chrome.i18n.getMessage("noticeNoRibbons"),
+    buttonClearAll = chrome.i18n.getMessage("buttonClearAll"),
+    buttonDisable = chrome.i18n.getMessage("buttonDisable"),
+    buttonEnable = chrome.i18n.getMessage("buttonEnable"),
+    buttonOptions = chrome.i18n.getMessage("buttonOptions"),
+    errorDuplicateMarker = chrome.i18n.getMessage("errorDuplicateMarker"),
+    errorLabelEmpty = chrome.i18n.getMessage("errorLabelEmpty"),
+    errorUrlEmpty = chrome.i18n.getMessage("errorUrlEmpty"),
+    colorPickerUiDialog = chrome.i18n.getMessage("colorPickerUiDialog"),
+    colorPickerBtnToggle = chrome.i18n.getMessage("colorPickerBtnToggle"),
+    colorPickerBtnSwatch = chrome.i18n.getMessage("colorPickerBtnSwatch"),
+    colorPickerBtnLastColor = chrome.i18n.getMessage("colorPickerBtnLastColor"),
+    colorPickerBtnSave = chrome.i18n.getMessage("colorPickerBtnSave"),
+    colorPickerBtnCancel = chrome.i18n.getMessage("colorPickerBtnCancel"),
+    colorPickerBtnClear = chrome.i18n.getMessage("colorPickerBtnClear"),
+    colorPickerAriaBtnSave = chrome.i18n.getMessage("colorPickerAriaBtnSave"),
+    colorPickerAriaBtnCancel = chrome.i18n.getMessage("colorPickerAriaBtnCancel"),
+    colorPickerAriaBtnClear = chrome.i18n.getMessage("colorPickerAriaBtnClear"),
+    colorPickerAriaInput = chrome.i18n.getMessage("colorPickerAriaInput"),
+    colorPickerAriaPalette = chrome.i18n.getMessage("colorPickerAriaPalette"),
+    colorPickerAriaHue = chrome.i18n.getMessage("colorPickerAriaHue"),
+    colorPickerAriaOpacity = chrome.i18n.getMessage("colorPickerAriaOpacity"),
+    displayAt = chrome.i18n.getMessage("displayAt"),
+    ariaLabelEditRibbon = chrome.i18n.getMessage("ariaLabelEditRibbon"),
+    ariaLabelDeleteRibbon = chrome.i18n.getMessage("ariaLabelDeleteRibbon"),
+    ariaLabelAlertClose = chrome.i18n.getMessage("ariaLabelAlertClose");
 
-let languageCode = browser.i18n.getUILanguage(),
+let languageCode = chrome.i18n.getUILanguage(),
     pickr = null,
     colorSwatches = [
       'rgba(244, 67,  54, 1)',
@@ -151,14 +151,14 @@ function versionCompare(v1, v2, options) {
 }
 
 function initialize() {
-  browser.storage.sync.get(dbVersionKey).then((storedResult) => {
+  chrome.storage.sync.get(dbVersionKey).then((storedResult) => {
     let storedVersion = storedResult[dbVersionKey] || '',
-        extensionVersion = browser.runtime.getManifest().version;
+        extensionVersion = chrome.runtime.getManifest().version;
 
     if (storedVersion === '') {
       // This should process only once for people that have pre v2.3 installed
       // Pre v2.3 did not store the version in the db, therefore it should be empty
-      browser.storage.sync.get(null).then((storedResults) => {
+      chrome.storage.sync.get(null).then((storedResults) => {
         let storedArray = Object.keys(storedResults);
 
         if (storedArray.length > 0) {
@@ -176,16 +176,16 @@ function initialize() {
           }
 
           // Initial data conversion for pre v2.3 (old data is cleared before inserting the new format)
-          browser.storage.sync.clear().then(() => {
-            browser.storage.sync.set({ [markersKey] : convertedArray }).then(() => {
-              browser.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
+          chrome.storage.sync.clear().then(() => {
+            chrome.storage.sync.set({ [markersKey] : convertedArray }).then(() => {
+              chrome.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
                 initializeDisplay();
               }, onError);
             }, onError);
           });
         } else {
           // No previous markers saved
-          browser.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
+          chrome.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
             initializeDisplay();
           }, onError);
         }
@@ -194,7 +194,7 @@ function initialize() {
       // Version is saved in the db
       if (versionCompare(extensionVersion, storedVersion, {zeroExtend: true}) > 0) {
         // For future updates (when version number increases)
-        browser.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
+        chrome.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
           initializeDisplay();
         }, onError);
       } else {
@@ -205,7 +205,7 @@ function initialize() {
 }
 
 function initializeDisplay() {
-  browser.storage.sync.get(markersKey).then((storedResults) => {
+  chrome.storage.sync.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [];
 
     if (storedArray.length > 0) {
@@ -239,7 +239,7 @@ function showOrHideEmptyNotice(action = null) {
 }
 
 function saveSwatches(swatches) {
-  browser.storage.sync.set({ [swatchesKey] : swatches }).then(null, onError);
+  chrome.storage.sync.set({ [swatchesKey] : swatches }).then(null, onError);
 }
 
 /* Show error or success messages */
@@ -283,7 +283,7 @@ function saveSettings() {
       settingSize = $('.settings-input #size').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
-    browser.storage.sync.get(markersKey).then((storedResults) => {
+    chrome.storage.sync.get(markersKey).then((storedResults) => {
       let storedArray = storedResults[markersKey] || [],
           objectExists = searchStoredMarkers(settingUrl, storedArray);
 
@@ -326,7 +326,7 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
   storedArray.push(storeObject);
   let settingIndex =  storedArray.length + 1;
 
-  browser.storage.sync.set({ [markersKey] : storedArray }).then(() => {
+  chrome.storage.sync.set({ [markersKey] : storedArray }).then(() => {
     showOrHideEmptyNotice(hide);
     displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize);
   }, onError);
@@ -334,7 +334,7 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
 
 /* Update settings */
 function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious) {
-  browser.storage.sync.get(markersKey).then((storedResults) => {
+  chrome.storage.sync.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
         settingExists = searchStoredMarkers(newSettingUrl, storedArray, indexEditVal);
 
@@ -354,7 +354,7 @@ function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, se
       });
 
       // Save in DB
-      browser.storage.sync.set({ [markersKey] : updatedArray }).then(() => {
+      chrome.storage.sync.set({ [markersKey] : updatedArray }).then(() => {
         displaySetting(indexEditVal, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious);
       }, onError);
     } else {
@@ -365,7 +365,7 @@ function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, se
 }
 
 function deleteSetting(settingUrl, settingIndex) {
-  browser.storage.sync.get(markersKey).then((storedResults) => {
+  chrome.storage.sync.get(markersKey).then((storedResults) => {
     let storedArray = storedResults[markersKey] || [],
         settingExists = searchStoredMarkers(settingUrl, storedArray);
 
@@ -376,7 +376,7 @@ function deleteSetting(settingUrl, settingIndex) {
         return currentObj.settingUrl !== settingUrl && index !== settingIndex;
       });
 
-      browser.storage.sync.set({ [markersKey] : filteredArray }).then(() => {
+      chrome.storage.sync.set({ [markersKey] : filteredArray }).then(() => {
         showOrHideEmptyNotice();
       }, onError);
     }
@@ -388,7 +388,7 @@ function clearAll() {
   $('.settings-container .setting').each((index, element) => {
     $(element).remove();
   });
-  browser.storage.sync.set({ [markersKey] : [] }).then(null, onError);
+  chrome.storage.sync.set({ [markersKey] : [] }).then(null, onError);
   showOrHideEmptyNotice(show);
 }
 
@@ -660,7 +660,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     $('.settings-container').append(innerSettingsContainer);
   }
 
-  browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
+  chrome.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
     if (storedSwatchesArray[swatchesKey]) {
       colorSwatches = storedSwatchesArray[swatchesKey]
     }
@@ -723,7 +723,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     });
 
     pickr.on('show', () => {
-      browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
+      chrome.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
         if (storedSwatchesArray[swatchesKey]) {
           colorSwatches = storedSwatchesArray[swatchesKey]
         }
@@ -752,23 +752,23 @@ $(document).ready(() => {
   });
 
   optionsButton.click(() => {
-    browser.runtime.openOptionsPage();
+    chrome.runtime.openOptionsPage();
   });
 
   toggleButton.click(() => {
-    browser.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
+    chrome.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
       let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
-      browser.storage.sync.set({ [extensionEnabledKey] : !extensionEnabled }).then(() => {
+      chrome.storage.sync.set({ [extensionEnabledKey] : !extensionEnabled }).then(() => {
         let btnLabel = !extensionEnabled ? buttonDisable : buttonEnable;
         toggleButton.html(btnLabel);
         toggleButton.attr('class', `btn btn-sm btn-${!extensionEnabled ? 'danger' : 'success'} toggle`);
 
-        browser.runtime.sendMessage({cmd: "toggleExtensionOnOff", data: {value: !extensionEnabled}});
+        chrome.runtime.sendMessage({cmd: "toggleExtensionOnOff", data: {value: !extensionEnabled}});
       }, onError);
     }, onError);
   });
 
-  browser.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
+  chrome.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
     let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
     let btnLabel = extensionEnabled ? buttonDisable : buttonEnable;
     toggleButton.html(btnLabel);
@@ -789,7 +789,7 @@ $(document).ready(() => {
     }
   });
 
-  browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
+  chrome.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
     if (storedSwatchesArray[swatchesKey]) {
       colorSwatches = storedSwatchesArray[swatchesKey]
     }
@@ -851,7 +851,7 @@ $(document).ready(() => {
     });
 
     pickr.on('show', () => {
-      browser.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
+      chrome.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
         if (storedSwatchesArray[swatchesKey]) {
           colorSwatches = storedSwatchesArray[swatchesKey]
         }
@@ -873,7 +873,7 @@ $(document).ready(() => {
       color_input = $('#color'),
       label_input = $('#label');
 
-  browser.storage.sync.get(searchModeKey).then((storedSearchMode) => {
+  chrome.storage.sync.get(searchModeKey).then((storedSearchMode) => {
     let searchModeRegExp = storedSearchMode[searchModeKey] || false;
     if (searchModeRegExp) {
       url_input.attr('placeholder', inputUrlFragmentRegExpPlaceholder);

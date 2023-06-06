@@ -15,7 +15,8 @@
   "permissions": [
     "tabs",
     "activeTab",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -35,19 +36,14 @@
     "default_popup": "/popup/environment-marker.html"
   },
   "options_ui": {
-    "chrome_style": false,
     "page": "/options/options.html"
   },
   "background": {
-    "service_worker": [
-      "libraries/browser-polyfill.min.js",
-      "js/background.min.js"
-    ]
+    "service_worker": "js/background.min.js"
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": [
-      "libraries/browser-polyfill.min.js",
       "libraries/favico.min.js",
       "js/content.min.js"
     ]

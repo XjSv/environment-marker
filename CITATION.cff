@@ -1,0 +1,9 @@
+cff-version: 1.1.0
+message: "If you use environment-marker, please cite it using the following metadata"
+title: environment-marker
+authors:
+  - family-names: Tresova
+    given-names: Armand
+version: 3.0.0
+doi: 10.5281/zenodo.1171250
+date-released: 2023-06-06
