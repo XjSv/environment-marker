@@ -45,15 +45,15 @@ function updateCount(tabId, isOnRemoved) {
         // onRemoved fires too early and the count is one too many.
         // see https://bugzilla.mozilla.org/show_bug.cgi?id=1396758
         if (isOnRemoved && tabId && tabs.map((t) => { return t.id; }).includes(tabId)) {
-            length--;
+          length--;
         }
 
         chrome.action.setBadgeText({ text: length.toString() });
 
         if (length > TAB_COUNT_COLOR_LIMIT) {
-            chrome.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
+          chrome.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
         } else {
-            chrome.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
+          chrome.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
         }
       });
     } else {
@@ -114,7 +114,7 @@ function updateContent(tabId) {
                   },
                   files: ['/js/content.min.js']
                 }).then(() => {
-                  const messagePromise = chrome.tabs.sendMessage(tabId, {
+                  chrome.tabs.sendMessage(tabId, {
                     command: 'addRibbon',
                     url: storedObject.settingUrl,
                     color: storedObject.settingColor,
