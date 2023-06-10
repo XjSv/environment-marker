@@ -92,7 +92,6 @@ Currently, this extension supports Firefox and Chromium based browser such as Mi
 * [Pickr](https://simonwep.github.io/pickr/)
 * [Bootstrap 5](https://getbootstrap.com/)
 * [jQuery Slim](https://jquery.com/)
-* [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
 * [favico.js](https://github.com/ejci/favico.js)
@@ -140,7 +139,7 @@ There are a couple of options for installation.
     ```
 2. Run the default gulp task
     ``` bash
-    gulp
+    npm run develop
     ```
 3. Develop...
 4. Run the build script when ready
@@ -189,7 +188,6 @@ Project Link: [https://github.com/XjSv/environment-marker](https://github.com/Xj
 * [Pickr](https://simonwep.github.io/pickr/)
 * [Bootstrap 5](https://getbootstrap.com/)
 * [jQuery Slim](https://jquery.com/)
-* [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill/)
 * [he](https://github.com/mathiasbynens/he)
 * [fontpicker-jquery-plugin](https://github.com/av01d/fontpicker-jquery-plugin)
 * [favico.js](https://github.com/ejci/favico.js)

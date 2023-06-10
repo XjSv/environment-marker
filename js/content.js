@@ -4,10 +4,10 @@
    * If this content script is injected into the same page again,
    * it will do nothing next time.
    */
-  if (window.hasRun || typeof browser == "undefined") {
+  if (window.hasRun || typeof chrome == "undefined") {
     return;
   }
-  window.hasRun = true;
+  window.hasRun = true; 
 
   /**
    * Given a URL, background color create a ribbon and add it to the page.
@@ -130,7 +130,7 @@
    * Listen for messages from the background script.
    * Call "insertRibbon()" or "removeExistingRibbon()".
   */
-  browser.runtime.onMessage.addListener( (message) => {
+  chrome.runtime.onMessage.addListener( (message, sender, sendResponse) => {
     if (message.command === 'addRibbon') {
       insertRibbon(message.color, message.url, message.label, message.fontSize, message.position, message.size, message.font, message.enableFaviconMarker);
     } else if (message.command === 'reset') {
@@ -138,7 +138,7 @@
       removeExistingStylesheets();
     }
 
-    return Promise.resolve('done');
+    sendResponse('done');
   });
 
 })();

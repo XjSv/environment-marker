@@ -1,31 +1,31 @@
-let noticeSuccessExport = browser.i18n.getMessage("noticeSuccessExport"),
-    noticeSuccessImport = browser.i18n.getMessage("noticeSuccessImport"),
-    errorNoRibbonsToExport = browser.i18n.getMessage("errorNoRibbonsToExport"),
-    errorChooseFile = browser.i18n.getMessage("errorChooseFile"),
-    inputChooseFile = browser.i18n.getMessage("inputChooseFile"),
-    buttonExport = browser.i18n.getMessage("buttonExport"),
-    buttonImport = browser.i18n.getMessage("buttonImport"),
-    importWarning = browser.i18n.getMessage("importWarning"),
-    errorImportLabelEmpty = browser.i18n.getMessage("errorImportLabelEmpty"),
-    errorImportUrlEmpty = browser.i18n.getMessage("errorImportUrlEmpty"),
-    errorImportColorEmpty = browser.i18n.getMessage("errorImportColorEmpty"),
-    inputEnableRegExp = browser.i18n.getMessage("inputEnableRegExp"),
-    inputEnableTabCounter = browser.i18n.getMessage("inputEnableTabCounter"),
-    inputEnableFaviconMarker = browser.i18n.getMessage("inputEnableFaviconMarker"),
-    noticeSettingSaved = browser.i18n.getMessage("noticeSettingSaved"),
-    ariaLabelAlertClose = browser.i18n.getMessage("ariaLabelAlertClose"),
-    optionsSettingsSection = browser.i18n.getMessage("optionsSettingsSection"),
-    optionsExportImportSection = browser.i18n.getMessage("optionsExportImportSection"),
-    inputFontLabel = browser.i18n.getMessage("inputFontLabel"),
-    inputFontHelpText = browser.i18n.getMessage("inputFontHelpText"),
-    inputRegExpHelpText = browser.i18n.getMessage("inputRegExpHelpText"),
-    inputTabCounterHelpText = browser.i18n.getMessage("inputTabCounterHelpText"),
-    inputEnableFaviconMarkerHelpText = browser.i18n.getMessage("inputEnableFaviconMarkerHelpText"),
-    errorFileEmptyOrFormat = browser.i18n.getMessage("errorFileEmptyOrFormat"),
-    buttonOptions = browser.i18n.getMessage("buttonOptions"),
+let noticeSuccessExport = chrome.i18n.getMessage("noticeSuccessExport"),
+    noticeSuccessImport = chrome.i18n.getMessage("noticeSuccessImport"),
+    errorNoRibbonsToExport = chrome.i18n.getMessage("errorNoRibbonsToExport"),
+    errorChooseFile = chrome.i18n.getMessage("errorChooseFile"),
+    inputChooseFile = chrome.i18n.getMessage("inputChooseFile"),
+    buttonExport = chrome.i18n.getMessage("buttonExport"),
+    buttonImport = chrome.i18n.getMessage("buttonImport"),
+    importWarning = chrome.i18n.getMessage("importWarning"),
+    errorImportLabelEmpty = chrome.i18n.getMessage("errorImportLabelEmpty"),
+    errorImportUrlEmpty = chrome.i18n.getMessage("errorImportUrlEmpty"),
+    errorImportColorEmpty = chrome.i18n.getMessage("errorImportColorEmpty"),
+    inputEnableRegExp = chrome.i18n.getMessage("inputEnableRegExp"),
+    inputEnableTabCounter = chrome.i18n.getMessage("inputEnableTabCounter"),
+    inputEnableFaviconMarker = chrome.i18n.getMessage("inputEnableFaviconMarker"),
+    noticeSettingSaved = chrome.i18n.getMessage("noticeSettingSaved"),
+    ariaLabelAlertClose = chrome.i18n.getMessage("ariaLabelAlertClose"),
+    optionsSettingsSection = chrome.i18n.getMessage("optionsSettingsSection"),
+    optionsExportImportSection = chrome.i18n.getMessage("optionsExportImportSection"),
+    inputFontLabel = chrome.i18n.getMessage("inputFontLabel"),
+    inputFontHelpText = chrome.i18n.getMessage("inputFontHelpText"),
+    inputRegExpHelpText = chrome.i18n.getMessage("inputRegExpHelpText"),
+    inputTabCounterHelpText = chrome.i18n.getMessage("inputTabCounterHelpText"),
+    inputEnableFaviconMarkerHelpText = chrome.i18n.getMessage("inputEnableFaviconMarkerHelpText"),
+    errorFileEmptyOrFormat = chrome.i18n.getMessage("errorFileEmptyOrFormat"),
+    buttonOptions = chrome.i18n.getMessage("buttonOptions"),
     exportFile = null;
 
-let languageCode = browser.i18n.getUILanguage(),
+let languageCode = chrome.i18n.getUILanguage(),
     languageCodeTwoChar = languageCode.split('-')[0];
 const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
@@ -79,13 +79,13 @@ function exportConfig() {
     settings: []
   };
 
-  browser.storage.sync.get(markersKey).then((storedResults) => {
+  chrome.storage.sync.get(markersKey).then((storedResults) => {
     let markersStoredArray = storedResults[markersKey] || [];
 
     if (markersStoredArray.length == 0) {
       showMessage(errorNoRibbonsToExport, true);
     } else {
-      browser.storage.sync.get([
+      chrome.storage.sync.get([
         fontKey,
         searchModeKey,
         tabCounterKey,
@@ -166,27 +166,27 @@ function importConfig() {
         if (importConfigObjects.settings.length > 0) {
           for (let importConfigObject of importConfigObjects.settings) {
             if (importConfigObject.hasOwnProperty('searchModeBool')) {
-              browser.storage.sync.set({[searchModeKey]: importConfigObject.searchModeBool}).then(() => {
+              chrome.storage.sync.set({[searchModeKey]: importConfigObject.searchModeBool}).then(() => {
               }, onError);
             }
 
             if (importConfigObject.hasOwnProperty('tabCounterBool')) {
-              browser.storage.sync.set({[tabCounterKey]: importConfigObject.tabCounterBool}).then(() => {
+              chrome.storage.sync.set({[tabCounterKey]: importConfigObject.tabCounterBool}).then(() => {
               }, onError);
             }
 
             if (importConfigObject.hasOwnProperty('faviconMarkerBool')) {
-              browser.storage.sync.set({[faviconMarkerKey]: importConfigObject.faviconMarkerBool}).then(() => {
+              chrome.storage.sync.set({[faviconMarkerKey]: importConfigObject.faviconMarkerBool}).then(() => {
               }, onError);
             }
 
             if (importConfigObject.hasOwnProperty('fontString')) {
-              browser.storage.sync.set({[fontKey]: importConfigObject.fontString}).then(() => {
+              chrome.storage.sync.set({[fontKey]: importConfigObject.fontString}).then(() => {
               }, onError);
             }
 
             if (importConfigObject.hasOwnProperty('colorSwatchesArray')) {
-              browser.storage.sync.set({[swatchesKey]: importConfigObject.colorSwatchesArray}).then(() => {
+              chrome.storage.sync.set({[swatchesKey]: importConfigObject.colorSwatchesArray}).then(() => {
               }, onError);
             }
           }
@@ -224,7 +224,7 @@ function importConfig() {
         if (errorMessages !== '') {
           showMessage('<ul>' + errorMessages + '</ul>', true);
         } else {
-          browser.storage.sync.set({[markersKey]: storedArray}).then(() => {
+          chrome.storage.sync.set({[markersKey]: storedArray}).then(() => {
             showMessage(noticeSuccessImport);
           }, onError);
         }
@@ -260,38 +260,38 @@ $(document).ready(() => {
     }
   });
 
-  browser.storage.sync.get(searchModeKey).then((storedSearchMode) => {
+  chrome.storage.sync.get(searchModeKey).then((storedSearchMode) => {
     let storedSearchModeBool = storedSearchMode[searchModeKey] || false;
     $('#enable-regexp').prop('checked', storedSearchModeBool);
   }, onError);
 
   $('#enable-regexp').change((event) => {
     let enableRegexpValue = $(event.target).is(':checked');
-    browser.storage.sync.set({[searchModeKey]: enableRegexpValue }).then(() => {
+    chrome.storage.sync.set({[searchModeKey]: enableRegexpValue }).then(() => {
       showMessage(noticeSettingSaved);
     }, onError);
   });
 
-  browser.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
+  chrome.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
     let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
     $('#enable-tab-counter').prop('checked', storedTabCounterBool);
   }, onError);
 
   $('#enable-tab-counter').change((event) => {
     let enableTabCounterValue = $(event.target).is(':checked');
-    browser.storage.sync.set({[tabCounterKey]: enableTabCounterValue }).then(() => {
+    chrome.storage.sync.set({[tabCounterKey]: enableTabCounterValue }).then(() => {
       showMessage(noticeSettingSaved);
     }, onError);
   });
 
-  browser.storage.sync.get(faviconMarkerKey).then((storedFaviconMarker) => {
+  chrome.storage.sync.get(faviconMarkerKey).then((storedFaviconMarker) => {
     let faviconMarkerBool = storedFaviconMarker[faviconMarkerKey] || false;
     $('#enable-favicon-marker').prop('checked', faviconMarkerBool);
   }, onError);
 
   $('#enable-favicon-marker').change((event) => {
     let enableFaviconMarkerValue = $(event.target).is(':checked');
-    browser.storage.sync.set({[faviconMarkerKey]: enableFaviconMarkerValue }).then(() => {
+    chrome.storage.sync.set({[faviconMarkerKey]: enableFaviconMarkerValue }).then(() => {
       showMessage(noticeSettingSaved);
     }, onError);
   });
@@ -351,13 +351,13 @@ $(document).ready(() => {
     onSelect: function(fontObject) {
       let fontStoreValue = fontObject.fontType + ':' + fontObject.fontSpec;
 
-      browser.storage.sync.set({[fontKey]: fontStoreValue}).then(() => {
+      chrome.storage.sync.set({[fontKey]: fontStoreValue}).then(() => {
         showMessage(noticeSettingSaved);
       }, onError);
     }
   });
 
-  browser.storage.sync.get(fontKey).then((storedFont) => {
+  chrome.storage.sync.get(fontKey).then((storedFont) => {
     let fontString = storedFont[fontKey] || '';
 
     if (fontString) {
@@ -370,7 +370,7 @@ $(document).ready(() => {
   });
 
   $('.fp-clear').click(() => {
-    browser.storage.sync.set({[fontKey]: ''}).then(() => {
+    chrome.storage.sync.set({[fontKey]: ''}).then(() => {
       showMessage(noticeSettingSaved);
     }, onError);
   });
