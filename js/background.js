@@ -125,10 +125,10 @@ function updateContent(tabId) {
                     font: fontString,
                     enableFaviconMarker: faviconMarker,
                   }).then((response) => {
-                    if (response !== undefined) {
+                    /* if (response !== undefined) {
                       console.log("Message from the content script:");
                       console.log(response);
-                    }
+                    } */
                   }).catch(onError);
                 }, onError);
 
