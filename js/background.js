@@ -13,17 +13,17 @@ function onError(error) {
   console.log(error);
 }
 
-browser.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
+chrome.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
   let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
   if (extensionEnabled) {
     initialize();
   }
 }, onError);
 
-browser.runtime.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     if (request.cmd === "toggleExtensionOnOff") {
-      browser.storage.sync.set({ [extensionEnabledKey] :  request.data.value }).then(() => {
+      chrome.storage.sync.set({ [extensionEnabledKey] :  request.data.value }).then(() => {
         if (request.data.value) {
           initialize();
         } else {
@@ -35,47 +35,47 @@ browser.runtime.onMessage.addListener(
 );
 
 function updateCount(tabId, isOnRemoved) {
-  browser.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
+  chrome.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
     let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
 
     if (storedTabCounterBool) {
-      browser.tabs.query({}).then((tabs) => {
+      chrome.tabs.query({}).then((tabs) => {
         let length = tabs.length;
 
         // onRemoved fires too early and the count is one too many.
         // see https://bugzilla.mozilla.org/show_bug.cgi?id=1396758
         if (isOnRemoved && tabId && tabs.map((t) => { return t.id; }).includes(tabId)) {
-            length--;
+          length--;
         }
 
-        browser.browserAction.setBadgeText({ text: length.toString() });
+        chrome.action.setBadgeText({ text: length.toString() });
 
         if (length > TAB_COUNT_COLOR_LIMIT) {
-            browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
+          chrome.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_HIGH });
         } else {
-            browser.browserAction.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
+          chrome.action.setBadgeBackgroundColor({ 'color': TAB_COUNT_COLOR_LOW });
         }
       });
     } else {
-      browser.browserAction.setBadgeText({ text: '' });
+      chrome.action.setBadgeText({ text: '' });
     }
   });
 }
 
 function clearCount() {
-  browser.browserAction.setBadgeText({ text: '' });
+  chrome.action.setBadgeText({ text: '' });
 }
 
 function updateContent(tabId) {
   if (tabId !== undefined) {
-    browser.tabs.get(tabId).then((tab) => {
+    chrome.tabs.get(tabId).then((tab) => {
       if (tab.url !== '') {
-        browser.storage.sync.get([
+        chrome.storage.sync.get([
           fontKey,
           searchModeKey,
           markersKey,
           faviconMarkerKey
-          ]).then((options) => {
+        ]).then((options) => {
           let fontString = options[fontKey] || '';
           let searchModeRegExp = options[searchModeKey] || false;
           let faviconMarker = options[faviconMarkerKey] || false;
@@ -91,11 +91,30 @@ function updateContent(tabId) {
                 urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
               }
 
+              // Issue #233 (Add IP Restriction)
+              // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/dns/resolve
+              /* let searchModeDns = false;
+
+              if (searchModeDns) {
+                console.log(tab);
+
+                const url = new URL(tab.url);
+                const domain = url.hostname;
+
+                console.log(domain);
+
+                let resolving = browser.dns.resolve(domain);
+                resolving.then(resolved);
+              } */
+
               if (urlFound) {
-                browser.tabs.executeScript(tabId, {
-                  file: '/js/content.min.js'
+                chrome.scripting.executeScript({
+                  target: {
+                    tabId: tabId
+                  },
+                  files: ['/js/content.min.js']
                 }).then(() => {
-                  browser.tabs.sendMessage(tabId, {
+                  chrome.tabs.sendMessage(tabId, {
                     command: 'addRibbon',
                     url: storedObject.settingUrl,
                     color: storedObject.settingColor,
@@ -104,15 +123,20 @@ function updateContent(tabId) {
                     position: storedObject.settingPosition,
                     size: storedObject.settingSize,
                     font: fontString,
-                    enableFaviconMarker: faviconMarker
-                  }).then(response => {
-                    //console.log("Message from the content script:");
-                    //console.log(response.response);
+                    enableFaviconMarker: faviconMarker,
+                  }).then((response) => {
+                    /* if (response !== undefined) {
+                      console.log("Message from the content script:");
+                      console.log(response);
+                    } */
                   }).catch(onError);
                 }, onError);
 
-                browser.tabs.insertCSS(tabId, {
-                  file: '/css/content.min.css'
+                chrome.scripting.insertCSS({
+                  target: {
+                    tabId: tabId,
+                  },
+                  files: [ '/css/content.min.css' ],
                 }).then(null, onError);
               }
             }
@@ -138,15 +162,15 @@ let onUpdatedListener = function(tabId, changeInfo, tab) {
 };
 
 function initialize() {
-  browser.tabs.onRemoved.addListener(onRemovedListener);
-  browser.tabs.onCreated.addListener(onCreatedListener);
-  browser.tabs.onUpdated.addListener(onUpdatedListener);
+  chrome.tabs.onRemoved.addListener(onRemovedListener);
+  chrome.tabs.onCreated.addListener(onCreatedListener);
+  chrome.tabs.onUpdated.addListener(onUpdatedListener);
   updateCount();
 }
 
 function removeListeners() {
-  browser.tabs.onRemoved.removeListener(onRemovedListener);
-  browser.tabs.onCreated.removeListener(onCreatedListener);
-  browser.tabs.onUpdated.removeListener(onUpdatedListener);
+  chrome.tabs.onRemoved.removeListener(onRemovedListener);
+  chrome.tabs.onCreated.removeListener(onCreatedListener);
+  chrome.tabs.onUpdated.removeListener(onUpdatedListener);
   clearCount();
 }
