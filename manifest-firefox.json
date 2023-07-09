@@ -24,7 +24,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "environment-marker@armandtresova.com",
-      "strict_min_version": "57.0"
+      "strict_min_version": "109.0"
     }
   },
   "action": {
