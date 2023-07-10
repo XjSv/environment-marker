@@ -15,8 +15,8 @@ function onError(error) {
 
 chrome.storage.sync.get(extensionEnabledKey).then((extensionEnabledValue) => {
   let extensionEnabled = extensionEnabledValue[extensionEnabledKey] === undefined ? true : extensionEnabledValue[extensionEnabledKey];
-  if (extensionEnabled) {
-    initialize();
+  if (!extensionEnabled) {
+    removeListeners();
   }
 }, onError);
 
@@ -174,3 +174,5 @@ function removeListeners() {
   chrome.tabs.onUpdated.removeListener(onUpdatedListener);
   clearCount();
 }
+
+initialize();
