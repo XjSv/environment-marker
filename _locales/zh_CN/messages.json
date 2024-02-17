@@ -76,7 +76,7 @@
     "description": "Extra Large option label for the Size select field."
   },
   "displayAt": {
-    "message": "位置",
+    "message": "在",
     "description": "Word used to indicate the position of the ribbon."
   },
   "ariaLabelEditRibbon": {
