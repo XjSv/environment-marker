@@ -7,7 +7,7 @@
   "main": "js/background.js",
   "devDependencies": {
     "archiver": "^7.0.1",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.5",
     "gulp": "^5.0.0",
     "gulp-postcss": "^10.0.0",
