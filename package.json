@@ -16,7 +16,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify-es": "^3.0.0",
     "merge-stream": "^2.0.0",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.1",
     "sass": "^1.81.0"
   },
   "scripts": {
