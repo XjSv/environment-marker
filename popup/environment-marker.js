@@ -86,11 +86,13 @@ const sizesMap = [
   {value: 'large', label: sizeSelectLarge},
   {value: 'extra-large', label: sizeSelectExtraLarge}
 ];
+const dnsApiSupported = isDnsApiSupported();
 const searchModeMap = [
   {value: 'normal', label: searchModeNormal},
   {value: 'regexp', label: searchModeRegExp},
-  {value: 'dns', label: searchModeDns}
+  ...(dnsApiSupported ? [{value: 'dns', label: searchModeDns}] : [])
 ];
+
 Pickr.prototype.getSwatches = function() {
   return this._swatchColors.reduce((arr, swatch) => {
     arr.push(swatch.color.toRGBA().toString(0));
@@ -157,6 +159,10 @@ function versionCompare(v1, v2, options) {
     return -1;
   }
   return 0;
+}
+
+function isDnsApiSupported() {
+  return chrome.dns && chrome.dns.resolve;
 }
 
 function initialize() {

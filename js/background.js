@@ -100,19 +100,6 @@ function clearCount() {
   chrome.action.setBadgeText({ text: '' });
 }
 
-browser.runtime.getBrowserInfo().then((info) => {
-  if (info.name === 'Firefox') {
-    // Enable the option specific to Firefox
-  } else {
-    // Enable the option for other browsers
-  }
-});
-
-function resolved(record) {
-  console.log(record.canonicalName);
-  console.log(record.addresses);
-}
-
 // CIDR matching utility function
 function isIpInCidr(ip, cidr) {
   try {
