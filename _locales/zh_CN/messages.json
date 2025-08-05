@@ -79,6 +79,18 @@
     "message": "特大",
     "description": "Extra Large option label for the Size select field."
   },
+  "searchModeNormal": {
+    "message": "Normal",
+    "description": "Normal option label for the Search Mode select field."
+  },
+  "searchModeRegExp": {
+    "message": "RegExp",
+    "description": "Regular Expressions option label for the Search Mode select field."
+  },
+  "searchModeDns": {
+    "message": "DNS",
+    "description": "DNS option label for the Search Mode select field."
+  },
   "displayAt": {
     "message": "在",
     "description": "Word used to indicate the position of the ribbon."
