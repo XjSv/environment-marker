@@ -15,6 +15,10 @@
     "message": "RegExp",
     "description": "URL fragment input field placeholder when using RegExp."
   },
+  "inputUrlFragmentDnsPlaceholder": {
+    "message": "IP / CIDR Notation",
+    "description": "URL fragment input field placeholder when using DNS."
+  },
   "inputColorPlaceholder": {
     "message": "Couleur",
     "description": "Color input field placeholder."
@@ -74,6 +78,18 @@
   "sizeSelectExtraLarge": {
     "message": "Très Grande",
     "description": "Extra Large option label for the Size select field."
+  },
+  "searchModeNormal": {
+    "message": "Normal",
+    "description": "Normal option label for the Search Mode select field."
+  },
+  "searchModeRegExp": {
+    "message": "RegExp",
+    "description": "Regular Expressions option label for the Search Mode select field."
+  },
+  "searchModeDns": {
+    "message": "DNS",
+    "description": "DNS option label for the Search Mode select field."
   },
   "displayAt": {
     "message": "à",
@@ -175,10 +191,6 @@
     "message": "Les polices sont appliquées globalement à tous les rubans.",
     "description": "Font input help text."
   },
-  "inputRegExpHelpText": {
-    "message": "Activer les expressions régulières dans le champ de fragment d'URL.",
-    "description": "RegExp Enable input help text."
-  },
   "inputTabCounterHelpText": {
     "message": "Activer le compteur d'onglets.",
     "description": "Tab Counter Enable input help text."
@@ -186,6 +198,10 @@
   "inputEnableFaviconMarkerHelpText": {
     "message": "Activer le marqueur de Favicon.",
     "description": "Favicon Marker Enable input help text."
+  },
+  "inputDontSyncMarkerDataHelpText": {
+    "message": "Don't sync marker data between devices (Recommended when you have more than ~45 markers).",
+    "description": "Don't sync marker data between devices input help text."
   },
   "buttonExport": {
     "message": "Exporter",
@@ -199,10 +215,6 @@
     "message": "Choisir un fichier",
     "description": "Choose file input label."
   },
-  "inputEnableRegExp": {
-    "message": "RegExp",
-    "description": "RegExp Enable input label."
-  },
   "inputEnableTabCounter": {
     "message": "Compteur d'onglets",
     "description": "Tab Counter Enable input label."
@@ -210,6 +222,10 @@
   "inputEnableFaviconMarker": {
     "message": "Marqueur de Favicon",
     "description": "Favicon Marker Enable input label."
+  },
+  "inputDontSyncMarkerData": {
+    "message": "Don't Sync Marker Data",
+    "description": "Don't Sync Marker Data input label."
   },
   "importWarning": {
     "message": "Attention: l'importation de rubans annulera tout!",
