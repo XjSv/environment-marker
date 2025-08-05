@@ -6,7 +6,41 @@ const markersKey = '__em-markers__';
 const searchModeKey = '__em-search-mode__';
 const tabCounterKey = '__em-tab-counter__';
 const faviconMarkerKey = '__em-favicon-marker__';
+const dontSyncMarkerDataKey = '__em-dont-sync-marker-data__';
 const fontKey = '__em-font__';
+
+// Migration function for moving from global search mode to per-marker search mode
+function migrateSearchMode() {
+  chrome.storage.sync.get([searchModeKey, dontSyncMarkerDataKey]).then((storedResults) => {
+    let globalSearchMode = storedResults[searchModeKey];
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
+
+    // If global search mode is enabled, we need to migrate
+    if (globalSearchMode) {
+      const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
+
+      storage.get(markersKey).then((storedResults) => {
+        let storedArray = storedResults[markersKey] || [];
+        let updatedArray = storedArray.map(marker => {
+          // Only update markers that don't have a search mode set
+          if (!marker.settingSearchMode) {
+            return {
+              ...marker,
+              settingSearchMode: 'regexp'
+            };
+          }
+          return marker;
+        });
+
+        // Save updated markers
+        storage.set({ [markersKey]: updatedArray }).then(() => {
+          // Remove the old global setting
+          chrome.storage.sync.remove(searchModeKey);
+        }, onError);
+      }, onError);
+    }
+  }, onError);
+}
 
 // Generic Error Handler
 function onError(error) {
@@ -66,6 +100,48 @@ function clearCount() {
   chrome.action.setBadgeText({ text: '' });
 }
 
+browser.runtime.getBrowserInfo().then((info) => {
+  if (info.name === 'Firefox') {
+    // Enable the option specific to Firefox
+  } else {
+    // Enable the option for other browsers
+  }
+});
+
+function resolved(record) {
+  console.log(record.canonicalName);
+  console.log(record.addresses);
+}
+
+// CIDR matching utility function
+function isIpInCidr(ip, cidr) {
+  try {
+    // Split CIDR into IP and prefix
+    const [cidrIp, prefix] = cidr.split('/');
+    const prefixLength = parseInt(prefix, 10);
+
+    // Convert IPs to binary
+    const ipToBinary = ip.split('.').map(octet =>
+      parseInt(octet, 10).toString(2).padStart(8, '0')
+    ).join('');
+
+    const cidrIpToBinary = cidrIp.split('.').map(octet =>
+      parseInt(octet, 10).toString(2).padStart(8, '0')
+    ).join('');
+
+    // Compare the first prefixLength bits
+    return ipToBinary.substring(0, prefixLength) === cidrIpToBinary.substring(0, prefixLength);
+  } catch (error) {
+    console.error('CIDR matching error:', error);
+    return false;
+  }
+}
+
+// Check if DNS API is supported
+function isDnsApiSupported() {
+  return chrome.dns && chrome.dns.resolve;
+}
+
 function updateContent(tabId) {
   if (tabId !== undefined) {
     chrome.tabs.get(tabId).then((tab) => {
@@ -73,78 +149,100 @@ function updateContent(tabId) {
         chrome.storage.sync.get([
           fontKey,
           searchModeKey,
-          markersKey,
-          faviconMarkerKey
+          faviconMarkerKey,
+          dontSyncMarkerDataKey
         ]).then((options) => {
           let fontString = options[fontKey] || '';
           let searchModeRegExp = options[searchModeKey] || false;
           let faviconMarker = options[faviconMarkerKey] || false;
+          let dontSyncMarkerData = options[dontSyncMarkerDataKey] || false;
 
-          if (options[markersKey]) {
-            for (let storedObject of options[markersKey]) {
+          const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
 
-              let urlFound = false;
-              if (searchModeRegExp) {
-                let regex = new RegExp(storedObject.settingUrl, 'iu');
-                urlFound = regex.test(tab.url);
-              } else {
-                urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
-              }
+          storage.get(markersKey).then((storedResults) => {
+            let storedData = storedResults[markersKey] || [];
 
-              // Issue #233 (Add IP Restriction)
-              // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/dns/resolve
-              /* let searchModeDns = false;
+            if (storedData) {
+              for (let storedObject of storedData) {
+                let urlFound = false;
 
-              if (searchModeDns) {
-                console.log(tab);
+                switch (storedObject.settingSearchMode) {
+                  case 'normal':
+                    urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
+                    break;
+                  case 'regexp':
+                    let regex = new RegExp(storedObject.settingUrl, 'iu');
+                    urlFound = regex.test(tab.url);
+                    break;
+                  case 'dns':
+                    if (isDnsApiSupported()) {
+                      const url = new URL(tab.url);
+                      const domain = url.hostname;
 
-                const url = new URL(tab.url);
-                const domain = url.hostname;
+                      try {
+                        chrome.dns.resolve(domain).then((record) => {
+                          // Check if any of the resolved IPs match the marker's URL (CIDR or exact match)
+                          urlFound = record.addresses.some(ip => {
+                            // Check if the marker URL is in CIDR notation
+                            if (storedObject.settingUrl.includes('/')) {
+                              return isIpInCidr(ip, storedObject.settingUrl);
+                            }
+                            // Otherwise do exact match
+                            return storedObject.settingUrl.includes(ip);
+                          });
 
-                console.log(domain);
+                          if (urlFound) {
+                            applyMarker(tabId, storedObject, fontString, faviconMarker);
+                          }
+                        }).catch((error) => {
+                          console.error('DNS resolution failed:', error);
+                        });
+                      } catch (error) {
+                        console.error('DNS API not available:', error);
+                      }
+                    } else {
+                      console.warn('DNS resolution not supported in this browser');
+                      // Fallback to normal search mode
+                      urlFound = (tab.url.indexOf(storedObject.settingUrl) !== -1);
+                    }
+                    break;
+                }
 
-                let resolving = browser.dns.resolve(domain);
-                resolving.then(resolved);
-              } */
-
-              if (urlFound) {
-                chrome.scripting.executeScript({
-                  target: {
-                    tabId: tabId
-                  },
-                  files: ['/js/content.min.js']
-                }).then(() => {
-                  chrome.tabs.sendMessage(tabId, {
-                    command: 'addRibbon',
-                    url: storedObject.settingUrl,
-                    color: storedObject.settingColor,
-                    label: storedObject.settingLabel,
-                    fontSize: storedObject.settingFontSize,
-                    position: storedObject.settingPosition,
-                    size: storedObject.settingSize,
-                    font: fontString,
-                    enableFaviconMarker: faviconMarker,
-                  }).then((response) => {
-                    /* if (response !== undefined) {
-                      console.log("Message from the content script:");
-                      console.log(response);
-                    } */
-                  }).catch(onError);
-                }, onError);
-
-                chrome.scripting.insertCSS({
-                  target: {
-                    tabId: tabId,
-                  },
-                  files: [ '/css/content.min.css' ],
-                }).then(null, onError);
+                if (urlFound && storedObject.settingSearchMode !== 'dns') {
+                  applyMarker(tabId, storedObject, fontString, faviconMarker);
+                }
               }
             }
-          }
+          }, onError);
         });
       }
     }, onError);
   }
+}
+
+// Helper function to apply marker styling
+function applyMarker(tabId, marker, fontString, faviconMarker) {
+  chrome.scripting.executeScript({
+    target: { tabId: tabId },
+    files: ['/js/content.min.js']
+  }).then(() => {
+    chrome.tabs.sendMessage(tabId, {
+      command: 'addRibbon',
+      url: marker.settingUrl,
+      color: marker.settingColor,
+      label: marker.settingLabel,
+      fontSize: marker.settingFontSize,
+      position: marker.settingPosition,
+      size: marker.settingSize,
+      font: fontString,
+      enableFaviconMarker: faviconMarker,
+    }).catch(onError);
+  }, onError);
+
+  chrome.scripting.insertCSS({
+    target: { tabId: tabId },
+    files: ['/css/content.min.css'],
+  }).catch(onError);
 }
 
 let onRemovedListener = function(tabId, removeInfo) {
@@ -154,6 +252,7 @@ let onRemovedListener = function(tabId, removeInfo) {
 let onCreatedListener = function(tab) {
   updateCount(tab.id, false);
 };
+
 let onUpdatedListener = function(tabId, changeInfo, tab) {
   // Only run update once after the page is finished loading
   if (changeInfo.status === 'complete') {
@@ -166,6 +265,7 @@ function initialize() {
   chrome.tabs.onCreated.addListener(onCreatedListener);
   chrome.tabs.onUpdated.addListener(onUpdatedListener);
   updateCount();
+  migrateSearchMode();
 }
 
 function removeListeners() {

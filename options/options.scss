@@ -30,18 +30,21 @@ body {
     }
     .enable-regexp-container,
     .enable-tab-counter-container,
-    .enable-favicon-marker-container {
+    .enable-favicon-marker-container,
+    .dont-sync-marker-data-container {
       > div {
         padding-top: 10px;
       }
       #enable-regexp-label,
       #enable-tab-counter-label,
-      #enable-favicon-marker-label {
+      #enable-favicon-marker-label,
+      #dont-sync-marker-data-label {
         font-weight: 600;
       }
-      #enable-regexp-help-block,
+      // #enable-regexp-help-block,
       #enable-tab-counter-help-block,
-      #enable-favicon-marker-help-block {
+      #enable-favicon-marker-help-block,
+      #dont-sync-marker-data-help-block {
         display: inline-block;
         margin: 0;
         position: relative;

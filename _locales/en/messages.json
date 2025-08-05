@@ -16,6 +16,10 @@
     "message": "RegExp",
     "description": "URL fragment input field placeholder when using RegExp."
   },
+  "inputUrlFragmentDnsPlaceholder": {
+    "message": "IP / CIDR Notation",
+    "description": "URL fragment input field placeholder when using DNS."
+  },
   "inputColorPlaceholder": {
     "message": "Color",
     "description": "Color input field placeholder."
@@ -77,6 +81,19 @@
   "sizeSelectExtraLarge": {
     "message": "Extra Large",
     "description": "Extra Large option label for the Size select field."
+  },
+
+  "searchModeNormal": {
+    "message": "Normal",
+    "description": "Normal option label for the Search Mode select field."
+  },
+  "searchModeRegExp": {
+    "message": "RegExp",
+    "description": "Regular Expressions option label for the Search Mode select field."
+  },
+  "searchModeDns": {
+    "message": "DNS",
+    "description": "DNS option label for the Search Mode select field."
   },
 
   "displayAt": {
@@ -185,10 +202,6 @@
     "message": "Fonts are applied globally to all ribbons.",
     "description": "Font input help text."
   },
-  "inputRegExpHelpText": {
-    "message": "Enable Regular Expressions in the URL fragment field.",
-    "description": "RegExp Enable input help text."
-  },
   "inputTabCounterHelpText": {
     "message": "Enable the tab counter.",
     "description": "Tab Counter Enable input help text."
@@ -196,6 +209,11 @@
   "inputEnableFaviconMarkerHelpText": {
     "message": "Enable the Favicon marker.",
     "description": "Favicon Marker Enable input help text."
+  },
+
+  "inputDontSyncMarkerDataHelpText": {
+    "message": "Don't sync marker data between devices (Recommended when you have more than ~45 markers).",
+    "description": "Don't sync marker data between devices input help text."
   },
 
   "buttonExport": {
@@ -210,10 +228,6 @@
     "message": "Choose file",
     "description": "Choose file input label."
   },
-  "inputEnableRegExp": {
-    "message": "RegExp",
-    "description": "RegExp Enable input label."
-  },
   "inputEnableTabCounter": {
     "message": "Tab Counter",
     "description": "Tab Counter Enable input label."
@@ -221,6 +235,10 @@
   "inputEnableFaviconMarker": {
     "message": "Favicon Marker",
     "description": "Favicon Marker Enable input label."
+  },
+  "inputDontSyncMarkerData": {
+    "message": "Don't Sync Marker Data",
+    "description": "Don't Sync Marker Data input label."
   },
   "importWarning": {
     "message": "Warning: Importing ribbons will override everything!",

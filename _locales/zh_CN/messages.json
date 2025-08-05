@@ -15,6 +15,10 @@
     "message": "正则表达式",
     "description": "URL fragment input field placeholder when using RegExp."
   },
+  "inputUrlFragmentDnsPlaceholder": {
+    "message": "IP / CIDR Notation",
+    "description": "URL fragment input field placeholder when using DNS."
+  },
   "inputColorPlaceholder": {
     "message": "颜色",
     "description": "Color input field placeholder."
@@ -175,10 +179,6 @@
     "message": "字体是全局应用于所有标签的。",
     "description": "Font input help text."
   },
-  "inputRegExpHelpText": {
-    "message": "在 URL 字段中启用正则表达式。",
-    "description": "RegExp Enable input help text."
-  },
   "inputTabCounterHelpText": {
     "message": "启用选项卡计数器。",
     "description": "Tab Counter Enable input help text."
@@ -186,6 +186,10 @@
   "inputEnableFaviconMarkerHelpText": {
     "message": "启用图标标记。",
     "description": "Favicon Marker Enable input help text."
+  },
+  "inputDontSyncMarkerDataHelpText": {
+    "message": "Don't sync marker data between devices (Recommended when you have more than ~45 markers).",
+    "description": "Don't sync marker data between devices input help text."
   },
   "buttonExport": {
     "message": "导出",
@@ -199,10 +203,6 @@
     "message": "选择文件",
     "description": "Choose file input label."
   },
-  "inputEnableRegExp": {
-    "message": "正则表达式",
-    "description": "RegExp Enable input label."
-  },
   "inputEnableTabCounter": {
     "message": "标签页计数器",
     "description": "Tab Counter Enable input label."
@@ -210,6 +210,10 @@
   "inputEnableFaviconMarker": {
     "message": "图标标记",
     "description": "Favicon Marker Enable input label."
+  },
+  "inputDontSyncMarkerData": {
+    "message": "Don't Sync Marker Data",
+    "description": "Don't Sync Marker Data input label."
   },
   "importWarning": {
     "message": "警告: 导入标签将覆盖所有内容!",

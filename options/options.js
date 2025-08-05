@@ -9,18 +9,18 @@ let noticeSuccessExport = chrome.i18n.getMessage("noticeSuccessExport"),
     errorImportLabelEmpty = chrome.i18n.getMessage("errorImportLabelEmpty"),
     errorImportUrlEmpty = chrome.i18n.getMessage("errorImportUrlEmpty"),
     errorImportColorEmpty = chrome.i18n.getMessage("errorImportColorEmpty"),
-    inputEnableRegExp = chrome.i18n.getMessage("inputEnableRegExp"),
     inputEnableTabCounter = chrome.i18n.getMessage("inputEnableTabCounter"),
     inputEnableFaviconMarker = chrome.i18n.getMessage("inputEnableFaviconMarker"),
+    inputDontSyncMarkerData = chrome.i18n.getMessage("inputDontSyncMarkerData"),
     noticeSettingSaved = chrome.i18n.getMessage("noticeSettingSaved"),
     ariaLabelAlertClose = chrome.i18n.getMessage("ariaLabelAlertClose"),
     optionsSettingsSection = chrome.i18n.getMessage("optionsSettingsSection"),
     optionsExportImportSection = chrome.i18n.getMessage("optionsExportImportSection"),
     inputFontLabel = chrome.i18n.getMessage("inputFontLabel"),
     inputFontHelpText = chrome.i18n.getMessage("inputFontHelpText"),
-    inputRegExpHelpText = chrome.i18n.getMessage("inputRegExpHelpText"),
     inputTabCounterHelpText = chrome.i18n.getMessage("inputTabCounterHelpText"),
     inputEnableFaviconMarkerHelpText = chrome.i18n.getMessage("inputEnableFaviconMarkerHelpText"),
+    inputDontSyncMarkerDataHelpText = chrome.i18n.getMessage("inputDontSyncMarkerDataHelpText"),
     errorFileEmptyOrFormat = chrome.i18n.getMessage("errorFileEmptyOrFormat"),
     buttonOptions = chrome.i18n.getMessage("buttonOptions"),
     exportFile = null;
@@ -28,12 +28,12 @@ let noticeSuccessExport = chrome.i18n.getMessage("noticeSuccessExport"),
 let languageCode = chrome.i18n.getUILanguage(),
     languageCodeTwoChar = languageCode.split('-')[0];
 const markersKey = '__em-markers__';
-const searchModeKey = '__em-search-mode__';
 const tabCounterKey = '__em-tab-counter__';
 const faviconMarkerKey = '__em-favicon-marker__';
 const swatchesKey = '__em-swatches__';
 const dbVersionKey = '__em-version__';
 const fontKey = '__em-font__';
+const dontSyncMarkerDataKey = '__em-dont-sync-marker-data__';
 const exportFileName = 'environment-marker-export.json';
 
 function onError(error) {
@@ -79,71 +79,76 @@ function exportConfig() {
     settings: []
   };
 
-  chrome.storage.sync.get(markersKey).then((storedResults) => {
-    let markersStoredArray = storedResults[markersKey] || [];
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
 
-    if (markersStoredArray.length == 0) {
-      showMessage(errorNoRibbonsToExport, true);
-    } else {
-      chrome.storage.sync.get([
-        fontKey,
-        searchModeKey,
-        tabCounterKey,
-        swatchesKey,
-        faviconMarkerKey
-       ]).then((options) => {
-        let fontStoredString = options[fontKey] || '';
-        let searchModeStoredBool = options[searchModeKey] || false;
-        let tabCounterStoredBool = options[tabCounterKey] || false;
-        let faviconMarkerStoredBool = options[faviconMarkerKey] || false;
-        let colorSwatchesStoredArray = options[swatchesKey];
+    const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
 
-        for (let storedObject of markersStoredArray) {
-          configurations.markers.push({
-            "url": storedObject.settingUrl,
-            "color": storedObject.settingColor,
-            "label": storedObject.settingLabel,
-            "position": storedObject.settingPosition,
-            "size": storedObject.settingSize
+    storage.get(markersKey).then((storedResults) => {
+      let markersStoredArray = storedResults[markersKey] || [];
+
+      if (markersStoredArray.length == 0) {
+        showMessage(errorNoRibbonsToExport, true);
+      } else {
+        chrome.storage.sync.get([
+          fontKey,
+          tabCounterKey,
+          swatchesKey,
+          faviconMarkerKey
+         ]).then((options) => {
+          let fontStoredString = options[fontKey] || '';
+          let tabCounterStoredBool = options[tabCounterKey] || false;
+          let faviconMarkerStoredBool = options[faviconMarkerKey] || false;
+          let colorSwatchesStoredArray = options[swatchesKey];
+          let dontSyncMarkerDataStoredBool = options[dontSyncMarkerDataKey] || false;
+
+          for (let storedObject of markersStoredArray) {
+            configurations.markers.push({
+              "url": storedObject.settingUrl,
+              "color": storedObject.settingColor,
+              "label": storedObject.settingLabel,
+              "position": storedObject.settingPosition,
+              "size": storedObject.settingSize,
+            });
+          }
+
+          configurations.settings.push({
+            "fontString": fontStoredString
           });
-        }
 
-        configurations.settings.push({
-          "fontString": fontStoredString
-        });
+          configurations.settings.push({
+            "tabCounterBool": tabCounterStoredBool
+          });
 
-        configurations.settings.push({
-          "searchModeBool": searchModeStoredBool
-        });
+          configurations.settings.push({
+            "faviconMarkerBool": faviconMarkerStoredBool
+          });
 
-        configurations.settings.push({
-          "tabCounterBool": tabCounterStoredBool
-        });
+          configurations.settings.push({
+            "colorSwatchesArray": colorSwatchesStoredArray
+          });
 
-        configurations.settings.push({
-          "faviconMarkerBool": faviconMarkerStoredBool
-        });
+          configurations.settings.push({
+            "dontSyncMarkerDataBool": dontSyncMarkerDataStoredBool
+          });
 
-        configurations.settings.push({
-          "colorSwatchesArray": colorSwatchesStoredArray
-        });
+          let configurations_json = JSON.stringify(configurations);
+          let link = document.createElement('a');
+          link.setAttribute('download', exportFileName);
+          link.href = makeJsonExportFile(configurations_json);
+          document.body.appendChild(link);
 
-        let configurations_json = JSON.stringify(configurations);
-        let link = document.createElement('a');
-        link.setAttribute('download', exportFileName);
-        link.href = makeJsonExportFile(configurations_json);
-        document.body.appendChild(link);
+          // Wait for the link to be added to the document
+          window.requestAnimationFrame(function () {
+            let event = new MouseEvent('click');
+            link.dispatchEvent(event);
+            document.body.removeChild(link);
 
-        // Wait for the link to be added to the document
-        window.requestAnimationFrame(function () {
-          let event = new MouseEvent('click');
-          link.dispatchEvent(event);
-          document.body.removeChild(link);
-
-          showMessage(noticeSuccessExport);
-        });
-       });
-    }
+            showMessage(noticeSuccessExport);
+          });
+         });
+      }
+    }, onError);
   }, onError);
 }
 
@@ -165,11 +170,6 @@ function importConfig() {
 
         if (importConfigObjects.settings.length > 0) {
           for (let importConfigObject of importConfigObjects.settings) {
-            if (importConfigObject.hasOwnProperty('searchModeBool')) {
-              chrome.storage.sync.set({[searchModeKey]: importConfigObject.searchModeBool}).then(() => {
-              }, onError);
-            }
-
             if (importConfigObject.hasOwnProperty('tabCounterBool')) {
               chrome.storage.sync.set({[tabCounterKey]: importConfigObject.tabCounterBool}).then(() => {
               }, onError);
@@ -177,6 +177,11 @@ function importConfig() {
 
             if (importConfigObject.hasOwnProperty('faviconMarkerBool')) {
               chrome.storage.sync.set({[faviconMarkerKey]: importConfigObject.faviconMarkerBool}).then(() => {
+              }, onError);
+            }
+
+            if (importConfigObject.hasOwnProperty('dontSyncMarkerDataBool')) {
+              chrome.storage.sync.set({[dontSyncMarkerDataKey]: importConfigObject.dontSyncMarkerDataBool}).then(() => {
               }, onError);
             }
 
@@ -260,18 +265,6 @@ $(document).ready(() => {
     }
   });
 
-  chrome.storage.sync.get(searchModeKey).then((storedSearchMode) => {
-    let storedSearchModeBool = storedSearchMode[searchModeKey] || false;
-    $('#enable-regexp').prop('checked', storedSearchModeBool);
-  }, onError);
-
-  $('#enable-regexp').change((event) => {
-    let enableRegexpValue = $(event.target).is(':checked');
-    chrome.storage.sync.set({[searchModeKey]: enableRegexpValue }).then(() => {
-      showMessage(noticeSettingSaved);
-    }, onError);
-  });
-
   chrome.storage.sync.get(tabCounterKey).then((storedTabCounter) => {
     let storedTabCounterBool = storedTabCounter[tabCounterKey] || false;
     $('#enable-tab-counter').prop('checked', storedTabCounterBool);
@@ -296,21 +289,33 @@ $(document).ready(() => {
     }, onError);
   });
 
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedDontSyncMarkerData) => {
+    let dontSyncMarkerDataBool = storedDontSyncMarkerData[dontSyncMarkerDataKey] || false;
+    $('#dont-sync-marker-data').prop('checked', dontSyncMarkerDataBool);
+  }, onError);
+
+  $('#dont-sync-marker-data').change((event) => {
+    let dontSyncMarkerDataValue = $(event.target).is(':checked');
+    chrome.storage.sync.set({[dontSyncMarkerDataKey]: dontSyncMarkerDataValue }).then(() => {
+      showMessage(noticeSettingSaved);
+    }, onError);
+  });
+
   exportButton.html('<i class="fas fa-download fa-lg"></i> ' + buttonExport);
   importButton.html('<i class="fas fa-upload fa-lg"></i> ' + buttonImport);
   $('.import-file-label').html(inputChooseFile);
   $('#import-warning').html(importWarning);
-  $('#enable-regexp-label').html(inputEnableRegExp);
   $('#enable-tab-counter-label').html(inputEnableTabCounter);
   $('#enable-favicon-marker-label').html(inputEnableFaviconMarker);
+  $('#dont-sync-marker-data-label').html(inputDontSyncMarkerData);
 
   $('#settings-section-label').html('<i class="fas fa-cog"></i> ' + optionsSettingsSection);
   $('#export-import-section-label').html('<i class="fas fa-sync-alt"></i> ' + optionsExportImportSection);
   $('#font-label').html(inputFontLabel);
   $('#font-picker-help-block').html(inputFontHelpText);
-  $('#enable-regexp-help-block').html(inputRegExpHelpText);
   $('#enable-tab-counter-help-block').html(inputTabCounterHelpText);
   $('#enable-favicon-marker-help-block').html(inputEnableFaviconMarkerHelpText);
+  $('#dont-sync-marker-data-help-block').html(inputDontSyncMarkerDataHelpText);
 
   $('#font-picker').fontpicker({
     lang: languageCodeTwoChar,

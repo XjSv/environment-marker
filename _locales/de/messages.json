@@ -15,6 +15,10 @@
     "message": "RegExp",
     "description": "URL fragment input field placeholder when using RegExp."
   },
+  "inputUrlFragmentDnsPlaceholder": {
+    "message": "IP / CIDR Notation",
+    "description": "URL fragment input field placeholder when using DNS."
+  },
   "inputColorPlaceholder": {
     "message": "Farbe",
     "description": "Color input field placeholder."
@@ -175,10 +179,6 @@
     "message": "Schriften werden global auf alle Bänder angewendet.",
     "description": "Font input help text."
   },
-  "inputRegExpHelpText": {
-    "message": "Aktiviere reguläre Ausdrücke im URL-Fragment Feld.",
-    "description": "RegExp Enable input help text."
-  },
   "inputTabCounterHelpText": {
     "message": "Aktiviere den Tab-Zähler.",
     "description": "Tab Counter Enable input help text."
@@ -186,6 +186,10 @@
   "inputEnableFaviconMarkerHelpText": {
     "message": "Favicon Marker aktivieren.",
     "description": "Favicon Marker Enable input help text."
+  },
+  "inputDontSyncMarkerDataHelpText": {
+    "message": "Don't sync marker data between devices (Recommended when you have more than ~45 markers).",
+    "description": "Don't sync marker data between devices input help text."
   },
   "buttonExport": {
     "message": "Exportieren",
@@ -199,10 +203,6 @@
     "message": "Datei auswählen",
     "description": "Choose file input label."
   },
-  "inputEnableRegExp": {
-    "message": "RegExp",
-    "description": "RegExp Enable input label."
-  },
   "inputEnableTabCounter": {
     "message": "Tab-Zähler",
     "description": "Tab Counter Enable input label."
@@ -210,6 +210,10 @@
   "inputEnableFaviconMarker": {
     "message": "Favicon Marker",
     "description": "Favicon Marker Enable input label."
+  },
+  "inputDontSyncMarkerData": {
+    "message": "Don't Sync Marker Data",
+    "description": "Don't Sync Marker Data input label."
   },
   "importWarning": {
     "message": "Warnung: Durch das Importieren von Bändern wird alles außer Kraft gesetzt!",

@@ -1,5 +1,6 @@
 let inputUrlFragmentPlaceholder = chrome.i18n.getMessage("inputUrlFragmentPlaceholder"),
     inputUrlFragmentRegExpPlaceholder = chrome.i18n.getMessage("inputUrlFragmentRegExpPlaceholder"),
+    inputUrlFragmentDnsPlaceholder = chrome.i18n.getMessage("inputUrlFragmentDnsPlaceholder"),
     inputColorPlaceholder = chrome.i18n.getMessage("inputColorPlaceholder"),
     inputLabelPlaceholder = chrome.i18n.getMessage("inputLabelPlaceholder"),
     selectFontSizeLabel = chrome.i18n.getMessage("selectFontSizeLabel"),
@@ -15,6 +16,9 @@ let inputUrlFragmentPlaceholder = chrome.i18n.getMessage("inputUrlFragmentPlaceh
     sizeSelectNormal = chrome.i18n.getMessage("sizeSelectNormal"),
     sizeSelectLarge = chrome.i18n.getMessage("sizeSelectLarge"),
     sizeSelectExtraLarge = chrome.i18n.getMessage("sizeSelectExtraLarge"),
+    searchModeNormal = chrome.i18n.getMessage("searchModeNormal"),
+    searchModeRegExp = chrome.i18n.getMessage("searchModeRegExp"),
+    searchModeDns = chrome.i18n.getMessage("searchModeDns"),
     noticeNoRibbons = chrome.i18n.getMessage("noticeNoRibbons"),
     buttonClearAll = chrome.i18n.getMessage("buttonClearAll"),
     buttonDisable = chrome.i18n.getMessage("buttonDisable"),
@@ -58,6 +62,7 @@ const swatchesKey = '__em-swatches__';
 const markersKey = '__em-markers__';
 const dbVersionKey = '__em-version__';
 const searchModeKey = '__em-search-mode__';
+const dontSyncMarkerDataKey = '__em-dont-sync-marker-data__';
 const maxSwatches = 7;
 const hide = 'none';
 const show = 'block';
@@ -81,7 +86,11 @@ const sizesMap = [
   {value: 'large', label: sizeSelectLarge},
   {value: 'extra-large', label: sizeSelectExtraLarge}
 ];
-
+const searchModeMap = [
+  {value: 'normal', label: searchModeNormal},
+  {value: 'regexp', label: searchModeRegExp},
+  {value: 'dns', label: searchModeDns}
+];
 Pickr.prototype.getSwatches = function() {
   return this._swatchColors.reduce((arr, swatch) => {
     arr.push(swatch.color.toRGBA().toString(0));
@@ -170,16 +179,23 @@ function initialize() {
               settingLabel: storedResults[storedMarker][1],
               settingPosition: storedResults[storedMarker][2],
               settingSize: storedResults[storedMarker][3],
-              settingFontSize: storedResults[storedMarker][4]
+              settingFontSize: storedResults[storedMarker][4],
+              settingSearchMode: storedResults[storedMarker][5]
             };
             convertedArray.push(storeObject);
           }
 
           // Initial data conversion for pre v2.3 (old data is cleared before inserting the new format)
           chrome.storage.sync.clear().then(() => {
-            chrome.storage.sync.set({ [markersKey] : convertedArray }).then(() => {
-              chrome.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
-                initializeDisplay();
+            chrome.storage.sync.set({ [dontSyncMarkerDataKey]: false }).then(() => {
+              let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
+
+              const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
+
+              storage.set({ [markersKey] : convertedArray }).then(() => {
+                chrome.storage.sync.set({ [dbVersionKey] : extensionVersion }).then(() => {
+                  initializeDisplay();
+                }, onError);
               }, onError);
             }, onError);
           });
@@ -205,27 +221,34 @@ function initialize() {
 }
 
 function initializeDisplay() {
-  chrome.storage.sync.get(markersKey).then((storedResults) => {
-    let storedArray = storedResults[markersKey] || [];
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
 
-    if (storedArray.length > 0) {
-      $('.setting').remove();
-      showOrHideEmptyNotice(hide);
+    const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
 
-      for (let index in storedArray) {
-        displaySetting(
-            index,
-            storedArray[index].settingUrl,
-            storedArray[index].settingColor,
-            storedArray[index].settingLabel,
-            storedArray[index].settingPosition,
-            storedArray[index].settingSize,
-            storedArray[index].settingFontSize
-        );
+    storage.get(markersKey).then((storedResults) => {
+      let storedArray = storedResults[markersKey] || [];
+
+      if (storedArray.length > 0) {
+        $('.setting').remove();
+        showOrHideEmptyNotice(hide);
+
+        for (let index in storedArray) {
+          displaySetting(
+              index,
+              storedArray[index].settingUrl,
+              storedArray[index].settingColor,
+              storedArray[index].settingLabel,
+              storedArray[index].settingPosition,
+              storedArray[index].settingSize,
+              storedArray[index].settingFontSize,
+              storedArray[index].settingSearchMode
+          );
+        }
+      } else {
+        showOrHideEmptyNotice(show);
       }
-    } else {
-      showOrHideEmptyNotice(show);
-    }
+    }, onError);
   }, onError);
 }
 
@@ -280,30 +303,38 @@ function saveSettings() {
       settingLabel = $('.settings-input #label').val(),
       settingFontSize = $('.settings-input #font-size').val(),
       settingPosition = $('.settings-input #position').val(),
-      settingSize = $('.settings-input #size').val();
+      settingSize = $('.settings-input #size').val(),
+      settingSearchMode = $('.settings-input #search-mode').val();
 
   if (settingUrl !== '' && settingColor !== '' && settingLabel !== '') {
-    chrome.storage.sync.get(markersKey).then((storedResults) => {
-      let storedArray = storedResults[markersKey] || [],
-          objectExists = searchStoredMarkers(settingUrl, storedArray);
+    chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+      let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
 
-      if (!objectExists) {
-        if ($('.alert-dismissible').length) {
-          $(".alert-dismissible").alert('close');
+      const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
+
+      storage.get(markersKey).then((storedResults) => {
+        let storedArray = storedResults[markersKey] || [],
+            objectExists = searchStoredMarkers(settingUrl, storedArray);
+
+        if (!objectExists) {
+          if ($('.alert-dismissible').length) {
+            $(".alert-dismissible").alert('close');
+          }
+
+          // Reset input elements for the next entry
+          $('.settings-input #url').val('');
+          $('.settings-input #label').val('');
+          $('.settings-input #font-size').val('14');
+          $('.settings-input #position').val('top-left');
+          $('.settings-input #size').val('normal');
+          $('.settings-input #search-mode').val('normal');
+
+          storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, settingSearchMode);
+        } else {
+          // Duplicate marker error message
+          showMessage(errorDuplicateMarker, true);
         }
-
-        // Reset input elements for the next entry
-        $('.settings-input #url').val('');
-        $('.settings-input #label').val('');
-        $('.settings-input #font-size').val('14');
-        $('.settings-input #position').val('top-left');
-        $('.settings-input #size').val('normal');
-
-        storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize);
-      } else {
-        // Duplicate marker error message
-        showMessage(errorDuplicateMarker, true);
-      }
+      }, onError);
     }, onError);
   } else {
     // Empty input error message
@@ -312,7 +343,7 @@ function saveSettings() {
 }
 
 /* Store a new setting in local storage */
-function storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize) {
+function storeSetting(storedResults, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, settingSearchMode) {
   let storedArray = storedResults[markersKey] || [];
   let storeObject = {
     settingUrl: settingUrl,
@@ -320,66 +351,85 @@ function storeSetting(storedResults, settingUrl, settingColor, settingLabel, set
     settingLabel: settingLabel,
     settingPosition: settingPosition,
     settingSize: settingSize,
-    settingFontSize: settingFontSize
+    settingFontSize: settingFontSize,
+    settingSearchMode: settingSearchMode
   };
 
   storedArray.push(storeObject);
-  let settingIndex =  storedArray.length + 1;
+  let settingIndex = storedArray.length + 1;
 
-  chrome.storage.sync.set({ [markersKey] : storedArray }).then(() => {
-    showOrHideEmptyNotice(hide);
-    displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize);
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
+
+    const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
+
+    storage.set({ [markersKey]: storedArray }).then(() => {
+      showOrHideEmptyNotice(hide);
+      displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, settingSearchMode);
+    }, onError);
   }, onError);
 }
 
 /* Update settings */
-function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious) {
-  chrome.storage.sync.get(markersKey).then((storedResults) => {
-    let storedArray = storedResults[markersKey] || [],
-        settingExists = searchStoredMarkers(newSettingUrl, storedArray, indexEditVal);
+function updateSetting(indexEditVal, settingUrl, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, settingSearchMode, replacePrevious) {
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
 
-    indexEditVal = Number(indexEditVal);
+    const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
 
-    if (!settingExists) {
-      let updatedArray = storedArray.filter(function(currentObj, index) {
-        if (currentObj.settingUrl === settingUrl && index === indexEditVal) {
-          currentObj.settingUrl = newSettingUrl;
-          currentObj.settingColor = settingColor;
-          currentObj.settingLabel = settingLabel;
-          currentObj.settingFontSize = settingFontSize;
-          currentObj.settingPosition = settingPosition;
-          currentObj.settingSize = settingSize;
-        }
-        return true;
-      });
+    storage.get(markersKey).then((storedResults) => {
+      let storedArray = storedResults[markersKey] || [],
+          settingExists = searchStoredMarkers(newSettingUrl, storedArray, indexEditVal);
 
-      // Save in DB
-      chrome.storage.sync.set({ [markersKey] : updatedArray }).then(() => {
-        displaySetting(indexEditVal, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious);
-      }, onError);
-    } else {
-      // Duplicate marker error message
-      showMessage(errorDuplicateMarker, true);
-    }
+      indexEditVal = Number(indexEditVal);
+
+      if (!settingExists) {
+        let updatedArray = storedArray.filter(function(currentObj, index) {
+          if (currentObj.settingUrl === settingUrl && index === indexEditVal) {
+            currentObj.settingUrl = newSettingUrl;
+            currentObj.settingColor = settingColor;
+            currentObj.settingLabel = settingLabel;
+            currentObj.settingFontSize = settingFontSize;
+            currentObj.settingPosition = settingPosition;
+            currentObj.settingSize = settingSize;
+            currentObj.settingSearchMode = settingSearchMode;
+          }
+          return true;
+        });
+
+        storage.set({ [markersKey]: updatedArray }).then(() => {
+          displaySetting(indexEditVal, newSettingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, settingSearchMode, replacePrevious);
+        }, onError);
+      } else {
+        // Duplicate marker error message
+        showMessage(errorDuplicateMarker, true);
+      }
+    }, onError);
   }, onError);
 }
 
 function deleteSetting(settingUrl, settingIndex) {
-  chrome.storage.sync.get(markersKey).then((storedResults) => {
-    let storedArray = storedResults[markersKey] || [],
-        settingExists = searchStoredMarkers(settingUrl, storedArray);
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
 
-    settingIndex = Number(settingIndex);
+    const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
 
-    if (settingExists) {
-      let filteredArray = storedArray.filter(function(currentObj, index) {
-        return currentObj.settingUrl !== settingUrl && index !== settingIndex;
-      });
+    storage.get(markersKey).then((storedResults) => {
+      let storedArray = storedResults[markersKey] || [],
+          settingExists = searchStoredMarkers(settingUrl, storedArray);
 
-      chrome.storage.sync.set({ [markersKey] : filteredArray }).then(() => {
-        showOrHideEmptyNotice();
-      }, onError);
-    }
+      settingIndex = Number(settingIndex);
+
+      if (settingExists) {
+        let filteredArray = storedArray.filter(function(currentObj, index) {
+          return currentObj.settingUrl !== settingUrl && index !== settingIndex;
+        });
+
+        storage.set({ [markersKey]: filteredArray }).then(() => {
+          showOrHideEmptyNotice();
+        }, onError);
+      }
+    }, onError);
   }, onError);
 }
 
@@ -388,12 +438,20 @@ function clearAll() {
   $('.settings-container .setting').each((index, element) => {
     $(element).remove();
   });
-  chrome.storage.sync.set({ [markersKey] : [] }).then(null, onError);
-  showOrHideEmptyNotice(show);
+
+  chrome.storage.sync.get(dontSyncMarkerDataKey).then((storedResults) => {
+    let dontSyncMarkerData = storedResults[dontSyncMarkerDataKey] || false;
+
+    const storage = dontSyncMarkerData ? chrome.storage.local : chrome.storage.sync;
+
+    storage.set({ [markersKey]: [] }).then(() => {
+      showOrHideEmptyNotice(show);
+    }, onError);
+  }, onError);
 }
 
 /* Display a setting in the setting box */
-function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, replacePrevious = null) {
+function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, settingPosition, settingSize, settingFontSize, settingSearchMode, replacePrevious = null) {
   // For backwards compatibility for users that already have ribbons configured.
   // @TODO: Remove sometime in the future
   let settingFontSizeDisplay = '14px';
@@ -415,6 +473,13 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     return accumulator;
   }, {});
 
+  let settingSearchModeDisplay = searchModeMap.reduce(function(accumulator, currentValue) {
+    if (currentValue.value === settingSearchMode) {
+      accumulator = currentValue.label;
+    }
+    return accumulator;
+  }, {});
+
   // For backwards compatibility for users that already have ribbons configured.
   // @TODO: Remove sometime in the future
   let settingSizeDisplay = sizeSelectNormal;
@@ -431,13 +496,13 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
 
   let settingUrlDisplay = truncateString(settingUrl, 30),
       settingUrlDisplayEncoded = he.encode(settingUrlDisplay),
-      innerSettingsContainer = $( "<div/>", { "class": "setting" }),
-      displayContainer = $( "<div/>", { "class": "my-1 align-items-center display-container" }),
+      innerSettingsContainer = $("<div/>", { "class": "setting" }),
+      displayContainer = $("<div/>", { "class": "my-1 align-items-center display-container" }),
       displayString =
         '<div class="d-flex align-items-center">' +
           '<div class="col-3 align-self-center"><b>' + truncateString(settingLabel, 30) + '</b></div>' +
           '<div class="col-4 align-self-center">' + settingUrlDisplayEncoded + '</div> ' +
-          '<div class="col-5 align-self-center">' + settingFontSizeDisplay + ', ' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + '</div> ' +
+          '<div class="col-5 align-self-center">' + settingFontSizeDisplay + ', ' + settingSizeDisplay + ' ' + displayAt + ' ' + settingPositionDisplay + ' ' + settingSearchModeDisplay + '</div> ' +
         '</div>';
 
   let displayLabelUrl = $( "<div/>", {
@@ -486,171 +551,130 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     "style": "display: none;"
   });
 
-  let editUrlInputContainer = $( "<div/>", {
-    "class": "w-100 pe-1 edit-url-container"
-  });
+  // First row elements
+  let editFirstRow = $( "<div/>", { "class": "d-flex mb-2" });
 
+  let editUrlInputContainer = $( "<div/>", { "class": "w-50 pe-1" });
   let editUrlInput = $( "<input/>", {
-    "class": "form-control edit-url",
+    "class": "form-control",
     "placeholder": inputUrlFragmentPlaceholder,
     value: settingUrl
   });
 
-  let editIndexHiddenInput = $( "<input/>", {
-    type: "hidden",
-    value: settingIndex
-  });
-
-  let editColorInputContainer = $( "<div/>", {
-    "class": "flex-shrink-1 px-1 edit-color"
-  });
-
-  let editColorInput = $( "<input/>", {
-    "class": "color-picker",
-    value: settingColor
-  });
-
-  let editLabelInputContainer = $( "<div/>", {
-    "class": "pe-1 edit-label-container"
-  });
-
+  let editLabelInputContainer = $( "<div/>", { "class": "w-50" });
   let editLabelInput = $( "<input/>", {
-    "class": "form-control edit-label",
+    "class": "form-control",
     "placeholder": inputLabelPlaceholder,
     value: settingLabel
   });
 
-  let optionsSelectFontSizeContainer = $( "<div/>", {
-    "class": "px-1 edit-font-size-container"
-  });
+  // Second row elements
+  let editSecondRow = $( "<div/>", { "class": "d-flex" });
 
-  let optionsSelectFontSize = $( "<select/>", {
-    "class": "form-select edit-font-size"
-  });
+  let editSearchModeContainer = $( "<div/>", { "class": "pe-1" });
+  let editSearchMode = $( "<select/>", { "class": "form-select" });
+  for (let i = 0; i < searchModeMap.length; i++) {
+    if (searchModeMap[i].value === settingSearchMode) {
+      editSearchMode.append(new Option(searchModeMap[i].label, searchModeMap[i].value, true, true));
+    } else {
+      editSearchMode.append(new Option(searchModeMap[i].label, searchModeMap[i].value));
+    }
+  }
 
+  let editFontSizeContainer = $( "<div/>", { "class": "pe-1" });
+  let editFontSize = $( "<select/>", { "class": "form-select" });
   for (let i = 0; i < fontSizeMap.length; i++) {
     if (fontSizeMap[i].value === settingFontSize) {
-      optionsSelectFontSize.append(new Option(fontSizeMap[i].label, fontSizeMap[i].value, true, true));
+      editFontSize.append(new Option(fontSizeMap[i].label, fontSizeMap[i].value, true, true));
     } else {
-      optionsSelectFontSize.append(new Option(fontSizeMap[i].label, fontSizeMap[i].value));
+      editFontSize.append(new Option(fontSizeMap[i].label, fontSizeMap[i].value));
     }
   }
 
-  let optionsSelectPositionContainer = $( "<div/>", {
-    "class": "px-1 edit-position-container"
-  });
-
-  let optionsSelectPosition = $( "<select/>", {
-    "class": "form-select edit-position"
-  });
-
+  let editPositionContainer = $( "<div/>", { "class": "pe-1" });
+  let editPosition = $( "<select/>", { "class": "form-select" });
   for (let i = 0; i < positionsMap.length; i++) {
     if (positionsMap[i].value === settingPosition) {
-      optionsSelectPosition.append(new Option(positionsMap[i].label, positionsMap[i].value, true, true));
+      editPosition.append(new Option(positionsMap[i].label, positionsMap[i].value, true, true));
     } else {
-      optionsSelectPosition.append(new Option(positionsMap[i].label, positionsMap[i].value));
+      editPosition.append(new Option(positionsMap[i].label, positionsMap[i].value));
     }
   }
 
-  let optionsSelectSizeContainer = $( "<div/>", {
-    "class": "px-1 edit-size-container"
-  });
-
-  let optionsSelectSize = $( "<select/>", {
-    "class": "form-select edit-size"
-  });
-
+  let editSizeContainer = $( "<div/>", { "class": "pe-1" });
+  let editSize = $( "<select/>", { "class": "form-select" });
   for (let i = 0; i < sizesMap.length; i++) {
     if (sizesMap[i].value === settingSize) {
-      optionsSelectSize.append(new Option(sizesMap[i].label, sizesMap[i].value, true, true));
+      editSize.append(new Option(sizesMap[i].label, sizesMap[i].value, true, true));
     } else {
-      optionsSelectSize.append(new Option(sizesMap[i].label, sizesMap[i].value));
+      editSize.append(new Option(sizesMap[i].label, sizesMap[i].value));
     }
   }
 
-  let updateBtnContainer = $( "<div/>", {
-    "class": "flex-shrink-1 ps-1 edit-update"
+  let editColorContainer = $( "<div/>", { "class": "flex-shrink-1 pe-1" });
+  let editColorInput = $( "<input/>", {
+    "class": "form-control color-picker",
+    value: settingColor
   });
 
+  let editButtonContainer = $( "<div/>", { "class": "flex-grow-1" });
   let updateBtn = $( "<button/>", {
     "class": "btn btn-success btn-sm update",
     html: '<i class="fas fa-pencil-alt fa-lg"></i>',
     click: function() {
-      let indexEditVal = editIndexHiddenInput.val(),
+      let indexEditVal = settingIndex,
           urlEditVal = editUrlInput.val(),
           colorEditVal = editColorInput.val(),
           labelEditVal = editLabelInput.val(),
-          fontSizeEditVal = optionsSelectFontSize.val(),
-          positionEditVal = optionsSelectPosition.val(),
-          sizeEditVal = optionsSelectSize.val();
+          fontSizeEditVal = editFontSize.val(),
+          positionEditVal = editPosition.val(),
+          sizeEditVal = editSize.val(),
+          searchModeEditVal = editSearchMode.val();
 
       if (urlEditVal !== settingUrl ||
           colorEditVal !== settingColor ||
           labelEditVal !== settingLabel ||
           fontSizeEditVal !== settingFontSize ||
           positionEditVal !== settingPosition ||
-          sizeEditVal !== settingSize) {
-        updateSetting(indexEditVal, settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal, fontSizeEditVal, innerSettingsContainer);
+          sizeEditVal !== settingSize ||
+          searchModeEditVal !== settingSearchMode) {
+        updateSetting(indexEditVal, settingUrl, urlEditVal, colorEditVal, labelEditVal, positionEditVal, sizeEditVal, fontSizeEditVal, searchModeEditVal, innerSettingsContainer);
       }
     }
   });
 
-  let cancelBtnContainer = $( "<div/>", {
-    "class": "flex-shrink-1 ps-1 edit-cancel"
-  });
-
-  let cancelBtn = $( "<button/>", {
-    "class": "btn btn-secondary btn-sm cancel",
-    html: '<i class="fas fa-times fa-lg"></i>',
-    click: function() {
-      displayContainer.show();
-      editContainer.hide();
-      editUrlInput.val(settingUrl);
-      editColorInput.val(settingColor);
-      editLabelInput.val(settingLabel);
-      optionsSelectPosition.val(settingPosition);
-      optionsSelectSize.val(settingSize);
-      optionsSelectFontSize.val(settingFontSize);
-    }
-  });
-
-  let editFirstRow = $( "<div/>", {
-    "class": "d-flex mb-2"
-  });
-
-  let editSecondRow = $( "<div/>", {
-    "class": "d-flex"
-  });
-
+  // Assemble first row
   editUrlInputContainer.append(editUrlInput);
-  editUrlInputContainer.append(editIndexHiddenInput);
-  editColorInputContainer.append(editColorInput);
-  optionsSelectFontSizeContainer.append(optionsSelectFontSize);
-  optionsSelectPositionContainer.append(optionsSelectPosition);
-  optionsSelectSizeContainer.append(optionsSelectSize);
-  updateBtnContainer.append(updateBtn);
   editLabelInputContainer.append(editLabelInput);
-  cancelBtnContainer.append(cancelBtn);
-
   editFirstRow.append(editUrlInputContainer);
-  editFirstRow.append(editColorInputContainer);
-  editFirstRow.append(updateBtnContainer);
+  editFirstRow.append(editLabelInputContainer);
 
-  editSecondRow.append(editLabelInputContainer);
-  editSecondRow.append(optionsSelectFontSizeContainer);
-  editSecondRow.append(optionsSelectPositionContainer);
-  editSecondRow.append(optionsSelectSizeContainer);
-  editSecondRow.append(cancelBtnContainer);
+  // Assemble second row
+  editSearchModeContainer.append(editSearchMode);
+  editFontSizeContainer.append(editFontSize);
+  editPositionContainer.append(editPosition);
+  editSizeContainer.append(editSize);
+  editColorContainer.append(editColorInput);
+  editButtonContainer.append(updateBtn);
 
+  editSecondRow.append(editSearchModeContainer);
+  editSecondRow.append(editFontSizeContainer);
+  editSecondRow.append(editPositionContainer);
+  editSecondRow.append(editSizeContainer);
+  editSecondRow.append(editColorContainer);
+  editSecondRow.append(editButtonContainer);
+
+  // Assemble edit container
   editContainer.append(editFirstRow);
   editContainer.append(editSecondRow);
 
+  // Assemble display container
   deleteBtnContainer.append(deleteBtn);
-
   displayContainer.append(displayLabelUrl);
   displayContainer.append(displayColor);
   displayContainer.append(deleteBtnContainer);
 
+  // Assemble final container
   innerSettingsContainer.append(displayContainer);
   innerSettingsContainer.append(editContainer);
 
@@ -660,6 +684,7 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
     $('.settings-container').append(innerSettingsContainer);
   }
 
+  // Initialize color picker
   chrome.storage.sync.get(swatchesKey).then((storedSwatchesArray) => {
     if (storedSwatchesArray[swatchesKey]) {
       colorSwatches = storedSwatchesArray[swatchesKey]
@@ -733,11 +758,38 @@ function displaySetting(settingIndex, settingUrl, settingColor, settingLabel, se
   }, onError);
 }
 
+function updateUrlInputPlaceholder(url_input) {
+  let searchMode = $('#search-mode').val();
+  switch (searchMode) {
+    case 'regexp':
+      url_input.attr('placeholder', inputUrlFragmentRegExpPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentRegExpPlaceholder);
+      break;
+    case 'dns':
+      url_input.attr('placeholder', inputUrlFragmentDnsPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentDnsPlaceholder);
+      break;
+    default:
+      url_input.attr('placeholder', inputUrlFragmentPlaceholder);
+      url_input.attr('aria-label', inputUrlFragmentPlaceholder);
+      break;
+  }
+}
+
+
 $(document).ready(() => {
   /* Display previously saved markers on startup */
   initialize();
 
   $('html').attr('lang', languageCode);
+
+  // Check if DNS API is supported
+  const isDnsSupported = chrome.dns && chrome.dns.resolve;
+
+  // Only show DNS option if supported
+  if (!isDnsSupported) {
+    $('#search-mode option[value="dns"]').remove();
+  }
 
   let clearButton = $('.clear'),
       toggleButton = $('.toggle'),
@@ -873,15 +925,10 @@ $(document).ready(() => {
       color_input = $('#color'),
       label_input = $('#label');
 
-  chrome.storage.sync.get(searchModeKey).then((storedSearchMode) => {
-    let searchModeRegExp = storedSearchMode[searchModeKey] || false;
-    if (searchModeRegExp) {
-      url_input.attr('placeholder', inputUrlFragmentRegExpPlaceholder);
-      url_input.attr('aria-label', inputUrlFragmentRegExpPlaceholder);
-    } else {
-      url_input.attr('placeholder', inputUrlFragmentPlaceholder);
-      url_input.attr('aria-label', inputUrlFragmentPlaceholder);
-    }
+  updateUrlInputPlaceholder(url_input);
+  // Listen for changes in the search mode
+  $('#search-mode').change(() => {
+    updateUrlInputPlaceholder(url_input);
   });
 
   color_input.attr('placeholder', inputColorPlaceholder);
@@ -904,4 +951,16 @@ $(document).ready(() => {
   $('#size option[value="normal"]').html(sizeSelectNormal);
   $('#size option[value="large"]').html(sizeSelectLarge);
   $('#size option[value="extra-large"]').html(sizeSelectExtraLarge);
+
+  $('#search-mode option[value="normal"]').html(searchModeNormal);
+  $('#search-mode option[value="regexp"]').html(searchModeRegExp);
+  $('#search-mode option[value="dns"]').html(searchModeDns);
+
+  // browser.runtime.getBrowserInfo().then((info) => {
+  //   if (info.name === 'Firefox') {
+  //     // Enable the option specific to Firefox
+  //   } else {
+  //     // Enable the option for other browsers
+  //   }
+  // });
 });
