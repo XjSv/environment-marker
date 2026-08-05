@@ -6,7 +6,7 @@
   "license": "MPL-2.0",
   "main": "js/background.js",
   "devDependencies": {
-    "archiver": "^7.0.1",
+    "archiver": "^8.0.0",
     "autoprefixer": "^10.5.0",
     "cssnano": "^7.0.6",
     "gulp": "^5.0.0",
