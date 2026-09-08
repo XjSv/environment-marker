@@ -10,7 +10,7 @@
     "autoprefixer": "^10.4.21",
     "cssnano": "^8.0.4",
     "archiver": "^8.0.0",
-    "autoprefixer": "^10.5.4",
+    "autoprefixer": "^10.5.5",
     "cssnano": "^8.0.5",
     "gulp": "^5.0.1",
     "gulp-postcss": "^10.0.0",
