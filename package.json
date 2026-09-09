@@ -11,7 +11,7 @@
     "cssnano": "^8.0.4",
     "archiver": "^8.0.0",
     "autoprefixer": "^10.5.4",
-    "cssnano": "^8.0.5",
+    "cssnano": "^9.0.3",
     "gulp": "^5.0.1",
     "gulp-postcss": "^10.0.0",
     "gulp-rename": "^2.1.0",
