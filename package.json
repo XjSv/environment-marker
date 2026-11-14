@@ -4,11 +4,11 @@
   "description": "A browser WebExtension that adds a color marker (ribbon) to the page depending if the URL contains a given string.",
   "author": "Armand Tresova <atresova@gmail.com> (https://www.armandtresova.com/)",
   "license": "MPL-2.0",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0"
+  },
   "main": "js/background.js",
   "devDependencies": {
-    "archiver": "^7.0.1",
-    "autoprefixer": "^10.4.21",
-    "cssnano": "^8.0.4",
     "archiver": "^8.0.0",
     "autoprefixer": "^10.6.2",
     "cssnano": "^9.9.0",
@@ -19,8 +19,8 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify-es": "^3.0.0",
     "merge-stream": "^2.0.0",
-    "postcss": "^8.5.32",
-    "sass": "^1.108.1"
+    "postcss": "^8.5.33",
+    "sass": "^1.108.2"
   },
   "scripts": {
     "develop": "node node_modules/gulp/bin/gulp.js --color --gulpfile gulpfile.js default",
